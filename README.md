@@ -23,7 +23,7 @@ You've found a Bug?
 ### Commands
 |**Command**|**Description**|
 |-----------|---------------|
-|`/ban`|Ban a player (this overrides the PMMP Ban commmand)|
+|`/ban <player> [reason: ...] [time: ...]`|Ban a player (this overrides the PMMP Ban commmand)|
 
 ### License:
 This Pluginis licensed under the [Apache License 2.0](/LICENSE)! Plugin by supercrafter333!
