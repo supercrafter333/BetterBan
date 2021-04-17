@@ -1,0 +1,12 @@
+# BetterBan© by supercrafter333
+# Ban better, with BetterBan©
+
+# Configuration
+
+# Messages
+kick-message: "Banned by admin."
+kick-message-with-reason: "Banned by admin. Reason: {reason}"
+kick-message-with-time: "Banned by admin. {line} Reason: {reason} {line} Ends at: {time}"
+
+# Error messages
+use-DateInterval-format: "§4Please use the the right format!§4 For example: §81d"
