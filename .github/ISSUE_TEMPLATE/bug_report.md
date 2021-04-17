@@ -10,7 +10,7 @@ assignees: ''
 # Bug: [Bug Name]
 
 ### Informations
-PTimeUI Version: [1.0.1]
+BetterBan Version: [1.0.1]
 Server-OS: [Linux Ubuntu 20.04]
 PHP Version: [8.0.2]
 PocketMine-MP Version: [3.17.5]
