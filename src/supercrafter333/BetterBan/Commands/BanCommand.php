@@ -50,10 +50,11 @@ class BanCommand extends VanillaCommand
             throw new InvalidCommandSyntaxException();
         }
 
-        if (count($args) <= 2) {
+        if (count($args) == 2 || count($args) == 1) {
             $name = array_shift($args);
             $reason = isset($args[0]) ? $args[0] : "";
 
+            $pl->addBanToBanlog($name);
             $sender->getServer()->getNameBans()->addBan($name, $reason, null, $sender->getName());
             if (($player = $sender->getServer()->getPlayerExact($name)) instanceof Player) {
                 $player->kick($reason !== "" ? str_replace(["{reason}", "{line}"], [$args[0], "\n"], $cfg->get("kick-message-with-reason")) . $reason : $cfg->get("kick-message"));
@@ -73,6 +74,7 @@ class BanCommand extends VanillaCommand
             $bantime = $informations[0];
             $reason = $informations[1];
             //if ($args[1] instanceof DateInterval) {
+            $pl->addBanToBanlog($name);
             $sender->getServer()->getNameBans()->addBan($name, $reason, $bantime, $sender->getName());
             if (($player = $sender->getServer()->getPlayerExact($name)) instanceof Player) {
                 $player->kick($reason !== "" ? str_replace(["{reason}", "{time}", "{line}"], [$args[0], $bantime->format("Y.m.d H:i:s"), "\n"], $cfg->get("kick-message-with-time")) . $reason : $cfg->get("kick-message"));

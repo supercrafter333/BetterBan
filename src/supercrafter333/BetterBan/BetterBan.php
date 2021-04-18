@@ -5,6 +5,8 @@ namespace supercrafter333\BetterBan;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use supercrafter333\BetterBan\Commands\BanCommand;
+use supercrafter333\BetterBan\Commands\BaninfoCommand;
+use supercrafter333\BetterBan\Commands\BanlogCommand;
 
 /**
  * Class BetterBan
@@ -18,14 +20,21 @@ class BetterBan extends PluginBase
      */
     protected static $instance;
 
+    public const VERSION = "1.1.0-dev";
+
     public function onEnable()
     {
         self::$instance = $this;
         $this->saveResource("config.yml");
+        $this->versionCheck(self::VERSION);
         $cmdMap = $this->getServer()->getCommandMap();
         $pmmpBanCmd = $cmdMap->getCommand("ban");
         $cmdMap->unregister($pmmpBanCmd);
-        $cmdMap->register("BetterBan", new BanCommand("ban"));
+        $cmdMap->registerAll("BetterBan", [
+            new BanCommand("ban"),
+            new BanlogCommand("banlog"),
+            new BaninfoCommand("baninfo")
+        ]);
     }
 
     /**
@@ -43,6 +52,40 @@ class BetterBan extends PluginBase
     {
         $cfg = new Config($this->getDataFolder() . "config.yml", Config::YAML);
         return $cfg;
+    }
+
+    private function versionCheck($version)
+    {
+        if (!$this->getConfig()->exists("version") || !$this->getConfig()->get("version") == $version) {
+            $this->getLogger()->debug("OUTDATED CONFIG.YML!! You config.yml is outdated! Your config.yml will automatically updated!");
+            unlink($this->getConfig()->getPath());
+            $this->saveResource("config.yml");
+            $this->getConfig()->reload();
+            $this->getLogger()->debug("confg.yml Updated for version: §b$version");
+        }
+    }
+
+    public function getBanLogs()
+    {
+        return new Config($this->getDataFolder() . "banLogs.yml", Config::YAML);
+    }
+
+    public function addBanToBanlog(string $playerName)
+    {
+        $log = $this->getBanLogs();
+        if ($log->exists($playerName)) {
+            $log->set($playerName, intval($log->get($playerName) +1));
+            $log->save();
+        } else {
+            $log->set($playerName, 1);
+            $log->save();
+        }
+    }
+
+    public function getBanLogOf(string $playerName): int
+    {
+        $bans = $this->getBanLogs()->exists($playerName) ? $this->getBanLogs()->get($playerName) : 0;
+        return $bans;
     }
 
     /**

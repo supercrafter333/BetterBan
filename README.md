@@ -10,10 +10,10 @@ I would be very happy if you leave a star for this project.
 - Easy2Use
 
 ### TODOs
-- [ ] Banlog Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2))
-- [ ] Baninfo Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2))
+- [ ] Banlog Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2)) [WIP]
+- [ ] Baninfo Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2)) [WIP]
 - [ ] Edited Unban Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2)) [Only maybe]
-- [ ] Editban Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2))
+- [ ] Editban Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2)) [as last, later]
 
 ### Bugs - none
 You've found a Bug?
