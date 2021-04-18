@@ -18,9 +18,6 @@ class BetterBan extends PluginBase
      */
     protected static $instance;
 
-    /**
-     *
-     */
     public function onEnable()
     {
         self::$instance = $this;
