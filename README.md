@@ -14,7 +14,7 @@ I would be very happy if you leave a star for this project.
 - [X] Banlog Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2))
 - [X] Baninfo Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2))
 - [ ] Edited Unban Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2)) [Only maybe]
-- [ ] Editban Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2)) [as last, later]
+- [X] Editban Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2)) [as last, later]
 
 ### Bugs - none
 You've found a Bug?
