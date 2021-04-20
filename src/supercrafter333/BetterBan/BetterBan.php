@@ -56,6 +56,9 @@ class BetterBan extends PluginBase
         return $cfg;
     }
 
+    /**
+     * @param $version
+     */
     private function versionCheck($version)
     {
         if (!$this->getConfig()->exists("version") || !$this->getConfig()->get("version") == $version) {
@@ -67,11 +70,17 @@ class BetterBan extends PluginBase
         }
     }
 
+    /**
+     * @return Config
+     */
     public function getBanLogs()
     {
         return new Config($this->getDataFolder() . "banLogs.yml", Config::YAML);
     }
 
+    /**
+     * @param string $playerName
+     */
     public function addBanToBanlog(string $playerName)
     {
         $log = $this->getBanLogs();
@@ -84,6 +93,10 @@ class BetterBan extends PluginBase
         }
     }
 
+    /**
+     * @param string $playerName
+     * @return int
+     */
     public function getBanLogOf(string $playerName): int
     {
         $bans = $this->getBanLogs()->exists($playerName) ? $this->getBanLogs()->get($playerName) : 0;
@@ -140,6 +153,12 @@ class BetterBan extends PluginBase
         return [$t, ltrim(str_replace($found[0], "", $string))];
     }
 
+    /**
+     * @param string $string
+     * @param \DateTime $time
+     * @return array|null
+     * @throws \Exception
+     */
     public function stringToTimestampAdd(string $string, \DateTime $time): ?array{
         /**
          * Rules:
@@ -185,6 +204,12 @@ class BetterBan extends PluginBase
         return [$t, ltrim(str_replace($found[0], "", $string))];
     }
 
+    /**
+     * @param string $string
+     * @param \DateTime $time
+     * @return array|null
+     * @throws \Exception
+     */
     public function stringToTimestampReduce(string $string, \DateTime $time): ?array{
         /**
          * Rules:

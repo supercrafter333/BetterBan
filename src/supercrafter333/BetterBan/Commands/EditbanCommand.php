@@ -9,11 +9,25 @@ use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use supercrafter333\BetterBan\BetterBan;
 
+/**
+ * Class EditbanCommand
+ * @package supercrafter333\BetterBan\Commands
+ */
 class EditbanCommand extends Command implements PluginIdentifiableCommand
 {
 
+    /**
+     * @var BetterBan
+     */
     private $pl;
 
+    /**
+     * EditbanCommand constructor.
+     * @param string $name
+     * @param string $description
+     * @param string|null $usageMessage
+     * @param array $aliases
+     */
     public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = [])
     {
         $this->pl = BetterBan::getInstance();
@@ -21,6 +35,12 @@ class EditbanCommand extends Command implements PluginIdentifiableCommand
         parent::__construct("editban", "Add or reduce the time of a ban", "§4Use:§r /editban <player> <addbantime|reducebantime> <time>", $aliases);
     }
 
+    /**
+     * @param CommandSender $s
+     * @param string $commandLabel
+     * @param array $args
+     * @throws \Exception
+     */
     public function execute(CommandSender $s, string $commandLabel, array $args): void
     {
         $plugin = $this->pl;
@@ -86,6 +106,9 @@ class EditbanCommand extends Command implements PluginIdentifiableCommand
         }
     }
 
+    /**
+     * @return Plugin
+     */
     public function getPlugin(): Plugin
     {
         return $this->pl;
