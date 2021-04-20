@@ -10,10 +10,10 @@ I would be very happy if you leave a star for this project.
 - Easy2Use
 
 ### TODOs
-- [X] Banlog Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2))
-- [X] Baninfo Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2))
+- [ ] Banlog Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2))
+- [ ] Baninfo Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2))
 - [ ] Edited Unban Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2)) [Only maybe]
-- [ ] Editban Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2)) [as last, later]
+- [ ] Editban Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2)) [WIP]
 
 ### Bugs - none
 You've found a Bug?
@@ -27,6 +27,7 @@ You've found a Bug?
 |**Command**|**Description**|
 |-----------|---------------|
 |`/ban <player> [reason: ...] [time: ...]`|Ban a player (this overrides the PMMP Ban commmand)|
+|`/editban <player> <addbantime/reducebantime> <time>`|Add or reduce the time of a ban|
 
 ### License:
 This Pluginis licensed under the [Apache License 2.0](/LICENSE)! Plugin by supercrafter333!
