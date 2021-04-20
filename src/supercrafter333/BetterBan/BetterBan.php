@@ -7,6 +7,7 @@ use pocketmine\utils\Config;
 use supercrafter333\BetterBan\Commands\BanCommand;
 use supercrafter333\BetterBan\Commands\BaninfoCommand;
 use supercrafter333\BetterBan\Commands\BanlogCommand;
+use supercrafter333\BetterBan\Commands\EditbanCommand;
 
 /**
  * Class BetterBan
@@ -20,7 +21,7 @@ class BetterBan extends PluginBase
      */
     protected static $instance;
 
-    public const VERSION = "1.1.0-dev";
+    public const VERSION = "2.0.0-dev";
 
     public function onEnable()
     {
@@ -33,7 +34,8 @@ class BetterBan extends PluginBase
         $cmdMap->registerAll("BetterBan", [
             new BanCommand("ban"),
             new BanlogCommand("banlog"),
-            new BaninfoCommand("baninfo")
+            new BaninfoCommand("baninfo"),
+            new EditbanCommand("editban")
         ]);
     }
 
@@ -131,6 +133,96 @@ class BetterBan extends PluginBase
                     break;
                 default:
                     $t->add(new \DateInterval("PT" . $i . "S"));
+                    break;
+            }
+            $string = str_replace($found[0][$k], "", $string);
+        }
+        return [$t, ltrim(str_replace($found[0], "", $string))];
+    }
+
+    public function stringToTimestampAdd(string $string, \DateTime $time): ?array{
+        /**
+         * Rules:
+         * Integers without suffix are considered as seconds
+         * "s" is for seconds
+         * "m" is for minutes
+         * "h" is for hours
+         * "d" is for days
+         * "w" is for weeks
+         * "mo" is for months
+         * "y" is for years
+         */
+        if(trim($string) === ""){
+            return null;
+        }
+        $t = $time;
+        preg_match_all("/[0-9]+(y|mo|w|d|h|m|s)|[0-9]+/", $string, $found);
+        if(count($found[0]) < 1){
+            return null;
+        }
+        $found[2] = preg_replace("/[^0-9]/", "", $found[0]);
+        foreach($found[2] as $k => $i){
+            switch($c = $found[1][$k]){
+                case "y":
+                case "w":
+                case "d":
+                    $t->add(new \DateInterval("P" . $i. strtoupper($c)));
+                    break;
+                case "mo":
+                    $t->add(new \DateInterval("P" . $i. strtoupper(substr($c, 0, strlen($c) -1))));
+                    break;
+                case "h":
+                case "m":
+                case "s":
+                    $t->add(new \DateInterval("PT" . $i . strtoupper($c)));
+                    break;
+                default:
+                    $t->add(new \DateInterval("PT" . $i . "S"));
+                    break;
+            }
+            $string = str_replace($found[0][$k], "", $string);
+        }
+        return [$t, ltrim(str_replace($found[0], "", $string))];
+    }
+
+    public function stringToTimestampReduce(string $string, \DateTime $time): ?array{
+        /**
+         * Rules:
+         * Integers without suffix are considered as seconds
+         * "s" is for seconds
+         * "m" is for minutes
+         * "h" is for hours
+         * "d" is for days
+         * "w" is for weeks
+         * "mo" is for months
+         * "y" is for years
+         */
+        if(trim($string) === ""){
+            return null;
+        }
+        $t = $time;
+        preg_match_all("/[0-9]+(y|mo|w|d|h|m|s)|[0-9]+/", $string, $found);
+        if(count($found[0]) < 1){
+            return null;
+        }
+        $found[2] = preg_replace("/[^0-9]/", "", $found[0]);
+        foreach($found[2] as $k => $i){
+            switch($c = $found[1][$k]){
+                case "y":
+                case "w":
+                case "d":
+                    $t->sub(new \DateInterval("P" . $i. strtoupper($c)));
+                    break;
+                case "mo":
+                    $t->sub(new \DateInterval("P" . $i. strtoupper(substr($c, 0, strlen($c) -1))));
+                    break;
+                case "h":
+                case "m":
+                case "s":
+                    $t->sub(new \DateInterval("PT" . $i . strtoupper($c)));
+                    break;
+                default:
+                    $t->sub(new \DateInterval("PT" . $i . "S"));
                     break;
             }
             $string = str_replace($found[0][$k], "", $string);

@@ -1,4 +1,5 @@
-# BetterBan - V1.0.0   [![](https://poggit.pmmp.io/shield.state/BetterBan)](https://poggit.pmmp.io/p/BetterBan) 
+# BetterBan - V2.0.0-dev   [![](https://poggit.pmmp.io/shield.state/BetterBan)](https://poggit.pmmp.io/p/BetterBan) 
+> `DEV-VERSION: This is a Development Version and it can contain bugs! This is not the final version!`
 
 **Would you like to ban players for a certain period of time? Then BetterBan is just right for you! Easily ban players for a certain time and configure a bit in `config.yml`.**
 
@@ -27,6 +28,9 @@ You've found a Bug?
 |**Command**|**Description**|
 |-----------|---------------|
 |`/ban <player> [reason: ...] [time: ...]`|Ban a player (this overrides the PMMP Ban commmand)|
+|`/banlog <player>`|See the ban-count of an player|
+|`/baninfo <player>`|See ban informations for a player|
+|`/editban <player> <addbantime/reducebantime> <time>`|Edit a ban of a player|
 
 ### License:
 This Pluginis licensed under the [Apache License 2.0](/LICENSE)! Plugin by supercrafter333!
