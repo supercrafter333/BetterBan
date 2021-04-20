@@ -1,0 +1,18 @@
+# BetterBan© by supercrafter333
+# Ban better, with BetterBan©
+
+# Configuration
+
+# Messages
+kick-message: "Banned by admin."
+kick-message-with-reason: "Banned by admin. Reason: {reason}"
+kick-message-with-time: "Banned by admin. {line} Reason: {reason} {line} Ends at: {time}"
+banlog-message-log: "§eBans of player §7{name}§e: §b{log}"
+baninfo-message-list: "§7---====§eBan Informations of §b{name}§7====---{line}§7source: §b{source}{line}§7reason: §b{reason}{line}§7date: §b{date}{line}§7log: §b{log}{line}§7---====§eBan Informations of §b{name}§7====---"
+
+# Error messages
+use-DateInterval-format: "§4Please use the the right format!§4 For example: §81d"
+error-not-banned: "§4The player called §7{name}§4 isn't banned!"
+
+#don't change this
+version: "1.1.0-dev"
