@@ -7,17 +7,24 @@ use DateTime;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\defaults\VanillaCommand;
+use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\command\utils\InvalidCommandSyntaxException;
 use pocketmine\lang\TranslationContainer;
 use pocketmine\Player;
+use pocketmine\plugin\Plugin;
 use supercrafter333\BetterBan\BetterBan;
 
 /**
  * Class BanCommand
  * @package supercrafter333\BetterBan\Commands
  */
-class BanCommand extends VanillaCommand
+class BanCommand extends Command implements PluginIdentifiableCommand
 {
+
+    /**
+     * @var BetterBan
+     */
+    private $pl;
 
     /**
      * BanCommand constructor.
@@ -28,6 +35,7 @@ class BanCommand extends VanillaCommand
      */
     public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = [])
     {
+        $this->pl = BetterBan::getInstance();
         parent::__construct($name, "%pocketmine.command.ban.player.description", "§4Use: §r/ban <name> [reason: ...] [date interval: ...]");
         $this->setPermission("pocketmine.command.ban.player");
     }
@@ -85,5 +93,13 @@ class BanCommand extends VanillaCommand
             $sender->sendMessage($this->usageMessage);
         }
         return true;
+    }
+
+    /**
+     * @return Plugin
+     */
+    public function getPlugin(): Plugin
+    {
+        return $this->pl;
     }
 }

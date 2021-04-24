@@ -48,15 +48,6 @@ class BetterBan extends PluginBase
     }
 
     /**
-     * @return Config
-     */
-    public function getConfig(): Config
-    {
-        $cfg = new Config($this->getDataFolder() . "config.yml", Config::YAML);
-        return $cfg;
-    }
-
-    /**
      * @param $version
      */
     private function versionCheck($version)
