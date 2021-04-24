@@ -1,5 +1,4 @@
-# BetterBan - V2.0.0-dev   [![](https://poggit.pmmp.io/shield.state/BetterBan)](https://poggit.pmmp.io/p/BetterBan) 
-> `DEV-VERSION: This is a Development Version and it can contain bugs! This is not the final version!`
+# BetterBan - V2.0.0   [![](https://poggit.pmmp.io/shield.state/BetterBan)](https://poggit.pmmp.io/p/BetterBan) 
 
 **Would you like to ban players for a certain period of time? Then BetterBan is just right for you! Easily ban players for a certain time and configure a bit in `config.yml`.**
 

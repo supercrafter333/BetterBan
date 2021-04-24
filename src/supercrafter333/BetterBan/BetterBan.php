@@ -21,7 +21,7 @@ class BetterBan extends PluginBase
      */
     protected static $instance;
 
-    public const VERSION = "2.0.0-dev";
+    public const VERSION = "2.0.0";
 
     public function onEnable()
     {

@@ -16,4 +16,4 @@ error-not-banned: "§4The player called §7{name}§4 isn't banned!"
 error-no-tempban-found: "§4The player called §7{name}§4 isn't temp banned!"
 
 #don't change this
-version: "2.0.0-dev"
+version: "2.0.0"

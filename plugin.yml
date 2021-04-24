@@ -1,5 +1,19 @@
 name: BetterBan
-version: 2.0.0-dev
+version: 2.0.0
 api: 3.0.0
 main: supercrafter333\BetterBan\BetterBan
 author: supercrfafter333
+
+permissions:
+  BetterBan.admin:
+    default: op
+    children:
+      BetterBan.editban.cmd:
+        description: Command permission
+        default: op
+      BetterBan.banlog.cmd:
+        description: Command permission
+        default: op
+      BetterBan.baninfo.cmd:
+        description: Command permission
+        default: op
