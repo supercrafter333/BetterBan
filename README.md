@@ -6,6 +6,9 @@ I would be very happy if you leave a star for this project.
 
 ### Features
 - Ban players easy per time
+- Edit bans
+- See how often was a player banned
+- See ban informations of bans
 - configure something in the `config.yml`
 - Easy2Use
 
