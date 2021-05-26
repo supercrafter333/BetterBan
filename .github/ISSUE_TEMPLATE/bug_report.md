@@ -10,10 +10,10 @@ assignees: ''
 # Bug: [Bug Name]
 
 ### Informations
-BetterBan Version: [1.0.1]
+BetterBan Version: [2.0.0]
 Server-OS: [Linux Ubuntu 20.04]
-PHP Version: [8.0.2]
-PocketMine-MP Version: [3.17.5]
+PHP Version: [7.3.0]
+PocketMine-MP Version: [3.19.0]
 
 ### Error
 [Console Error:]
