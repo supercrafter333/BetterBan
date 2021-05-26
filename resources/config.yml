@@ -15,5 +15,28 @@ use-DateInterval-format: "§4Please use the the right format!§4 For example: §
 error-not-banned: "§4The player called §7{name}§4 isn't banned!"
 error-no-tempban-found: "§4The player called §7{name}§4 isn't temp banned!"
 
+# Discord Webhook Settings
+use-discord: "false"
+discord-webhook: ""
+# Ban
+ban-title: "Ban!"
+ban-message: "The player `{banned}` was banned by `{source}`!"
+#Colors: https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812
+ban-color: 15158332
+# Ban Updated
+ban-updated-title: "Ban Updated!"
+ban-updated-message: "The ban of {banned} was updated!"
+#Colors: https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812
+ban-updated-color: 16776960
+
+##########[SOON]##########
+# Unban
+#unban-title: "Unban!"
+#unban-message: "The player `{player}` was unbanned by `{source}`!"
+#Colors: https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812
+#unban-color: 3066993
+##########[SOON]##########
+
+
 #don't change this
-version: "2.0.0"
+version: "2.1.0"

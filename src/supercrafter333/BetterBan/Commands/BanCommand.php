@@ -68,6 +68,7 @@ class BanCommand extends Command implements PluginIdentifiableCommand
                 $player->kick($reason !== "" ? str_replace(["{reason}", "{line}"], [$args[0], "\n"], $cfg->get("kick-message-with-reason")) . $reason : $cfg->get("kick-message"));
                 Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.ban.success", [$player !== null ? $player->getName() : $name]));
                 $sender->sendMessage("Banned!");
+                $pl->sendBanMessageToDC($name, $sender->getName(), $reason);
             }
         } elseif (count($args) >= 3) {
             $name = array_shift($args);
@@ -88,6 +89,7 @@ class BanCommand extends Command implements PluginIdentifiableCommand
                 $player->kick($reason !== "" ? str_replace(["{reason}", "{time}", "{line}"], [$args[0], $bantime->format("Y.m.d H:i:s"), "\n"], $cfg->get("kick-message-with-time")) . $reason : $cfg->get("kick-message"));
                 Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.ban.success", [$player !== null ? $player->getName() : $name]));
                 $sender->sendMessage("[Time] Banned!");
+                $pl->sendBanMessageToDC($name, $sender->getName(), $reason);
             }
         } else {
             $sender->sendMessage($this->usageMessage);

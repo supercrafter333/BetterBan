@@ -6,4 +6,8 @@ branches:
 projects:
   BetterBan:
     path: ""
+    icon: "icon.gif"
+    libs:
+      - src: CortexPE\DiscordWebhookAPI
+        version: ^1.0.1
 ...

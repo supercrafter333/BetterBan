@@ -42,6 +42,6 @@ Owner: supercrafter333
 
 Helper: ---
 
-Icon: ---
+Icon: [Tenor GIF](https://tenor.com/boBQR.gif)
 
 Discord-Tag: `supercrafter333#4062`
