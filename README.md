@@ -1,3 +1,4 @@
+[![Discord](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/ca6cWPpERp)
 # BetterBan - V2.1.0   [![](https://poggit.pmmp.io/shield.state/BetterBan)](https://poggit.pmmp.io/p/BetterBan) [![](https://poggit.pmmp.io/shield.dl.total/BetterBan)](https://poggit.pmmp.io/p/BetterBan)
 
 **Would you like to ban players for a certain period of time? Then BetterBan is just right for you! Easily ban players for a certain time and configure a bit in `config.yml`.**
