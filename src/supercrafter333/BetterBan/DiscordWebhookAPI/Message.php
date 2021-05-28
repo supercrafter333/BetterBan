@@ -26,29 +26,48 @@
 
 declare(strict_types = 1);
 
-namespace CortexPE\DiscordWebhookAPI;
+namespace supercrafter333\BetterBan\DiscordWebhookAPI;
 
 
-use CortexPE\DiscordWebhookAPI\task\DiscordWebhookSendTask;
-use pocketmine\Server;
+class Message implements \JsonSerializable {
+	/** @var array */
+	protected $data = [];
 
-class Webhook {
-	/** @var string */
-	protected $url;
-
-	public function __construct(string $url){
-		$this->url = $url;
+	public function setContent(string $content): void{
+		$this->data["content"] = $content;
 	}
 
-	public function getURL(): string{
-		return $this->url;
+	public function getContent(): ?string{
+		return $this->data["content"];
 	}
 
-	public function isValid(): bool{
-		return filter_var($this->url, FILTER_VALIDATE_URL) !== false;
+	public function getUsername(): ?string{
+		return $this->data["username"];
 	}
 
-	public function send(Message $message): void{
-		Server::getInstance()->getAsyncPool()->submitTask(new DiscordWebhookSendTask($this, $message));
+	public function setUsername(string $username): void{
+		$this->data["username"] = $username;
+	}
+
+	public function getAvatarURL(): ?string{
+		return $this->data["avatar_url"];
+	}
+
+	public function setAvatarURL(string $avatarURL): void{
+		$this->data["avatar_url"] = $avatarURL;
+	}
+
+	public function addEmbed(Embed $embed):void{
+		if(!empty(($arr = $embed->asArray()))){
+			$this->data["embeds"][] = $arr;
+		}
+	}
+
+	public function setTextToSpeech(bool $ttsEnabled):void{
+		$this->data["tts"] = $ttsEnabled;
+	}
+
+	public function jsonSerialize(){
+		return $this->data;
 	}
 }

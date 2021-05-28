@@ -2,9 +2,9 @@
 
 namespace supercrafter333\BetterBan;
 
-use CortexPE\DiscordWebhookAPI\Embed;
-use CortexPE\DiscordWebhookAPI\Message;
-use CortexPE\DiscordWebhookAPI\Webhook;
+use supercrafter333\BetterBan\DiscordWebhookAPI\Embed;
+use supercrafter333\BetterBan\DiscordWebhookAPI\Message;
+use supercrafter333\BetterBan\DiscordWebhookAPI\Webhook;
 use DateInterval;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;

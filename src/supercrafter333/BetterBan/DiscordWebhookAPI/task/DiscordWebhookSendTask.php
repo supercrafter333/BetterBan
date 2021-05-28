@@ -26,11 +26,10 @@
 
 declare(strict_types = 1);
 
-namespace CortexPE\DiscordWebhookAPI\task;
+namespace supercrafter333\BetterBan\DiscordWebhookAPI\task;
 
-
-use CortexPE\DiscordWebhookAPI\Message;
-use CortexPE\DiscordWebhookAPI\Webhook;
+use supercrafter333\BetterBan\DiscordWebhookAPI\Message;
+use supercrafter333\BetterBan\DiscordWebhookAPI\Webhook;
 use pocketmine\scheduler\AsyncTask;
 use pocketmine\Server;
 
