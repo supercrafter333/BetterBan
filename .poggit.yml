@@ -2,12 +2,11 @@
 build-by-default: true
 branches:
 - master
-- Dev
 projects:
   BetterBan:
     path: ""
     icon: "icon.gif"
     libs:
-      - src: marshall\DiscordWebhookAPI\DiscordWebhookAPI
+      - src: CortexPE\DiscordWebhookAPI\DiscordWebhookAPI
         version: ^1.0.1
 ...
