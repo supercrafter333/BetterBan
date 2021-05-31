@@ -8,6 +8,5 @@ projects:
     path: ""
     icon: "icon.gif"
     libs:
-      - src: CortexPE\DiscordWebhookAPI\DiscordWebhookAPI
-        version: ^1.0.1
+      - src: https://poggit.pmmp.io/r/118780/DiscordWebhookAPI_dev-18.phar
 ...
