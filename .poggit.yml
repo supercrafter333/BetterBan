@@ -8,6 +8,6 @@ projects:
     path: ""
     icon: "icon.gif"
     libs:
-      - src: "CortexPE\DiscordWebhookAPI\DiscordWebhookAPI"
+      - src: CortexPE\DiscordWebhookAPI\DiscordWebhookAPI
         version: ^1.0.1
 ...
