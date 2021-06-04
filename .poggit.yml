@@ -7,4 +7,6 @@ projects:
   BetterBan:
     path: ""
     icon: "icon.gif"
+    virions:
+      - DiscordWebhookAPI
 ...
