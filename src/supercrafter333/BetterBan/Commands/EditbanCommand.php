@@ -8,6 +8,7 @@ use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use supercrafter333\BetterBan\BetterBan;
+use supercrafter333\BetterBan\Events\BBEditbanEvent;
 
 /**
  * Class EditbanCommand
@@ -73,7 +74,8 @@ class EditbanCommand extends Command implements PluginIdentifiableCommand
             $newDate = $date;
             $ban->setExpires($newDate);
             $server->getNameBans()->save(true);
-            $plugin->sendBanUpdatedMessageToDC($playerName);
+            $ebEvent = new BBEditbanEvent($playerName);
+            $ebEvent->call();
             if (!$s->isOp()) {
                 $s->sendMessage("§7§o[Added time to ban: " . $playerName . " +" . $args[2] . "]");
             }
@@ -93,7 +95,8 @@ class EditbanCommand extends Command implements PluginIdentifiableCommand
             //$clipboard = ["time" => $ban->getExpires(), "reason" => $ban->getReason(), "source" => $ban->getSource(), "name" => $ban->getName(), "created" => $ban->getCreated()];
             $ban->setExpires($newDate);
             $server->getNameBans()->save(true);
-            $plugin->sendBanUpdatedMessageToDC($playerName);
+            $ebEvent = new BBEditbanEvent($playerName);
+            $ebEvent->call();
             if (!$s->isOp()) {
                 $s->sendMessage("§7§o[Reduced time for ban: " . $playerName . " -" . $args[2] . "]");
             }

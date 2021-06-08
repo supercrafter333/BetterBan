@@ -1,5 +1,11 @@
 [![Discord](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/ca6cWPpERp)
-# BetterBan - V2.1.0   [![](https://poggit.pmmp.io/shield.state/BetterBan)](https://poggit.pmmp.io/p/BetterBan) [![](https://poggit.pmmp.io/shield.dl.total/BetterBan)](https://poggit.pmmp.io/p/BetterBan)
+# BetterBan - V2.2.0-DEV   [![](https://poggit.pmmp.io/shield.state/BetterBan)](https://poggit.pmmp.io/p/BetterBan) [![](https://poggit.pmmp.io/shield.dl.total/BetterBan)](https://poggit.pmmp.io/p/BetterBan)
+
+> **WARNING:** This is a development build! There can be bugs in development builds! Use at your own risk! Please report bugs if you discover any!
+
+- add random(/multi)-hubs ([#12](https://github.com/supercrafter333/theSpawn/issues/12))
+- Commands are now hidden for players who are not authorized to do so ([#13](https://github.com/supercrafter333/theSpawn/issues/13))
+- add new functions for random(/multi)-hubs
 
 **Would you like to ban players for a certain period of time? Then BetterBan is just right for you! Easily ban players for a certain time and configure a bit in `config.yml`.**
 

@@ -25,7 +25,7 @@ class BetterBan extends PluginBase
      */
     protected static $instance;
 
-    public const VERSION = "2.1.0";
+    public const VERSION = "2.2.0-DEV";
 
     public static $DISCORD_WEBHOOK_URL = null;
 
@@ -49,6 +49,7 @@ class BetterBan extends PluginBase
             new BaninfoCommand("baninfo"),
             new EditbanCommand("editban")
         ]); //TODO: add custom Unban command and a Webhook message for unbanning
+        $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
     }
 
     /**
