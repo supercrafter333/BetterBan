@@ -8,6 +8,7 @@ use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\command\utils\InvalidCommandSyntaxException;
 use pocketmine\plugin\Plugin;
 use supercrafter333\BetterBan\BetterBan;
+use supercrafter333\BetterBan\Events\BBPardonEvent;
 
 class PardonCommand extends Command implements PluginIdentifiableCommand
 {
@@ -34,7 +35,8 @@ class PardonCommand extends Command implements PluginIdentifiableCommand
         $sender->getServer()->getNameBans()->remove($args[0]);
 
         Command::broadcastCommandMessage($sender, new TranslationContainer("commands.unban.success", [$args[0]]));
-
+        $ev = new BBPardonEvent($args[0], $sender->getName());
+        $ev->call();
 
         return true;
     }
