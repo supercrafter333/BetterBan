@@ -5,6 +5,7 @@ namespace supercrafter333\BetterBan;
 use pocketmine\event\Listener;
 use supercrafter333\BetterBan\Events\BBBanEvent;
 use supercrafter333\BetterBan\Events\BBEditbanEvent;
+use supercrafter333\BetterBan\Events\BBPardonEvent;
 
 class EventListener implements Listener
 {
@@ -16,6 +17,12 @@ class EventListener implements Listener
     }
 
     public function onBBEditban(BBEditbanEvent $event)
+    {
+        if ($event->isCancelled()) return;
+        $event->sendDiscordWebhookMessage();
+    }
+
+    public function onBBPardon(BBPardonEvent $event)
     {
         if ($event->isCancelled()) return;
         $event->sendDiscordWebhookMessage();

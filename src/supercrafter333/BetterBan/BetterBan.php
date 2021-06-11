@@ -12,6 +12,7 @@ use supercrafter333\BetterBan\Commands\BanCommand;
 use supercrafter333\BetterBan\Commands\BaninfoCommand;
 use supercrafter333\BetterBan\Commands\BanlogCommand;
 use supercrafter333\BetterBan\Commands\EditbanCommand;
+use supercrafter333\BetterBan\Commands\PardonCommand;
 
 /**
  * Class BetterBan
@@ -42,13 +43,16 @@ class BetterBan extends PluginBase
     {
         $cmdMap = $this->getServer()->getCommandMap();
         $pmmpBanCmd = $cmdMap->getCommand("ban");
+        $pmmpPardonCmd = $cmdMap->getCommand("pardon");
         $cmdMap->unregister($pmmpBanCmd);
+        $cmdMap->unregister($pmmpPardonCmd);
         $cmdMap->registerAll("BetterBan", [
             new BanCommand("ban"),
             new BanlogCommand("banlog"),
             new BaninfoCommand("baninfo"),
-            new EditbanCommand("editban")
-        ]); //TODO: add custom Unban command and a Webhook message for unbanning
+            new EditbanCommand("editban"),
+            new PardonCommand("pardon")
+        ]);
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
     }
 
@@ -298,5 +302,21 @@ class BetterBan extends PluginBase
         }
     }
 
-    //TODO: add custom Unban command and a Webhook message for unbanning
+    public function sendPardonMessageToDC(string $target, string $source)
+    {
+        $title = str_replace(["{target}", "{source}", "{line}"], [$target, $source, "\n"], $this->getConfig()->get("pardon-title"));
+        $message = str_replace(["{target}", "{source}", "{line}"], [$target, $source, "\n"], $this->getConfig()->get("pardon-message"));
+        $color = $this->getConfig()->get("pardon-color");
+        if ($this->getConfig()->get("use-discord") == "true" && self::$DISCORD_WEBHOOK_URL !== null) {
+            $webhook = new Webhook(self::$DISCORD_WEBHOOK_URL);
+            $msg = new Message();
+            $embed = new Embed();
+            $embed->setTitle($title);
+            $embed->setDescription($message);
+            $embed->setColor($color);
+            $embed->setTimestamp(new \DateTime('now'));
+            $msg->addEmbed($embed);
+            $webhook->send($msg);
+        }
+    }
 }

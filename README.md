@@ -22,7 +22,7 @@ I would be very happy if you leave a star for this project.
 ### TODOs
 - [X] Banlog Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2))
 - [X] Baninfo Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2))
-- [ ] Edited Unban Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2)) [Only maybe]
+- [X] Edited Unban Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2)) [Only maybe]
 - [X] Editban Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2)) [as last, later]
 
 ### Bugs - none
@@ -40,6 +40,7 @@ You've found a Bug?
 |`/banlog <player>`|See the ban-count of an player|
 |`/baninfo <player>`|See ban informations for a player|
 |`/editban <player> <addbantime/reducebantime> <time>`|Edit a ban of a player|
+|`/pardon <player>`|Unban a player|
 
 ### License:
 This Pluginis licensed under the [Apache License 2.0](/LICENSE)! Plugin by supercrafter333!

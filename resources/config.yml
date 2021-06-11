@@ -29,13 +29,11 @@ ban-updated-message: "The ban of {banned} was updated!"
 #Colors: https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812
 ban-updated-color: 16776960
 
-##########[SOON]##########
-# Unban
-#unban-title: "Unban!"
-#unban-message: "The player `{player}` was unbanned by `{source}`!"
+# Pardon / Unban
+pardon-title: "Unban!"
+pardon-message: "The player `{target}` was unbanned by `{source}`!"
 #Colors: https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812
-#unban-color: 3066993
-##########[SOON]##########
+pardon-color: 3066993
 
 
 #don't change this
