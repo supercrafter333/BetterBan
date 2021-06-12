@@ -26,7 +26,7 @@ class BetterBan extends PluginBase
      */
     protected static $instance;
 
-    public const VERSION = "2.2.0-DEV";
+    public const VERSION = "2.2.0";
 
     public static $DISCORD_WEBHOOK_URL = null;
 

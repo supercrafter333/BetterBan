@@ -63,6 +63,12 @@ class BanCommand extends Command implements PluginIdentifiableCommand
             $name = array_shift($args);
             $reason = isset($args[0]) ? $args[0] : "";
 
+            $banEvent = new BBBanEvent($sender->getName(), $name);
+            $banEvent->call();
+            if ($banEvent->isCancelled()) {
+                Command::broadcastCommandMessage($sender, "Ban cancelled because the BBBanEvent is cancelled!", true);
+                return true;
+            }
             $pl->addBanToBanlog($name);
             $sender->getServer()->getNameBans()->addBan($name, $reason, null, $sender->getName());
             if (($player = $sender->getServer()->getPlayerExact($name)) instanceof Player) {
@@ -70,13 +76,10 @@ class BanCommand extends Command implements PluginIdentifiableCommand
                 Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.ban.success", [$player !== null ? $player->getName() : $name]));
                 $sender->sendMessage("Banned!");
                 $reason2 = $reason === "" ?? null;
-                $banEvent = new BBBanEvent($name, $player->getName(), $reason2);
-                $banEvent->call();
             }
         } elseif (count($args) >= 3) {
             $name = array_shift($args);
             $reason = isset($args[0]) ? $args[0] : "";
-
             if (!$pl->stringToTimestamp(implode(" ", $args))) {
                 $sender->sendMessage($cfg->get("use-DateInterval-format"));
                 return true;
@@ -86,6 +89,12 @@ class BanCommand extends Command implements PluginIdentifiableCommand
             $bantime = $informations[0];
             $reason = $informations[1];
             //if ($args[1] instanceof DateInterval) {
+            $banEvent = new BBBanEvent($sender->getName(), $name, $reason);
+            $banEvent->call();
+            if ($banEvent->isCancelled()) {
+                Command::broadcastCommandMessage($sender, "Ban cancelled because the BBBanEvent is cancelled!", true);
+                return true;
+            }
             $pl->addBanToBanlog($name);
             $sender->getServer()->getNameBans()->addBan($name, $reason, $bantime, $sender->getName());
             if (($player = $sender->getServer()->getPlayerExact($name)) instanceof Player) {
@@ -93,8 +102,6 @@ class BanCommand extends Command implements PluginIdentifiableCommand
                 Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.ban.success", [$player !== null ? $player->getName() : $name]));
                 $sender->sendMessage("[Time] Banned!");
                 $reason2 = $reason === "" ?? null;
-                $banEvent = new BBBanEvent($name, $player->getName(), $reason2);
-                $banEvent->call();
             }
         } else {
             $sender->sendMessage($this->usageMessage);

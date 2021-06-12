@@ -1,7 +1,6 @@
 [![Discord](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/ca6cWPpERp)
-# BetterBan - V2.2.0-DEV   [![](https://poggit.pmmp.io/shield.state/BetterBan)](https://poggit.pmmp.io/p/BetterBan) [![](https://poggit.pmmp.io/shield.dl.total/BetterBan)](https://poggit.pmmp.io/p/BetterBan)
+# BetterBan - V2.2.0   [![](https://poggit.pmmp.io/shield.state/BetterBan)](https://poggit.pmmp.io/p/BetterBan) [![](https://poggit.pmmp.io/shield.dl.total/BetterBan)](https://poggit.pmmp.io/p/BetterBan)
 
-> **WARNING:** This is a development build! There can be bugs in development builds! Use at your own risk! Please report bugs if you discover any!
 
 - add random(/multi)-hubs ([#12](https://github.com/supercrafter333/theSpawn/issues/12))
 - Commands are now hidden for players who are not authorized to do so ([#13](https://github.com/supercrafter333/theSpawn/issues/13))
@@ -17,6 +16,7 @@ I would be very happy if you leave a star for this project.
 - See how often was a player banned
 - See ban informations of bans
 - configure something in the `config.yml`
+- Events
 - Easy2Use
 
 ### TODOs
@@ -24,6 +24,7 @@ I would be very happy if you leave a star for this project.
 - [X] Baninfo Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2))
 - [X] Edited Unban Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2)) [Only maybe]
 - [X] Editban Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2)) [as last, later]
+- [X] Events
 
 ### Bugs - none
 You've found a Bug?

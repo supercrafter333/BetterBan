@@ -68,14 +68,18 @@ class EditbanCommand extends Command implements PluginIdentifiableCommand
         }
         $nameBans = $server->getNameBans();
         $option = $args[1];
+        $ebEvent = new BBEditbanEvent($playerName);
+        $ebEvent->call();
+        if ($ebEvent->isCancelled()) {
+            Command::broadcastCommandMessage($s, "Ban editing cancelled because the BBEditbanEvent is cancelled!", true);
+            return;
+        }
         if ($option === "addbantime") {
             $information = $plugin->stringToTimestampAdd($args[2], $oldDate);
             $date = $information[0];
             $newDate = $date;
             $ban->setExpires($newDate);
             $server->getNameBans()->save(true);
-            $ebEvent = new BBEditbanEvent($playerName);
-            $ebEvent->call();
             if (!$s->isOp()) {
                 $s->sendMessage("§7§o[Added time to ban: " . $playerName . " +" . $args[2] . "]");
             }
@@ -95,8 +99,6 @@ class EditbanCommand extends Command implements PluginIdentifiableCommand
             //$clipboard = ["time" => $ban->getExpires(), "reason" => $ban->getReason(), "source" => $ban->getSource(), "name" => $ban->getName(), "created" => $ban->getCreated()];
             $ban->setExpires($newDate);
             $server->getNameBans()->save(true);
-            $ebEvent = new BBEditbanEvent($playerName);
-            $ebEvent->call();
             if (!$s->isOp()) {
                 $s->sendMessage("§7§o[Reduced time for ban: " . $playerName . " -" . $args[2] . "]");
             }
