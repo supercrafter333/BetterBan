@@ -16,6 +16,7 @@ I would be very happy if you leave a star for this project.
 - See how often was a player banned
 - See ban informations of bans
 - configure something in the `config.yml`
+- Discord-Webhook Support
 - Events
 - Easy2Use
 
