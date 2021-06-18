@@ -2,10 +2,6 @@
 # BetterBan - V2.2.0   [![](https://poggit.pmmp.io/shield.state/BetterBan)](https://poggit.pmmp.io/p/BetterBan) [![](https://poggit.pmmp.io/shield.dl.total/BetterBan)](https://poggit.pmmp.io/p/BetterBan)
 
 
-- add random(/multi)-hubs ([#12](https://github.com/supercrafter333/theSpawn/issues/12))
-- Commands are now hidden for players who are not authorized to do so ([#13](https://github.com/supercrafter333/theSpawn/issues/13))
-- add new functions for random(/multi)-hubs
-
 **Would you like to ban players for a certain period of time? Then BetterBan is just right for you! Easily ban players for a certain time and configure a bit in `config.yml`.**
 
 I would be very happy if you leave a star for this project.
