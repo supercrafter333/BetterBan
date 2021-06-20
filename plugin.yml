@@ -17,3 +17,6 @@ permissions:
       BetterBan.baninfo.cmd:
         description: Command permission
         default: op
+      BetterBan.editipban.cmd:
+        description: Command permission
+        default: op
