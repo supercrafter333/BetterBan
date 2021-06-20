@@ -9,4 +9,5 @@ projects:
     icon: "icon.gif"
     virions:
       - DiscordWebhookAPI
+      - pmforms
 ...

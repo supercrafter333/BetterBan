@@ -1,0 +1,36 @@
+<?php
+
+namespace supercrafter333\BetterBan\Commands;
+
+use pocketmine\command\Command;
+use pocketmine\command\CommandSender;
+use pocketmine\command\PluginIdentifiableCommand;
+use pocketmine\Player;
+use pocketmine\plugin\Plugin;
+use supercrafter333\BetterBan\BetterBan;
+use supercrafter333\BetterBan\Forms\BBDefaultForms;
+
+class BetterBanCommand extends Command implements PluginIdentifiableCommand
+{
+
+    public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = [])
+    {
+        parent::__construct("betterban", "Open the BetterBan Form!", $usageMessage, $aliases);
+    }
+
+    public function execute(CommandSender $sender, string $commandLabel, array $args): void
+    {
+        if ($sender instanceof Player) {
+            $sender->sendForm(BBDefaultForms::openMenuForm());
+            return;
+        } else {
+            $sender->sendMessage("Only In-Game!");
+            return;
+        }
+    }
+
+    public function getPlugin(): Plugin
+    {
+        return BetterBan::getInstance();
+    }
+}

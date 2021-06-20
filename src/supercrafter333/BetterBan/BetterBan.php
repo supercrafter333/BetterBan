@@ -6,13 +6,18 @@ use CortexPE\DiscordWebhookAPI\Embed;
 use CortexPE\DiscordWebhookAPI\Message;
 use CortexPE\DiscordWebhookAPI\Webhook;
 use DateInterval;
+use dktapps\pmforms\BaseForm;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use supercrafter333\BetterBan\Commands\BanCommand;
 use supercrafter333\BetterBan\Commands\BaninfoCommand;
+use supercrafter333\BetterBan\Commands\BanIpCommand;
 use supercrafter333\BetterBan\Commands\BanlogCommand;
+use supercrafter333\BetterBan\Commands\BetterBanCommand;
 use supercrafter333\BetterBan\Commands\EditbanCommand;
+use supercrafter333\BetterBan\Commands\EditipbanCommand;
 use supercrafter333\BetterBan\Commands\PardonCommand;
+use supercrafter333\BetterBan\Commands\PardonIpCommand;
 
 /**
  * Class BetterBan
@@ -26,7 +31,7 @@ class BetterBan extends PluginBase
      */
     protected static $instance;
 
-    public const VERSION = "2.2.0";
+    public const VERSION = "3.0.0-DEV";
 
     public static $DISCORD_WEBHOOK_URL = null;
 
@@ -35,6 +40,12 @@ class BetterBan extends PluginBase
         self::$instance = $this;
         $this->saveResource("config.yml");
         $this->versionCheck(self::VERSION);
+        if (!class_exists(BaseForm::class)) {
+            $this->getLogger()->error("pmforms missing!! Please download BetterBan from Poggit!");
+        }
+        if (!class_exists(Webhook::class)) {
+            $this->getLogger()->error("DiscordWebhookAPI missing!! Please download BetterBan from Poggit!");
+        }
         $dc_webhook = $this->getConfig()->get("discord-webhook") !== "" ? $this->getConfig()->get("discord-webhook") : null;
         self::$DISCORD_WEBHOOK_URL = $dc_webhook;
     }
@@ -44,14 +55,22 @@ class BetterBan extends PluginBase
         $cmdMap = $this->getServer()->getCommandMap();
         $pmmpBanCmd = $cmdMap->getCommand("ban");
         $pmmpPardonCmd = $cmdMap->getCommand("pardon");
+        $pmmpBanIpCmd = $cmdMap->getCommand("ban-ip");
+        $pmmpPardonIpCmd = $cmdMap->getCommand("pardon-ip");
         $cmdMap->unregister($pmmpBanCmd);
         $cmdMap->unregister($pmmpPardonCmd);
+        $cmdMap->unregister($pmmpBanIpCmd);
+        $cmdMap->unregister($pmmpPardonIpCmd);
         $cmdMap->registerAll("BetterBan", [
             new BanCommand("ban"),
             new BanlogCommand("banlog"),
             new BaninfoCommand("baninfo"),
             new EditbanCommand("editban"),
-            new PardonCommand("pardon")
+            new PardonCommand("pardon"),
+            new BanIpCommand("banip"),
+            new EditipbanCommand("editipban"),
+            new PardonIpCommand("pardonip"),
+            new BetterBanCommand("betterban")
         ]);
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
     }
@@ -69,12 +88,11 @@ class BetterBan extends PluginBase
      */
     private function versionCheck($version)
     {
-        if (!$this->getConfig()->exists("version") || !$this->getConfig()->get("version") == $version) {
+        if (!$this->getConfig()->exists("version") || $this->getConfig()->get("version") !== $version) {
             $this->getLogger()->debug("OUTDATED CONFIG.YML!! You config.yml is outdated! Your config.yml will automatically updated!");
-            unlink($this->getConfig()->getPath());
+            rename($this->getDataFolder() . "config.yml", $this->getDataFolder() . "oldConfig.yml");
             $this->saveResource("config.yml");
-            $this->getConfig()->reload();
-            $this->getLogger()->debug("confg.yml Updated for version: §b$version");
+            $this->getLogger()->debug("config.yml Updated for version: §b$version");
         }
     }
 
@@ -307,6 +325,60 @@ class BetterBan extends PluginBase
         $title = str_replace(["{target}", "{source}", "{line}"], [$target, $source, "\n"], $this->getConfig()->get("pardon-title"));
         $message = str_replace(["{target}", "{source}", "{line}"], [$target, $source, "\n"], $this->getConfig()->get("pardon-message"));
         $color = $this->getConfig()->get("pardon-color");
+        if ($this->getConfig()->get("use-discord") == "true" && self::$DISCORD_WEBHOOK_URL !== null) {
+            $webhook = new Webhook(self::$DISCORD_WEBHOOK_URL);
+            $msg = new Message();
+            $embed = new Embed();
+            $embed->setTitle($title);
+            $embed->setDescription($message);
+            $embed->setColor($color);
+            $embed->setTimestamp(new \DateTime('now'));
+            $msg->addEmbed($embed);
+            $webhook->send($msg);
+        }
+    }
+
+    public function sendIpBanMessageToDC(string $ip, string $source, string $reason)
+    {
+        $title = str_replace(["{ip}", "{source}", "{reason}", "{line}"], [$ip, $source, $reason, "\n"], $this->getConfig()->get("banip-title"));
+        $message = str_replace(["{ip}", "{source}", "{reason}", "{line}"], [$ip, $source, $reason, "\n"], $this->getConfig()->get("banip-message"));
+        $color = $this->getConfig()->get("banip-color");
+        if ($this->getConfig()->get("use-discord") == "true" && self::$DISCORD_WEBHOOK_URL !== null) {
+            $webhook = new Webhook(self::$DISCORD_WEBHOOK_URL);
+            $msg = new Message();
+            $embed = new Embed();
+            $embed->setTitle($title);
+            $embed->setDescription($message);
+            $embed->setColor($color);
+            $embed->setTimestamp(new \DateTime('now'));
+            $msg->addEmbed($embed);
+            $webhook->send($msg);
+        }
+    }
+
+    public function sendIpBanUpdatedMessageToDC(string $ip)
+    {
+        $title = str_replace(["{ip}", "{line}"], [$ip, "\n"], $this->getConfig()->get("ipban-updated-title"));
+        $message = str_replace(["{ip}", "{line}"], [$ip, "\n"], $this->getConfig()->get("ipban-updated-message"));
+        $color = $this->getConfig()->get("ipban-updated-color");
+        if ($this->getConfig()->get("use-discord") == "true" && self::$DISCORD_WEBHOOK_URL !== null) {
+            $webhook = new Webhook(self::$DISCORD_WEBHOOK_URL);
+            $msg = new Message();
+            $embed = new Embed();
+            $embed->setTitle($title);
+            $embed->setDescription($message);
+            $embed->setColor($color);
+            $embed->setTimestamp(new \DateTime('now'));
+            $msg->addEmbed($embed);
+            $webhook->send($msg);
+        }
+    }
+
+    public function sendPardonIpMessageToDC(string $ip, string $source)
+    {
+        $title = str_replace(["{ip}", "{source}", "{line}"], [$ip, $source, "\n"], $this->getConfig()->get("pardonip-title"));
+        $message = str_replace(["{ip}", "{source}", "{line}"], [$ip, $source, "\n"], $this->getConfig()->get("pardonip-message"));
+        $color = $this->getConfig()->get("pardonip-color");
         if ($this->getConfig()->get("use-discord") == "true" && self::$DISCORD_WEBHOOK_URL !== null) {
             $webhook = new Webhook(self::$DISCORD_WEBHOOK_URL);
             $msg = new Message();
