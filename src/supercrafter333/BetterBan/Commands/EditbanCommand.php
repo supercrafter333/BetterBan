@@ -9,6 +9,7 @@ use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use supercrafter333\BetterBan\BetterBan;
 use supercrafter333\BetterBan\Events\BBEditbanEvent;
+use supercrafter333\BetterBan\Forms\BBDefaultForms;
 
 /**
  * Class EditbanCommand
@@ -46,6 +47,10 @@ class EditbanCommand extends Command implements PluginIdentifiableCommand
     {
         $plugin = $this->pl;
         $cfg = $plugin->getConfig();
+        if (empty($args) && $s instanceof Player) {
+            $s->sendForm(BBDefaultForms::editbanForm());
+            return;
+        }
         if (count($args) < 3) {
             $s->sendMessage($this->usageMessage);
             return;

@@ -6,6 +6,10 @@ use pocketmine\event\Cancellable;
 use pocketmine\event\Event;
 use supercrafter333\BetterBan\BetterBan;
 
+/**
+ * Class BBBanIpEvent
+ * @package supercrafter333\BetterBan\Events
+ */
 class BBBanIpEvent extends Event implements Cancellable
 {
     /**

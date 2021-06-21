@@ -4,6 +4,7 @@
 # Configuration
 
 # Messages
+#ban
 kick-message: "Banned by admin."
 kick-message-with-reason: "Banned by admin. Reason: {reason}"
 kick-message-with-time: "Banned by admin. {line} Reason: {reason} {line} Ends at: {time}"
@@ -12,6 +13,9 @@ kick-ip-message-with-reason: "IP Banned. Reason: {reason}"
 kick-ip-message-with-time: "IP Banned. {line} Reason: {reason} {line} Ends at: {time}"
 banlog-message-log: "§eBans of player §7{name}§e: §b{log}"
 baninfo-message-list: "§7---====§eBan Informations of §b{name}§7====---{line}§7source: §b{source}{line}§7reason: §b{reason}{line}§7date: §b{date}{line}§7log: §b{log}{line}§7---====§eBan Informations of §b{name}§7====---"
+#kick
+kicked-message: "Kicked by admin."
+kicked-with-reason-message: "Kicked by admin.{line}Reason: {reason}"
 
 # Error messages
 use-DateInterval-format: "§4Please use the the right format!§4 For example: §81d"
@@ -57,6 +61,12 @@ pardonip-message: "The ip `{ip}` was unbanned by `{source}`!"
 #Colors: https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812
 pardonip-color: 3066993
 
+# Kick
+kick-dc-title: "Kick!"
+kick-dc-message: "The player `{target}` was kicked by `{source}`!"
+#Colors: https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812
+kick-dc-color: 16776960
+
 
 #don't change this
-version: "3.0.0-DEV"
+version: "3.0.0"

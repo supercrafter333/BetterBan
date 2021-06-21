@@ -6,13 +6,28 @@ use pocketmine\event\Cancellable;
 use pocketmine\event\Event;
 use supercrafter333\BetterBan\BetterBan;
 
+/**
+ * Class BBPardonIpEvent
+ * @package supercrafter333\BetterBan\Events
+ */
 class BBPardonIpEvent extends Event implements Cancellable
 {
-    
+
+    /**
+     * @var string
+     */
     private $IpAddress;
 
+    /**
+     * @var string
+     */
     private $source;
 
+    /**
+     * BBPardonIpEvent constructor.
+     * @param string $IpAddress
+     * @param string $source
+     */
     public function __construct(string $IpAddress, string $source)
     {
         $this->eventName = "BBPardonIpEvent";

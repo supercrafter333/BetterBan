@@ -14,6 +14,7 @@ use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use supercrafter333\BetterBan\BetterBan;
 use supercrafter333\BetterBan\Events\BBBanEvent;
+use supercrafter333\BetterBan\Forms\BBDefaultForms;
 
 /**
  * Class BanCommand
@@ -52,6 +53,11 @@ class BanCommand extends Command implements PluginIdentifiableCommand
         $pl = BetterBan::getInstance();
         $cfg = $pl->getConfig();
         if (!$this->testPermission($sender)) {
+            return true;
+        }
+
+        if (empty($args) && $sender instanceof Player) {
+            $sender->sendForm(BBDefaultForms::banForm());
             return true;
         }
 

@@ -12,7 +12,12 @@ use pocketmine\plugin\Plugin;
 use supercrafter333\BetterBan\BetterBan;
 use supercrafter333\BetterBan\Events\BBBanEvent;
 use supercrafter333\BetterBan\Events\BBBanIpEvent;
+use supercrafter333\BetterBan\Forms\BBDefaultForms;
 
+/**
+ * Class BanIpCommand
+ * @package supercrafter333\BetterBan\Commands
+ */
 class BanIpCommand extends Command implements PluginIdentifiableCommand
 {
     /**
@@ -21,6 +26,13 @@ class BanIpCommand extends Command implements PluginIdentifiableCommand
     private $pl;
 
 
+    /**
+     * BanIpCommand constructor.
+     * @param string $name
+     * @param string $description
+     * @param string|null $usageMessage
+     * @param array $aliases
+     */
     public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = [])
     {
         $this->pl = BetterBan::getInstance();
@@ -91,8 +103,21 @@ class BanIpCommand extends Command implements PluginIdentifiableCommand
         return true;
     }*/
 
-    public function execute(CommandSender $sender, string $commandLabel, array $args){
+    /**
+     * @param CommandSender $sender
+     * @param string $commandLabel
+     * @param array $args
+     * @return bool
+     * @throws \Exception
+     */
+    public function execute(CommandSender $sender, string $commandLabel, array $args): bool
+    {
         if(!$this->testPermission($sender)){
+            return true;
+        }
+
+        if (empty($args) && $sender instanceof Player) {
+            $sender->sendForm(BBDefaultForms::banIpForm());
             return true;
         }
 
@@ -140,6 +165,12 @@ class BanIpCommand extends Command implements PluginIdentifiableCommand
         return true;
     }
 
+    /**
+     * @param string $ip
+     * @param CommandSender $sender
+     * @param string|null $reason
+     * @param \DateTime|null $expires
+     */
     private function processIPBan(string $ip, CommandSender $sender, string $reason = null, \DateTime $expires = null) : void{
         $sender->getServer()->getIPBans()->addBan($ip, $reason, $expires, $sender->getName());
 
@@ -160,6 +191,9 @@ class BanIpCommand extends Command implements PluginIdentifiableCommand
     }
 
 
+    /**
+     * @return Plugin
+     */
     public function getPlugin(): Plugin
     {
         return $this->pl;

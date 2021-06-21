@@ -5,6 +5,7 @@ namespace supercrafter333\BetterBan\Forms;
 use DateTime;
 use dktapps\pmforms\CustomForm;
 use dktapps\pmforms\CustomFormResponse;
+use dktapps\pmforms\element\CustomFormElement;
 use dktapps\pmforms\element\Input;
 use dktapps\pmforms\element\Label;
 use dktapps\pmforms\element\Slider;
@@ -34,6 +35,7 @@ class BBDefaultForms
                 new MenuOption("Edit Ip-Ban\n§7Edit a Ip-Ban"),
                 new MenuOption("Pardon\n§7Unban a player"),
                 new MenuOption("Pardon-Ip\n§7Unban a Ip-Address"),
+                new MenuOption("Kick\n§7Kick a player"),
             ],
             function (Player $submitter, int $selected): void {
                 switch ($selected) {
@@ -54,6 +56,9 @@ class BBDefaultForms
                         return;
                     case 5:
                         $submitter->sendForm(self::pardonIpForm());
+                        return;
+                    case 6:
+                        $submitter->sendForm(self::kickForm());
                         return;
                 }
                 self::closeUI($submitter);
@@ -83,17 +88,16 @@ class BBDefaultForms
             ],
             function (Player $submitter, CustomFormResponse $response): void {
                 $res = $response->getAll();
-                $submitter->getServer()->getLogger()->warning("Name: " . $res["name"] . ", Reason: " . $res["reason"]);
                 if (!isset($res["name"]) || !isset($res["reason"])) {
                     $submitter->sendMessage("§4Ban cancelled!! §rPlease fill in the required fields (Name and Reason)!");
                     return;
                 }
                 if (!self::isResOkay($res["name"])) {
-                    $submitter->sendMessage("§4Ban cancelled!! The §eName§r isn't allowed (Empty)!");
+                    $submitter->sendMessage("§4Ban cancelled!! §rThe §eName§r isn't allowed (Empty)!");
                     return;
                 }
                 if (!self::isResOkay($res["reason"])) {
-                    $submitter->sendMessage("§4Ban cancelled!! The §eReason§r isn't allowed (Empty)!");
+                    $submitter->sendMessage("§4Ban cancelled!! §rThe §eReason§r isn't allowed (Empty)!");
                     return;
                 }
                 $name = $res["name"]; //Input
@@ -158,11 +162,11 @@ class BBDefaultForms
                     return;
                 }
                 if (!self::isResOkay($res["ip"])) {
-                    $submitter->sendMessage("§4Ban cancelled!! The §eIp-Address§r isn't allowed (Empty)!");
+                    $submitter->sendMessage("§4Ban cancelled!! §rThe §eIp-Address§r isn't allowed (Empty)!");
                     return;
                 }
                 if (!self::isResOkay($res["reason"])) {
-                    $submitter->sendMessage("§4Ban cancelled!! The §eReason§r isn't allowed (Empty)!");
+                    $submitter->sendMessage("§4Ban cancelled!! §rThe §eReason§r isn't allowed (Empty)!");
                     return;
                 }
                 $ip = $res["ip"]; //Input
@@ -225,7 +229,7 @@ class BBDefaultForms
                     return;
                 }
                 if (!self::isResOkay($res["name"])) {
-                    $submitter->sendMessage("§4Ban cancelled!! The §eName§r isn't allowed (Empty)!");
+                    $submitter->sendMessage("§4Ban cancelled!! §rThe §eName§r isn't allowed (Empty)!");
                     return;
                 }
                 $pl = BetterBan::getInstance();
@@ -255,7 +259,7 @@ class BBDefaultForms
                     return;
                 }
                 if ($mins == 0 && $hours == 0 && $days == 0 && $months == 0 && $years == 0) {
-                    $submitter->sendMessage("§4Ban cancelled!! The §eTimes§r are all set to 0!");
+                    $submitter->sendMessage("§4Ban cancelled!! §rThe §eTimes§r are all set to 0!");
                     return;
                 } else {
                     $bantime = $oldDate;
@@ -316,7 +320,7 @@ class BBDefaultForms
                     return;
                 }
                 if (!self::isResOkay($res["ip"])) {
-                    $submitter->sendMessage("§4Ban cancelled!! The §eIp-Address§r isn't allowed (Empty)!");
+                    $submitter->sendMessage("§4Ban cancelled!! §rThe §eIp-Address§r isn't allowed (Empty)!");
                     return;
                 }
                 $pl = BetterBan::getInstance();
@@ -346,7 +350,7 @@ class BBDefaultForms
                     return;
                 }
                 if ($mins == 0 && $hours == 0 && $days == 0 && $months == 0 && $years == 0) {
-                    $submitter->sendMessage("§4Ban cancelled!! The §eTimes§r are all set to 0!");
+                    $submitter->sendMessage("§4Ban cancelled!! §rThe §eTimes§r are all set to 0!");
                     return;
                 } else {
                     $bantime = $oldDate;
@@ -396,7 +400,7 @@ class BBDefaultForms
             ],
             function (Player $submitter, CustomFormResponse $response): void {
                 if (!self::isResOkay($response->getAll()["name"])) {
-                    $submitter->sendMessage("§4Ban cancelled!! The §eName§r isn't allowed (Empty)!");
+                    $submitter->sendMessage("§4Ban cancelled!! §rThe §eName§r isn't allowed (Empty)!");
                     return;
                 }
                 $submitter->getServer()->dispatchCommand($submitter, "pardon " . $response->getAll()["name"]);
@@ -419,10 +423,45 @@ class BBDefaultForms
             ],
             function (Player $submitter, CustomFormResponse $response): void {
                 if (!self::isResOkay($response->getAll()["ip"])) {
-                    $submitter->sendMessage("§4Ban cancelled!! The §eIp-Address§r isn't allowed (Empty)!");
+                    $submitter->sendMessage("§4Ban cancelled!! §rThe §eIp-Address§r isn't allowed (Empty)!");
                     return;
                 }
                 $submitter->getServer()->dispatchCommand($submitter, "pardonip " . $response->getAll()["ip"]);
+                return;
+            },
+            function (Player $submitter): void {
+                self::closeUI($submitter);
+                return;
+            });
+    }
+
+    public static function kickForm(): CustomForm
+    {
+        return new CustomForm(
+            "§c§lBetterBan",
+            [
+                new Label("l1", "Here you can kick a player from the server."),
+                new Input("name", "Name", "Name of the player"),
+                new Input("reason", "Name", "Reason of the kick"),
+                new Label("l2", "Click on §8Send§r to submit the changes.")
+            ],
+            function (Player $submitter, CustomFormResponse $response): void {
+                $res = $response->getAll();
+                if (!isset($res["name"]) || !isset($res["reason"])) {
+                    $submitter->sendMessage("§4Kick cancelled!! §rPlease fill in the required fields (Name and Reason)!");
+                    return;
+                }
+                if (!self::isResOkay($res["name"])) {
+                    $submitter->sendMessage("§4Kick cancelled!! §rThe §eName§r isn't allowed (Empty)!");
+                    return;
+                }
+                if (!self::isResOkay($res["reason"])) {
+                    $submitter->sendMessage("§4Kick cancelled!! §rThe §eReason§r isn't allowed (Empty)!");
+                    return;
+                }
+                $name = $res["name"]; //Input
+                $reason = $res["reason"]; //Input
+                $submitter->getServer()->dispatchCommand($submitter, "kick " . $name . " " . $reason);
                 return;
             },
             function (Player $submitter): void {

@@ -9,5 +9,7 @@ projects:
     icon: "icon.gif"
     virions:
       - DiscordWebhookAPI
-      - pmforms
+    libs:
+      - src: dktapps-pm-pl/pmforms/pmforms
+        version: ^1.0.0
 ...

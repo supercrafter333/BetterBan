@@ -7,13 +7,23 @@ use pocketmine\command\CommandSender;
 use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\command\utils\InvalidCommandSyntaxException;
 use pocketmine\lang\TranslationContainer;
+use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use supercrafter333\BetterBan\BetterBan;
 use supercrafter333\BetterBan\Events\BBPardonIpEvent;
+use supercrafter333\BetterBan\Forms\BBDefaultForms;
 
+/**
+ * Class PardonIpCommand
+ * @package supercrafter333\BetterBan\Commands
+ */
 class PardonIpCommand extends Command implements PluginIdentifiableCommand
 {
 
+    /**
+     * PardonIpCommand constructor.
+     * @param string $name
+     */
     public function __construct(string $name){
         parent::__construct(
             $name,
@@ -24,9 +34,19 @@ class PardonIpCommand extends Command implements PluginIdentifiableCommand
         $this->setPermission("pocketmine.command.unban.ip");
     }
 
+    /**
+     * @param CommandSender $sender
+     * @param string $commandLabel
+     * @param array $args
+     * @return bool
+     */
     public function execute(CommandSender $sender, string $commandLabel, array $args): bool
     {
         if(!$this->testPermission($sender)){
+            return true;
+        }
+        if (empty($args) && $sender instanceof Player) {
+            $sender->sendForm(BBDefaultForms::pardonIpForm());
             return true;
         }
         if(count($args) !== 1){
@@ -46,6 +66,9 @@ class PardonIpCommand extends Command implements PluginIdentifiableCommand
         return true;
     }
 
+    /**
+     * @return Plugin
+     */
     public function getPlugin(): Plugin
     {
         return BetterBan::getInstance();

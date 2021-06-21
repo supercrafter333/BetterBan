@@ -6,22 +6,39 @@ use pocketmine\event\Cancellable;
 use pocketmine\event\Event;
 use supercrafter333\BetterBan\BetterBan;
 
+/**
+ * Class BBEditbanEvent
+ * @package supercrafter333\BetterBan\Events
+ */
 class BBEditbanEvent extends Event implements Cancellable
 {
 
+    /**
+     * @var string
+     */
     protected $target;
 
+    /**
+     * BBEditbanEvent constructor.
+     * @param string $target
+     */
     public function __construct(string $target)
     {
         $this->eventName = "BBEditbanEvent";
         $this->target = $target;
     }
 
+    /**
+     * @return string
+     */
     public function getTarget(): string
     {
         return $this->target;
     }
 
+    /**
+     * @param string $target
+     */
     public function setTarget(string $target): void
     {
         $this->target = $target;
