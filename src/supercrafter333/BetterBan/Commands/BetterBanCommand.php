@@ -11,19 +11,14 @@ use supercrafter333\BetterBan\BetterBan;
 use supercrafter333\BetterBan\Forms\BBDefaultForms;
 
 /**
- * Class BanlogCommand
+ * Class BetterBanCommand
  * @package supercrafter333\BetterBan\Commands
  */
-class BanlogCommand extends Command implements PluginIdentifiableCommand
+class BetterBanCommand extends Command implements PluginIdentifiableCommand
 {
 
     /**
-     * @var BetterBan
-     */
-    private $pl;
-
-    /**
-     * BanlogCommand constructor.
+     * BetterBanCommand constructor.
      * @param string $name
      * @param string $description
      * @param string|null $usageMessage
@@ -31,25 +26,23 @@ class BanlogCommand extends Command implements PluginIdentifiableCommand
      */
     public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = [])
     {
-        $this->pl = BetterBan::getInstance();
-        parent::__construct("banlog", "See the ban-count of a player", "§4Usage:§r /banlog <player>", ["bancount"]);
+        parent::__construct("betterban", "Open the BetterBan Form!", $usageMessage, $aliases);
     }
 
     /**
-     * @param CommandSender $s
+     * @param CommandSender $sender
      * @param string $commandLabel
      * @param array $args
      */
-    public function execute(CommandSender $s, string $commandLabel, array $args): void
+    public function execute(CommandSender $sender, string $commandLabel, array $args): void
     {
-        if (empty($args)) {
-            $s->sendMessage($this->usageMessage);
+        if ($sender instanceof Player) {
+            $sender->sendForm(BBDefaultForms::openMenuForm());
+            return;
+        } else {
+            $sender->sendMessage("Only In-Game!");
             return;
         }
-        $pl = $this->pl;
-        $name = implode(" ", $args);
-        $s->sendMessage(str_replace(["{name}", "{log}"], [$name, $pl->getBanLogOf($name)], $pl->getConfig()->get("banlog-message-log")));
-        return;
     }
 
     /**
@@ -57,6 +50,6 @@ class BanlogCommand extends Command implements PluginIdentifiableCommand
      */
     public function getPlugin(): Plugin
     {
-        return $this->pl;
+        return BetterBan::getInstance();
     }
 }

@@ -2,11 +2,8 @@
 
 namespace supercrafter333\BetterBan\Commands;
 
-use DateInterval;
-use DateTime;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\command\defaults\VanillaCommand;
 use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\command\utils\InvalidCommandSyntaxException;
 use pocketmine\lang\TranslationContainer;
@@ -14,22 +11,23 @@ use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use supercrafter333\BetterBan\BetterBan;
 use supercrafter333\BetterBan\Events\BBBanEvent;
+use supercrafter333\BetterBan\Events\BBBanIpEvent;
 use supercrafter333\BetterBan\Forms\BBDefaultForms;
 
 /**
- * Class BanCommand
+ * Class BanIpCommand
  * @package supercrafter333\BetterBan\Commands
  */
-class BanCommand extends Command implements PluginIdentifiableCommand
+class BanIpCommand extends Command implements PluginIdentifiableCommand
 {
-
     /**
      * @var BetterBan
      */
     private $pl;
 
+
     /**
-     * BanCommand constructor.
+     * BanIpCommand constructor.
      * @param string $name
      * @param string $description
      * @param string|null $usageMessage
@@ -38,26 +36,16 @@ class BanCommand extends Command implements PluginIdentifiableCommand
     public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = [])
     {
         $this->pl = BetterBan::getInstance();
-        parent::__construct($name, "%pocketmine.command.ban.player.description", "§4Use: §r/ban <name> [reason: ...] [date interval: ...]");
-        $this->setPermission("pocketmine.command.ban.player");
+        parent::__construct($name, "%pocketmine.command.ban.ip.description", "§4Use: §r/banip <ip-address> [reason: ...] [date interval: ...]", ["ban-ip"]);
+        $this->setPermission("pocketmine.command.ban.ip");
     }
 
-    /**
-     * @param CommandSender $sender
-     * @param string $commandLabel
-     * @param array $args
-     * @return bool
-     */
-    public function execute(CommandSender $sender, string $commandLabel, array $args): bool
+
+    /*public function execute(CommandSender $sender, string $commandLabel, array $args): bool
     {
         $pl = BetterBan::getInstance();
         $cfg = $pl->getConfig();
         if (!$this->testPermission($sender)) {
-            return true;
-        }
-
-        if (empty($args) && $sender instanceof Player) {
-            $sender->sendForm(BBDefaultForms::banForm());
             return true;
         }
 
@@ -113,7 +101,95 @@ class BanCommand extends Command implements PluginIdentifiableCommand
             $sender->sendMessage($this->usageMessage);
         }
         return true;
+    }*/
+
+    /**
+     * @param CommandSender $sender
+     * @param string $commandLabel
+     * @param array $args
+     * @return bool
+     * @throws \Exception
+     */
+    public function execute(CommandSender $sender, string $commandLabel, array $args): bool
+    {
+        if(!$this->testPermission($sender)){
+            return true;
+        }
+
+        if (empty($args) && $sender instanceof Player) {
+            $sender->sendForm(BBDefaultForms::banIpForm());
+            return true;
+        }
+
+        if(count($args) === 0){
+            throw new InvalidCommandSyntaxException();
+        }
+
+        $value = array_shift($args);
+        if (count($args) == 2) {
+            $reason = $args[0];
+            $expires = null;
+        } else {
+            $reason = null;
+            $expires = null;
+        }
+        if (count($args) >= 3) {
+            $expiresRaw = BetterBan::getInstance()->stringToTimestamp(implode(" ", $args));
+            $expires = isset($expiresRaw[0]) == false ? null : $expiresRaw[0];
+        } else {
+            $expires = null;
+        }
+
+        if(preg_match("/^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$/", $value)){
+            $ev = new BBBanIpEvent($value, $sender->getName(), $reason);
+            $ev->call();
+            if ($ev->isCancelled()) {
+                Command::broadcastCommandMessage($sender, "Ip-Ban cancelled because the BBBanIpEvent is cancelled!", true);
+                return true;
+            }
+            $this->processIPBan($value, $sender, $reason, $expires);
+
+            Command::broadcastCommandMessage($sender, new TranslationContainer("commands.banip.success", [$value]), true);
+        }else{
+            if(($player = $sender->getServer()->getPlayer($value)) instanceof Player){
+                $this->processIPBan($player->getAddress(), $sender, $reason, $expires);
+
+                Command::broadcastCommandMessage($sender, new TranslationContainer("commands.banip.success.players", [$player->getAddress(), $player->getName()]), true);
+            }else{
+                $sender->sendMessage(new TranslationContainer("commands.banip.invalid"));
+
+                return false;
+            }
+        }
+
+        return true;
     }
+
+    /**
+     * @param string $ip
+     * @param CommandSender $sender
+     * @param string|null $reason
+     * @param \DateTime|null $expires
+     */
+    private function processIPBan(string $ip, CommandSender $sender, string $reason = null, \DateTime $expires = null) : void{
+        $sender->getServer()->getIPBans()->addBan($ip, $reason, $expires, $sender->getName());
+
+        foreach($sender->getServer()->getOnlinePlayers() as $player){
+            if($player->getAddress() === $ip) {
+                $cfg = BetterBan::getInstance()->getConfig();
+                BetterBan::getInstance()->addBanToBanlog($player->getName());
+                if ($reason == null) {
+                    $player->kick(str_replace(["{line}"], ["\n"], $cfg->get("kick-ip-message")));
+                } elseif ($expires == null) {
+                    $player->kick(str_replace(["{reason}", "{line}"], [$reason, "\n"], $cfg->get("kick-ip-message-with-reason")));
+                } else {
+                    $player->kick(str_replace(["{reason}", "{time}", "{line}"], [$reason, $expires->format("Y.m.d H:i:s"), "\n"], $cfg->get("kick-ip-message-with-time")));
+                }
+            }
+        }
+        $sender->getServer()->getNetwork()->blockAddress($ip, -1);
+    }
+
 
     /**
      * @return Plugin

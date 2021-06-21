@@ -4,16 +4,25 @@
 # Configuration
 
 # Messages
+#ban
 kick-message: "Banned by admin."
 kick-message-with-reason: "Banned by admin. Reason: {reason}"
 kick-message-with-time: "Banned by admin. {line} Reason: {reason} {line} Ends at: {time}"
+kick-ip-message: "IP Banned."
+kick-ip-message-with-reason: "IP Banned. Reason: {reason}"
+kick-ip-message-with-time: "IP Banned. {line} Reason: {reason} {line} Ends at: {time}"
 banlog-message-log: "§eBans of player §7{name}§e: §b{log}"
 baninfo-message-list: "§7---====§eBan Informations of §b{name}§7====---{line}§7source: §b{source}{line}§7reason: §b{reason}{line}§7date: §b{date}{line}§7log: §b{log}{line}§7---====§eBan Informations of §b{name}§7====---"
+#kick
+kicked-message: "Kicked by admin."
+kicked-with-reason-message: "Kicked by admin.{line}Reason: {reason}"
 
 # Error messages
 use-DateInterval-format: "§4Please use the the right format!§4 For example: §81d"
 error-not-banned: "§4The player called §7{name}§4 isn't banned!"
+error-not-ipbanned: "§4The player called §7{name}§4 isn't banned!"
 error-no-tempban-found: "§4The player called §7{name}§4 isn't temp banned!"
+error-no-iptempban-found: "§4The player called §7{name}§4 isn't temp banned!"
 
 # Discord Webhook Settings
 use-discord: "false"
@@ -35,6 +44,29 @@ pardon-message: "The player `{target}` was unbanned by `{source}`!"
 #Colors: https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812
 pardon-color: 3066993
 
+# Ip-Ban
+banip-title: "Ip-Ban!"
+banip-message: "The ip `{ip}` was banned by `{source}`!"
+#Colors: https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812
+banip-color: 15158332
+# Ip-Ban Updated
+ipban-updated-title: "Ip-Ban Updated!"
+ipban-updated-message: "The ban of the ip {ip} was updated!"
+#Colors: https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812
+ipban-updated-color: 16776960
+
+# Ip-Pardon / Ip-Unban
+pardonip-title: "IP Unbanned!"
+pardonip-message: "The ip `{ip}` was unbanned by `{source}`!"
+#Colors: https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812
+pardonip-color: 3066993
+
+# Kick
+kick-dc-title: "Kick!"
+kick-dc-message: "The player `{target}` was kicked by `{source}`!"
+#Colors: https://gist.github.com/thomasbnt/b6f455e2c7d743b796917fa3c205f812
+kick-dc-color: 16776960
+
 
 #don't change this
-version: "2.2.0"
+version: "3.0.0"

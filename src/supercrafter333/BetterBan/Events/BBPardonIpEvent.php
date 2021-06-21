@@ -7,16 +7,16 @@ use pocketmine\event\Event;
 use supercrafter333\BetterBan\BetterBan;
 
 /**
- * Class BBPardonEvent
+ * Class BBPardonIpEvent
  * @package supercrafter333\BetterBan\Events
  */
-class BBPardonEvent extends Event implements Cancellable
+class BBPardonIpEvent extends Event implements Cancellable
 {
 
     /**
      * @var string
      */
-    private $target;
+    private $IpAddress;
 
     /**
      * @var string
@@ -24,25 +24,25 @@ class BBPardonEvent extends Event implements Cancellable
     private $source;
 
     /**
-     * BBPardonEvent constructor.
-     * @param string $target
+     * BBPardonIpEvent constructor.
+     * @param string $IpAddress
      * @param string $source
      */
-    public function __construct(string $target, string $source)
+    public function __construct(string $IpAddress, string $source)
     {
-        $this->eventName = "BBPardonEvent";
-        $this->target = $target;
+        $this->eventName = "BBPardonIpEvent";
+        $this->IpAddress = $IpAddress;
         $this->source = $source;
     }
 
     /**
-     * Get the target
+     * Get the IpAddress
      *
      * @return string
      */
-    public function getTarget(): string
+    public function getIpAddress(): string
     {
-        return $this->target;
+        return $this->IpAddress;
     }
 
     /**
@@ -66,13 +66,13 @@ class BBPardonEvent extends Event implements Cancellable
     }
 
     /**
-     * Set the target
+     * Set the IpAddress
      *
-     * @param string $target
+     * @param string $IpAddress
      */
-    public function setTarget(string $target): void
+    public function setIpAddress(string $IpAddress): void
     {
-        $this->target = $target;
+        $this->IpAddress = $IpAddress;
     }
 
     /**
@@ -80,6 +80,6 @@ class BBPardonEvent extends Event implements Cancellable
      */
     public function sendDiscordWebhookMessage(): void
     {
-        BetterBan::getInstance()->sendPardonMessageToDC($this->target, $this->source);
+        BetterBan::getInstance()->sendPardonIpMessageToDC($this->IpAddress, $this->source);
     }
 }

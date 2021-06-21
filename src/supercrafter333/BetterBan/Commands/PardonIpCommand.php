@@ -10,28 +10,28 @@ use pocketmine\lang\TranslationContainer;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use supercrafter333\BetterBan\BetterBan;
-use supercrafter333\BetterBan\Events\BBPardonEvent;
+use supercrafter333\BetterBan\Events\BBPardonIpEvent;
 use supercrafter333\BetterBan\Forms\BBDefaultForms;
 
 /**
- * Class PardonCommand
+ * Class PardonIpCommand
  * @package supercrafter333\BetterBan\Commands
  */
-class PardonCommand extends Command implements PluginIdentifiableCommand
+class PardonIpCommand extends Command implements PluginIdentifiableCommand
 {
 
     /**
-     * PardonCommand constructor.
+     * PardonIpCommand constructor.
      * @param string $name
      */
     public function __construct(string $name){
         parent::__construct(
             $name,
-            "%pocketmine.command.unban.player.description",
-            "%commands.unban.usage",
-            ["unban"]
+            "%pocketmine.command.unban.ip.description",
+            "%commands.unbanip.usage",
+            ["unban-ip"]
         );
-        $this->setPermission("pocketmine.command.unban.player");
+        $this->setPermission("pocketmine.command.unban.ip");
     }
 
     /**
@@ -46,22 +46,22 @@ class PardonCommand extends Command implements PluginIdentifiableCommand
             return true;
         }
         if (empty($args) && $sender instanceof Player) {
-            $sender->sendForm(BBDefaultForms::pardonForm());
+            $sender->sendForm(BBDefaultForms::pardonIpForm());
             return true;
         }
         if(count($args) !== 1){
             throw new InvalidCommandSyntaxException();
         }
-        $ev = new BBPardonEvent($args[0], $sender->getName());
+        $ev = new BBPardonIpEvent($args[0], $sender->getName());
         $ev->call();
         if ($ev->isCancelled()) {
-            Command::broadcastCommandMessage($sender, "Unban cancelled because the BBPardonEvent is cancelled!", true);
+            Command::broadcastCommandMessage($sender, "Unban cancelled because the BBPardonIpEvent is cancelled!", true);
             return true;
         }
 
-        $sender->getServer()->getNameBans()->remove($args[0]);
+        $sender->getServer()->getIPBans()->remove($args[0]);
 
-        Command::broadcastCommandMessage($sender, new TranslationContainer("commands.unban.success", [$args[0]]));
+        Command::broadcastCommandMessage($sender, new TranslationContainer("commands.unbanip.success", [$args[0]]));
 
         return true;
     }
