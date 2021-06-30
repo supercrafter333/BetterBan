@@ -8,7 +8,7 @@ interface BBDefaultProvider
 
     public function __construct(string $target);
 
-    public function geTarget(): string;
+    public function getTarget(): string;
 
     public function getCreated() : \DateTime;
 
