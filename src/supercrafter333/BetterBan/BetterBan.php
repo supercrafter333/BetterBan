@@ -7,6 +7,7 @@ use CortexPE\DiscordWebhookAPI\Message;
 use CortexPE\DiscordWebhookAPI\Webhook;
 use DateInterval;
 use dktapps\pmforms\BaseForm;
+use pocketmine\permission\BanEntry;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use supercrafter333\BetterBan\Commands\BanCommand;
