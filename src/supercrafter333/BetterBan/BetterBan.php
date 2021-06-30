@@ -35,7 +35,7 @@ class BetterBan extends PluginBase
     /**
      * Version of BetterBan
      */
-    public const VERSION = "3.0.0";
+    public const VERSION = "4.0.0-DEV";
 
     /**
      * @var null
