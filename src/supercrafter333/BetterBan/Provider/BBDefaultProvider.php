@@ -2,14 +2,28 @@
 
 namespace supercrafter333\BetterBan\Provider;
 
+/**
+ * Interface BBDefaultProvider
+ * @package supercrafter333\BetterBan\Provider
+ */
 interface BBDefaultProvider
 {
     //TODO: add provider for MySQL name bans (and IP bans after that)
 
+    /**
+     * BBDefaultProvider constructor.
+     * @param string $target
+     */
     public function __construct(string $target);
 
+    /**
+     * @return string
+     */
     public function getTarget(): string;
 
+    /**
+     * @return \DateTime
+     */
     public function getCreated() : \DateTime;
 
     /**
@@ -17,6 +31,9 @@ interface BBDefaultProvider
      */
     public function setCreated(\DateTime $date);
 
+    /**
+     * @return string
+     */
     public function getSource() : string;
 
     /**
@@ -34,8 +51,14 @@ interface BBDefaultProvider
      */
     public function setExpires(\DateTime $date = null);
 
+    /**
+     * @return bool
+     */
     public function hasExpired() : bool;
 
+    /**
+     * @return string
+     */
     public function getReason() : string;
 
     /**
@@ -43,6 +66,9 @@ interface BBDefaultProvider
      */
     public function setReason(string $reason);
 
+    /**
+     * @return string
+     */
     public function getString() : string;
 
     /**
@@ -64,4 +90,45 @@ interface BBDefaultProvider
      * @throws \RuntimeException
      */
     public static function fromString(string $str) : ?self;
+
+    /**
+     * @param string $name
+     * @return $this|null
+     */
+    public function getEntry(string $name) : ?self;
+
+    /**
+     * @return self[]
+     */
+    public function getEntries() : array;
+
+    /**
+     * @return bool
+     */
+    public function isBanned() : bool;
+
+    /**
+     * @return void
+     */
+    public function add(self $entry);
+
+    /**
+     * @return void
+     */
+    public function remove(string $name);
+
+    /**
+     * @return void
+     */
+    public function removeExpired();
+
+    /**
+     * @return void
+     */
+    public function load();
+
+    /**
+     * @return void
+     */
+    public function save(bool $writeHeader = true);
 }
