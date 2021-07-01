@@ -8,8 +8,8 @@ projects:
     path: ""
     icon: "icon.gif"
     libs:
-      - src: dktapps-pm-pl/pmforms/pmforms
-        version: ^1.0.0
       - src: CortexPE\DiscordWebhookAPI\DiscordWebhookAPI
         version: ^1.0
+      - src: dktapps-pm-pl/pmforms/pmforms
+        version: ^1.0.0
 ...
