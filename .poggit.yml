@@ -7,9 +7,11 @@ projects:
   BetterBan:
     path: ""
     icon: "icon.gif"
+    virions:
+      - DiscordWebhookAPI
     libs:
       - src: dktapps-pm-pl/pmforms/pmforms
         version: ^1.0.0
-      - src: marshall\DiscordWebhookAPI\DiscordWebhookAPI
-        version: ^1.0.0
+      - src: CortexPE\DiscordWebhookAPI\DiscordWebhookAPI
+        version: ^1.0
 ...
