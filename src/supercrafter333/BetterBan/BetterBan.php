@@ -50,14 +50,18 @@ class BetterBan extends PluginBase
         self::$instance = $this;
         $this->saveResource("config.yml");
         $this->versionCheck(self::VERSION, false); //VERSION CHECK
+        $dc_webhook = $this->getConfig()->get("discord-webhook") !== "" ? $this->getConfig()->get("discord-webhook") : null;
+        self::$DISCORD_WEBHOOK_URL = $dc_webhook;
         if (!class_exists(BaseForm::class)) {
             $this->getLogger()->error("pmforms missing!! Please download BetterBan from Poggit!");
+            $this->getServer()->getPluginManager()->disablePlugin($this);
         }
         if (!class_exists(Webhook::class)) {
             $this->getLogger()->error("DiscordWebhookAPI missing!! Please download BetterBan from Poggit!");
+            if (self::$DISCORD_WEBHOOK_URL !== null) {
+                $this->getServer()->getPluginManager()->disablePlugin($this);
+            }
         }
-        $dc_webhook = $this->getConfig()->get("discord-webhook") !== "" ? $this->getConfig()->get("discord-webhook") : null;
-        self::$DISCORD_WEBHOOK_URL = $dc_webhook;
     }
 
     /**
