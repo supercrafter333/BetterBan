@@ -47,6 +47,13 @@ class BanlogCommand extends Command implements PluginIdentifiableCommand
             return;
         }
         $pl = $this->pl;
+        $cfg = $pl->getConfig();
+        $server = $pl->getServer();
+        if (!$server->getNameBans()->isBanned($args[0])) {
+            $s->sendMessage(str_replace(["{name}"], [$args[0]], $cfg->get("error-not-banned")));
+            return;
+        }
+        $pl = $this->pl;
         $name = implode(" ", $args);
         $s->sendMessage(str_replace(["{name}", "{log}"], [$name, $pl->getBanLogOf($name)], $pl->getConfig()->get("banlog-message-log")));
         return;

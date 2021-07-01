@@ -45,14 +45,20 @@ class BaninfoCommand extends Command implements PluginIdentifiableCommand
             return;
         }
         $pl = $this->pl;
+        $cfg = $pl->getConfig();
         $name = implode(" ", $args);
         $server = $pl->getServer();
+        if (!$server->getNameBans()->isBanned($args[0])) {
+            $s->sendMessage(str_replace(["{name}"], [$args[0]], $cfg->get("error-not-banned")));
+            return;
+        }
         $nameBans = $server->getNameBans();
-        if ($nameBans->getEntry($name) === null) {
-            $s->sendMessage(str_replace(["{name}"], [$name], $pl->getConfig()->get("error-not-banned")));
+        if (!$server->getNameBans()->isBanned($name)) {
+            $s->sendMessage(str_replace(["{name}"], [$name], $cfg->get("error-not-banned")));
+            return;
         }
         $ban = $nameBans->getEntry($name);
-        $source = $ban->getSource();
+        $source = $ban->getSource() === "(Unknown)" ? "§8---" : $ban->getSource();
         $date = $ban->hasExpired() ? $ban->getExpires()->format("Y.m.d H:i:s") : "§8---";
         $reason = $ban->getReason();
         $log = $pl->getBanLogOf($name);

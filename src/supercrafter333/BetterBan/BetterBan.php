@@ -35,7 +35,7 @@ class BetterBan extends PluginBase
     /**
      * Version of BetterBan
      */
-    public const VERSION = "3.0.0";
+    public const VERSION = "3.0.1";
 
     /**
      * @var null
@@ -49,7 +49,7 @@ class BetterBan extends PluginBase
     {
         self::$instance = $this;
         $this->saveResource("config.yml");
-        $this->versionCheck(self::VERSION);
+        $this->versionCheck(self::VERSION, false); //VERSION CHECK
         if (!class_exists(BaseForm::class)) {
             $this->getLogger()->error("pmforms missing!! Please download BetterBan from Poggit!");
         }
@@ -101,14 +101,19 @@ class BetterBan extends PluginBase
 
     /**
      * @param $version
+     * @param bool $update
      */
-    private function versionCheck($version)
+    private function versionCheck($version, bool $update = true)
     {
         if (!$this->getConfig()->exists("version") || $this->getConfig()->get("version") !== $version) {
-            $this->getLogger()->debug("OUTDATED CONFIG.YML!! You config.yml is outdated! Your config.yml will automatically updated!");
-            rename($this->getDataFolder() . "config.yml", $this->getDataFolder() . "oldConfig.yml");
-            $this->saveResource("config.yml");
-            $this->getLogger()->debug("config.yml Updated for version: §b$version");
+            if ($update == true) {
+                $this->getLogger()->debug("OUTDATED CONFIG.YML!! You config.yml is outdated! Your config.yml will automatically updated!");
+                rename($this->getDataFolder() . "config.yml", $this->getDataFolder() . "oldConfig.yml");
+                $this->saveResource("config.yml");
+                $this->getLogger()->debug("config.yml Updated for version: §b$version");
+            } else {
+                $this->getLogger()->warning("Your config.yml is outdated but that's not so bad.");
+            }
         }
     }
 
