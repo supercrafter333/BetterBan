@@ -17,18 +17,13 @@ class MySQLBanList
     /** @var array $settings */
     private $settings;
 
-    /** @var string $table */
-    private $table;
-
     /**
      * MySQLBanList constructor.
      * @param string[] $settings
-     * @param string $table
      */
-    public function __construct(array $settings, string $table)
+    public function __construct(array $settings)
     {
         $this->settings = $settings;
-        $this->table = $table;
         $this->db = new \mysqli($settings['host'], $settings['user'], $settings['password'], $settings['database']);
         if($this->db->connect_errno)
             throw new \RuntimeException('[BetterBan] ' . $this->db->connect_error);
@@ -37,9 +32,7 @@ class MySQLBanList
 
     private function init(): void
     {
-        $stmt = $this->db->prepare('CREATE TABLE IF NOT EXISTS ? ()'); // TODO: add columns
-        $stmt->bind_param('s', $this->table);
-        $stmt->execute();
+        $this->db->query('CREATE TABLE IF NOT EXISTS bans(target VARCHAR(255) NOT NULL, creationDate VARCHAR(255) NOT NULL, source VARCHAR(255) NOT NULL, expirationDate VARCHAR(255), reason TEXT NOT NULL)');
     }
 
     public function getEntry(string $target): ?BanEntry
