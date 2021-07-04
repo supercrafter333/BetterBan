@@ -20,6 +20,7 @@ use supercrafter333\BetterBan\Commands\EditipbanCommand;
 use supercrafter333\BetterBan\Commands\KickCommand;
 use supercrafter333\BetterBan\Commands\PardonCommand;
 use supercrafter333\BetterBan\Commands\PardonIpCommand;
+use supercrafter333\BetterBan\Permission\MySQLBanList;
 
 /**
  * Class BetterBan
@@ -42,6 +43,9 @@ class BetterBan extends PluginBase
      * @var null
      */
     public static $DISCORD_WEBHOOK_URL = null;
+
+    /** @var MySQLBanList $mysqlBans */
+    private $mysqlBans;
 
     /**
      * On Plugin Loading
@@ -66,6 +70,7 @@ class BetterBan extends PluginBase
      */
     public function onEnable()
     {
+        $this->mysqlBans = new MySQLBanList([]); // TODO: Include connection details
         $cmdMap = $this->getServer()->getCommandMap();
         $pmmpBanCmd = $cmdMap->getCommand("ban");
         $pmmpPardonCmd = $cmdMap->getCommand("pardon");
@@ -111,6 +116,14 @@ class BetterBan extends PluginBase
             $this->saveResource("config.yml");
             $this->getLogger()->debug("config.yml Updated for version: §b$version");
         }
+    }
+
+    /**
+     * @return MySQLBanList
+     */
+    public function getMySQLBans()
+    {
+        return $this->mysqlBans;
     }
 
     /**
