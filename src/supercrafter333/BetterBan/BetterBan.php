@@ -44,8 +44,11 @@ class BetterBan extends PluginBase
      */
     public static $DISCORD_WEBHOOK_URL = null;
 
-    /** @var MySQLBanList $mysqlBans */
-    private $mysqlBans;
+    /** @var MySQLBanList $mysqlBanByName */
+    private $mysqlBanByName;
+
+    /** @var MySQLBanList $mysqlBanByIP */
+    private $mysqlBanByIP;
 
     /**
      * On Plugin Loading
@@ -70,7 +73,8 @@ class BetterBan extends PluginBase
      */
     public function onEnable()
     {
-        $this->mysqlBans = new MySQLBanList([]); // TODO: Include connection details
+        $this->mysqlBanByName = new MySQLBanList([], MySQLBanList::TABLE_NAMEBANS); // TODO: Include connection details
+        $this->mysqlBanByIP = new MySQLBanList([], MySQLBanList::TABLE_IPBANS); // TODO: Include connection details
         $cmdMap = $this->getServer()->getCommandMap();
         $pmmpBanCmd = $cmdMap->getCommand("ban");
         $pmmpPardonCmd = $cmdMap->getCommand("pardon");
@@ -121,9 +125,17 @@ class BetterBan extends PluginBase
     /**
      * @return MySQLBanList
      */
-    public function getMySQLBans()
+    public function getMySQLNameBans()
     {
-        return $this->mysqlBans;
+        return $this->mysqlBanByName;
+    }
+
+    /**
+     * @return MySQLBanList
+     */
+    public function getMySQLIPBans()
+    {
+        return $this->mysqlBanByIP;
     }
 
     /**
