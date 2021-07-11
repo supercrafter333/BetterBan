@@ -7,7 +7,6 @@ use CortexPE\DiscordWebhookAPI\Message;
 use CortexPE\DiscordWebhookAPI\Webhook;
 use DateInterval;
 use dktapps\pmforms\BaseForm;
-use pocketmine\permission\BanEntry;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use supercrafter333\BetterBan\Commands\BanCommand;
@@ -70,6 +69,7 @@ class BetterBan extends PluginBase
 
     /**
      * On Plugin Enabling
+     * @todo Check if the MySQLBanList's should be set
      */
     public function onEnable()
     {
@@ -99,6 +99,14 @@ class BetterBan extends PluginBase
             new BetterBanCommand("betterban")
         ]);
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
+    }
+
+    public function onDisable()
+    {
+        if(isset($this->mysqlBanByName))
+            $this->getMySQLNameBans()->close();
+        if(isset($this->mysqlBanByIP))
+            $this->getMySQLIpBans()->close();
     }
 
     /**
@@ -133,7 +141,7 @@ class BetterBan extends PluginBase
     /**
      * @return MySQLBanList
      */
-    public function getMySQLIPBans()
+    public function getMySQLIpBans()
     {
         return $this->mysqlBanByIP;
     }

@@ -16,7 +16,7 @@ class MySQLBanList
     /** @var \mysqli $db */
     private $db;
 
-    /** @var array $settings */
+    /** @var string[] $settings */
     private $settings;
 
     /** @var string $table */
@@ -56,6 +56,13 @@ class MySQLBanList
         return true;
     }
 
+    public function close(): void
+    {
+        try {
+            $this->db->close();
+        } catch(\Exception $e) {}
+    }
+
     public function getEntry(string $target): ?BanEntry
     {
         if(!$this->reconnect())
@@ -68,6 +75,7 @@ class MySQLBanList
         }
         if(!$stmt)
             return null;
+        $target = strtolower($target);
         $stmt->bind_param('s', $target);
         $state = $stmt->execute();
         if(!$state)
@@ -76,26 +84,30 @@ class MySQLBanList
         if(!$result)
             return null;
         $stmt->close();
-        return self::fromAssocArray($result->fetch_assoc());
+        $data = $result->fetch_assoc();
+        if(is_null($data))
+            return null;
+        return self::fromAssocArray($data);
     }
 
     /**
      * @return BanEntry[]
      */
-    public function getEntries(): array
+    public function getEntries(bool $removeExpired = true): array
     {
         if(!$this->reconnect())
             throw new \mysqli_sql_exception('Could not connect to the database!');
-        $this->removeExpired();
+        if($removeExpired)
+            $this->removeExpired();
         if($this->table === self::TABLE_IPBANS) {
-            $data = $this->db->query('SELECT * FROM banned_ips;');
+            $result = $this->db->query('SELECT * FROM banned_ips;');
         } else {
-            $data = $this->db->query('SELECT * FROM banned_players;');
+            $result = $this->db->query('SELECT * FROM banned_players;');
         }
-        if(!$data)
+        if(is_bool($result))
             return [];
         $entries = [];
-        while ($row = $data->fetch_assoc()) {
+        while ($row = $result->fetch_assoc()) {
             $entries[] = self::fromAssocArray($row);
         }
         return $entries;
@@ -112,10 +124,13 @@ class MySQLBanList
             $stmt = $this->db->prepare('SELECT * FROM banned_players WHERE target=?;');
         }
         if(!$stmt)
-            return false;
+            throw new \mysqli_sql_exception('Error while preparing a mysql statement!');
+        $target = strtolower($target);
         $stmt->bind_param('s', $target);
         $stmt->execute();
         $result = $stmt->get_result();
+        if(!$result)
+            throw new \mysqli_sql_exception('An error has occurred!');
         $stmt->close();
         return $result->num_rows === 1;
     }
@@ -127,23 +142,26 @@ class MySQLBanList
         $this->addBan($entry->getName(), $entry->getReason(), $entry->getExpires(), $entry->getSource());
     }
 
-    /**
-     * TODO: Ban overwrite if target already banned
-     */
     public function addBan(string $target, string $reason = null, \DateTime $expires = null, string $source = null): BanEntry
     {
         if(!$this->reconnect())
             throw new \mysqli_sql_exception('Could not connect to the database!');
-        $this->removeExpired();
+        $target = strtolower($target);
         $entry = new BanEntry($target);
         $entry->setSource($source ?? $entry->getSource());
         $entry->setExpires($expires);
         $entry->setReason($reason ?? $entry->getReason());
+        if($this->isBanned($target)) {
+            $this->overwriteBan($entry);
+            return $entry;
+        }
         if($this->table === self::TABLE_IPBANS) {
             $stmt = $this->db->prepare('INSERT INTO banned_ips(target, creationDate, source, expirationDate, reason) VALUES(?,?,?,?,?);');
         } else {
             $stmt = $this->db->prepare('INSERT INTO banned_players(target, creationDate, source, expirationDate, reason) VALUES(?,?,?,?,?);');
         }
+        if(!$stmt)
+            throw new \mysqli_sql_exception('Error while preparing a mysql statement!');
         $creation = $entry->getCreated()->format(BanEntry::$format);
         $source = $entry->getSource();
         $expires = $entry->getExpires() === null ? "Forever" : $entry->getExpires()->format(BanEntry::$format);
@@ -158,12 +176,13 @@ class MySQLBanList
     {
         if(!$this->reconnect())
             throw new \mysqli_sql_exception('Could not connect to the database!');
-        $this->removeExpired();
         if($this->table === self::TABLE_IPBANS) {
             $stmt = $this->db->prepare('DELETE FROM banned_ips WHERE target=?;');
         } else {
             $stmt = $this->db->prepare('DELETE FROM banned_players WHERE target=?;');
         }
+        if(!$stmt)
+            throw new \mysqli_sql_exception('Error while preparing a mysql statement!');
         $stmt->bind_param('s', $target);
         $stmt->execute();
         $stmt->close();
@@ -171,17 +190,52 @@ class MySQLBanList
 
     public function removeExpired(): void
     {
-        // TODO: add functionality...
+        $entries = $this->getEntries(false);
+        foreach ($entries as $entry) {
+            if($entry->hasExpired()) {
+                $this->remove($entry->getName());
+            }
+        }
     }
 
+    private function overwriteBan(BanEntry $entry): void
+    {
+        if(!$this->reconnect())
+            throw new \mysqli_sql_exception('Could not connect to the database!');
+        if($this->table === self::TABLE_IPBANS) {
+            $stmt = $this->db->prepare('UPDATE banned_ips SET creationDate=?, source=?, expirationDate=?, reason=? WHERE target=?;');
+        } else {
+            $stmt = $this->db->prepare('UPDATE banned_players SET creationDate=?, source=?, expirationDate=?, reason=? WHERE target=?;');
+        }
+        if(!$stmt)
+            throw new \mysqli_sql_exception('Error while preparing a mysql statement!');
+        $target = $entry->getName();
+        $creation = $entry->getCreated()->format(BanEntry::$format);
+        $source = $entry->getSource();
+        $expires = $entry->getExpires() === null ? "Forever" : $entry->getExpires()->format(BanEntry::$format);
+        $reason = $entry->getReason();
+        $stmt->bind_param('sssss', $creation, $source, $expires, $reason, $target);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    /**
+     * @param string[] $data
+     * @return BanEntry
+     */
     private static function fromAssocArray(array $data): BanEntry
     {
+        $creation = \DateTime::createFromFormat(BanEntry::$format, $data['creationDate']);
+        $creation = $creation !== false ? $creation : new \DateTime();
         $entry = new BanEntry($data['target']);
-        $entry->setCreated(\DateTime::createFromFormat(BanEntry::$format, $data['creationDate']));
+        $entry->setCreated($creation);
         $entry->setSource($data['source']);
         $expirationDate = $data['expirationDate'];
-        if($expirationDate != null)
-            $entry->setExpires(\DateTime::createFromFormat(BanEntry::$format, $expirationDate));
+        if($expirationDate != null && strtolower($expirationDate) != 'forever') {
+            $expires = \DateTime::createFromFormat(BanEntry::$format, $expirationDate);
+            $expires = $expires !== false ? $expires : null;
+            $entry->setExpires($expires);
+        }
         $entry->setReason($data['reason']);
         return $entry;
     }
