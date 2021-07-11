@@ -7,7 +7,6 @@ use CortexPE\DiscordWebhookAPI\Message;
 use CortexPE\DiscordWebhookAPI\Webhook;
 use DateInterval;
 use dktapps\pmforms\BaseForm;
-use pocketmine\permission\BanEntry;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use supercrafter333\BetterBan\Commands\BanCommand;
@@ -20,6 +19,7 @@ use supercrafter333\BetterBan\Commands\EditipbanCommand;
 use supercrafter333\BetterBan\Commands\KickCommand;
 use supercrafter333\BetterBan\Commands\PardonCommand;
 use supercrafter333\BetterBan\Commands\PardonIpCommand;
+use supercrafter333\BetterBan\Permission\MySQLBanList;
 
 /**
  * Class BetterBan
@@ -43,6 +43,12 @@ class BetterBan extends PluginBase
      */
     public static $DISCORD_WEBHOOK_URL = null;
 
+    /** @var MySQLBanList $mysqlBanByName */
+    private $mysqlBanByName;
+
+    /** @var MySQLBanList $mysqlBanByIP */
+    private $mysqlBanByIP;
+
     /**
      * On Plugin Loading
      */
@@ -63,9 +69,12 @@ class BetterBan extends PluginBase
 
     /**
      * On Plugin Enabling
+     * @todo Check if the MySQLBanList's should be set
      */
     public function onEnable()
     {
+        $this->mysqlBanByName = new MySQLBanList([], MySQLBanList::TABLE_NAMEBANS); // TODO: Include connection details
+        $this->mysqlBanByIP = new MySQLBanList([], MySQLBanList::TABLE_IPBANS); // TODO: Include connection details
         $cmdMap = $this->getServer()->getCommandMap();
         $pmmpBanCmd = $cmdMap->getCommand("ban");
         $pmmpPardonCmd = $cmdMap->getCommand("pardon");
@@ -92,6 +101,14 @@ class BetterBan extends PluginBase
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
     }
 
+    public function onDisable()
+    {
+        if(isset($this->mysqlBanByName))
+            $this->getMySQLNameBans()->close();
+        if(isset($this->mysqlBanByIP))
+            $this->getMySQLIpBans()->close();
+    }
+
     /**
      * @return static
      */
@@ -111,6 +128,22 @@ class BetterBan extends PluginBase
             $this->saveResource("config.yml");
             $this->getLogger()->debug("config.yml Updated for version: §b$version");
         }
+    }
+
+    /**
+     * @return MySQLBanList
+     */
+    public function getMySQLNameBans()
+    {
+        return $this->mysqlBanByName;
+    }
+
+    /**
+     * @return MySQLBanList
+     */
+    public function getMySQLIpBans()
+    {
+        return $this->mysqlBanByIP;
     }
 
     /**
