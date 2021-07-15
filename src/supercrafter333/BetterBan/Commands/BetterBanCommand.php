@@ -26,6 +26,7 @@ class BetterBanCommand extends Command implements PluginIdentifiableCommand
      */
     public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = [])
     {
+        $this->setPermission("BetterBan.betterban.cmd");
         parent::__construct("betterban", "Open the BetterBan Form!", $usageMessage, $aliases);
     }
 
@@ -36,6 +37,9 @@ class BetterBanCommand extends Command implements PluginIdentifiableCommand
      */
     public function execute(CommandSender $sender, string $commandLabel, array $args): void
     {
+        if (!$this->testPermission($sender)) {
+            return;
+        }
         if ($sender instanceof Player) {
             $sender->sendForm(BBDefaultForms::openMenuForm());
             return;

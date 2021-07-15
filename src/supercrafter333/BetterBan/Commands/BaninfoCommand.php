@@ -40,6 +40,9 @@ class BaninfoCommand extends Command implements PluginIdentifiableCommand
      */
     public function execute(CommandSender $s, string $commandLabel, array $args): void
     {
+        if (!$this->testPermission($sender)) {
+            return;
+        }
         if (empty($args)) {
             $s->sendMessage($this->usageMessage);
             return;
