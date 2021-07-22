@@ -51,8 +51,8 @@ You've found a Bug?
 |`/kick <player>`|Kick a player|
 |`/betterban`|Open the BetterBan-Form|
 
-### License:
-This Pluginis licensed under the [Apache License 2.0](/LICENSE)! Plugin by supercrafter333!
+### License
+This Plugin licensed under the [Apache License 2.0](/LICENSE)! Plugin by supercrafter333!
 
 ### Credits
 Owner: supercrafter333
