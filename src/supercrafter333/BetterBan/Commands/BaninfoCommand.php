@@ -30,6 +30,7 @@ class BaninfoCommand extends Command implements PluginIdentifiableCommand
     public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = [])
     {
         $this->pl = BetterBan::getInstance();
+        $this->setPermission("BetterBan.baninfo.cmd");
         parent::__construct("baninfo", "See the ban-informations of a banned player", "§4Usage:§r /baninfo <player>", ["baninformation"]);
     }
 
@@ -40,6 +41,10 @@ class BaninfoCommand extends Command implements PluginIdentifiableCommand
      */
     public function execute(CommandSender $s, string $commandLabel, array $args): void
     {
+        if(!$this->testPermission($s)){
+            return;
+        }
+
         if (empty($args)) {
             $s->sendMessage($this->usageMessage);
             return;
@@ -49,7 +54,9 @@ class BaninfoCommand extends Command implements PluginIdentifiableCommand
         $server = $pl->getServer();
         $nameBans = $server->getNameBans();
         if ($nameBans->getEntry($name) === null) {
-            $s->sendMessage(str_replace(["{name}"], [$name], $pl->getConfig()->get("error-not-banned")));
+            //$s->sendMessage(str_replace(["{name}"], [$name], $pl->getConfig()->get("error-not-banned")));
+            $s->sendMessage(str_replace(["{name}", "{log}", "{line}"], [$name, $pl->getBanLogOf($name), "\n"], $pl->getConfig()->get("baninfo-not-banned")));
+            return;
         }
         $ban = $nameBans->getEntry($name);
         $source = $ban->getSource();

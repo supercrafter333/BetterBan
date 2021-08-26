@@ -65,13 +65,13 @@ class EditipbanCommand extends Command implements PluginIdentifiableCommand
             $s->sendMessage($this->usageMessage);
             return;
         }
-        $ban = $server->getIPBans()->getEntry($args[0]);
+        $ban = $plugin->useMySQL() ? $plugin->getMySQLIpBans()->getEntry($args[0]) : $server->getIPBans()->getEntry($args[0]);
         $oldDate = $ban->getExpires();
         if ($oldDate === null) {
             $s->sendMessage(str_replace(["{ip}"], [$args[0]], $cfg->get("error-no-iptempban-found")));
             return;
         }
-        $ipBans = $server->getIPBans();
+        $ipBans = $plugin->useMySQL() ? $plugin->getMySQLIpBans() : $server->getIPBans();
         $option = $args[1];
         $ebEvent = new BBEditbanEvent($playerip);
         $ebEvent->call();
@@ -84,7 +84,11 @@ class EditipbanCommand extends Command implements PluginIdentifiableCommand
             $date = $information[0];
             $newDate = $date;
             $ban->setExpires($newDate);
-            $server->getIPBans()->save(true);
+            if ($plugin->useMySQL()) {
+                $ipBans->add($ban);
+            } else {
+                $ipBans->save(true);
+            }
             //$server->getLogger()->info("§7§o[Added time to ban: " . $playerip . " +" . $args[2] . "]");
             Command::broadcastCommandMessage($s, "§7§o[Added time to ip-ban: " . $playerip . " +" . $args[2] . "]", true);
             return;
@@ -95,7 +99,11 @@ class EditipbanCommand extends Command implements PluginIdentifiableCommand
             $newDate = $date;
             //$clipboard = ["time" => $ban->getExpires(), "reason" => $ban->getReason(), "source" => $ban->getSource(), "ip" => $ban->getip(), "created" => $ban->getCreated()];
             $ban->setExpires($newDate);
-            $server->getIPBans()->save(true);
+            if ($plugin->useMySQL()) {
+                $ipBans->add($ban);
+            } else {
+                $ipBans->save(true);
+            }
             Command::broadcastCommandMessage($s, "§7§o[Reduced time for ip-ban: " . $playerip . " -" . $args[2] . "]", true);
             return;
         }

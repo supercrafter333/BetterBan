@@ -32,6 +32,7 @@ class BanlogCommand extends Command implements PluginIdentifiableCommand
     public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = [])
     {
         $this->pl = BetterBan::getInstance();
+        $this->setPermission("BetterBan.banlog.cmd");
         parent::__construct("banlog", "See the ban-count of a player", "§4Usage:§r /banlog <player>", ["bancount"]);
     }
 
@@ -42,6 +43,10 @@ class BanlogCommand extends Command implements PluginIdentifiableCommand
      */
     public function execute(CommandSender $s, string $commandLabel, array $args): void
     {
+        if(!$this->testPermission($s)){
+            return;
+        }
+
         if (empty($args)) {
             $s->sendMessage($this->usageMessage);
             return;

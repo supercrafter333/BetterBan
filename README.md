@@ -11,9 +11,10 @@ I would be very happy if you leave a star for this project.
 - Custom Kicks
 - See how often was a player banned
 - See ban informations of bans
-- configure something in the `config.yml`
+- MySQL Support (Thank you very much [@Tobias-2006](https://github.com/Tobias-2006))
 - Discord-Webhook Support
 - Events
+- configure something in the `config.yml`
 - Easy2Use
 
 ### TODOs
@@ -26,6 +27,11 @@ I would be very happy if you leave a star for this project.
 - [X] Custom Kick
 - [X] Forms
 
+**Mutes & Warns?**
+
+Please **DO NOT** open issues with suggestions like "Can you add mutes/warns?"! I already have plugins for this, [theWarn](https://github.com/supercrafter333/theWarn) to warn players and BetterMute which is under development.
+
+###
 ### Bugs - none
 You've found a Bug?
 - Go to [Issues](https://github.com/supercrafter333/BetterBan/issues)

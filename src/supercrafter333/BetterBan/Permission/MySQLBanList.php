@@ -30,7 +30,7 @@ class MySQLBanList
     {
         $this->settings = $settings;
         $this->table = $table;
-        $this->db = new \mysqli($settings['host'], $settings['user'], $settings['password'], $settings['database']);
+        $this->db = new \mysqli($settings['host'], $settings['user'], $settings['password'], $settings['database'], $settings['port']);
         if($this->db->connect_errno)
             throw new \RuntimeException('[BetterBan] ' . $this->db->connect_error);
         $this->init();

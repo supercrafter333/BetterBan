@@ -11,12 +11,15 @@ permissions:
       BetterBan.editban.cmd:
         description: Command permission
         default: op
+      BetterBan.editipban.cmd:
+        description: Command permission
+        default: op
       BetterBan.banlog.cmd:
         description: Command permission
         default: op
       BetterBan.baninfo.cmd:
         description: Command permission
         default: op
-      BetterBan.editipban.cmd:
+      BetterBan.betterban.cmd:
         description: Command permission
         default: op

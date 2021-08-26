@@ -69,12 +69,14 @@ class BetterBan extends PluginBase
 
     /**
      * On Plugin Enabling
-     * @todo Check if the MySQLBanList's should be set
      */
     public function onEnable()
     {
-        $this->mysqlBanByName = new MySQLBanList([], MySQLBanList::TABLE_NAMEBANS); // TODO: Include connection details
-        $this->mysqlBanByIP = new MySQLBanList([], MySQLBanList::TABLE_IPBANS); // TODO: Include connection details
+        if ($this->useMySQL()) {
+            $this->mysqlBanByName = new MySQLBanList($this->getMySQLSettings(), MySQLBanList::TABLE_NAMEBANS);
+            $this->mysqlBanByIP = new MySQLBanList($this->getMySQLSettings(), MySQLBanList::TABLE_IPBANS);
+            $this->getLogger()->info("MySQL support enabled!"); //I hope that's okay :/
+        }
         $cmdMap = $this->getServer()->getCommandMap();
         $pmmpBanCmd = $cmdMap->getCommand("ban");
         $pmmpPardonCmd = $cmdMap->getCommand("pardon");
@@ -101,6 +103,9 @@ class BetterBan extends PluginBase
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
     }
 
+    /**
+     *
+     */
     public function onDisable()
     {
         if(isset($this->mysqlBanByName))
@@ -133,7 +138,7 @@ class BetterBan extends PluginBase
     /**
      * @return MySQLBanList
      */
-    public function getMySQLNameBans()
+    public function getMySQLNameBans(): MySQLBanList
     {
         return $this->mysqlBanByName;
     }
@@ -152,6 +157,23 @@ class BetterBan extends PluginBase
     public function getBanLogs()
     {
         return new Config($this->getDataFolder() . "banLogs.yml", Config::YAML);
+    }
+
+    /**
+     * @return bool
+     */
+    public function useMySQL(): bool
+    {
+        if ($this->getConfig()->get("use-MySQL") !== "true") return false;
+        return true;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMySQLSettings(): array
+    {
+        return $this->getConfig()->get("MySQL", []);
     }
 
     /**
