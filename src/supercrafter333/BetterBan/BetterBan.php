@@ -123,6 +123,28 @@ class BetterBan extends PluginBase
     }
 
     /**
+     * @param string $name
+     * @return bool
+     */
+    public static function isBanned(string $name): bool
+    {
+        $pl = self::getInstance();
+        if ($pl->useMySQL()) return $pl->getMySQLNameBans()->isBanned($name);
+        return $pl->getServer()->getNameBans()->isBanned($name);
+    }
+
+    /**
+     * @param string $ip
+     * @return bool
+     */
+    public static function isBannedIp(string $ip): bool
+    {
+        $pl = self::getInstance();
+        if ($pl->useMySQL()) return $pl->getMySQLIpBans()->isBanned($ip);
+        return $pl->getServer()->getIPBans()->isBanned($ip);
+    }
+
+    /**
      * @param $version
      */
     private function versionCheck($version)
