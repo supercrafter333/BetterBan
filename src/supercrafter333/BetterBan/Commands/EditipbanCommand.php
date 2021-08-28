@@ -60,7 +60,7 @@ class EditipbanCommand extends Command implements PluginIdentifiableCommand
         }
         $server = $plugin->getServer();
         if (!$server->getIPBans()->isBanned($args[0])) {
-            $s->sendMessage(str_replace(["{ip}"], [$args[0]], $cfg->get("error-not-ipbanned")));
+            $s->sendMessage(str_replace(["{ip}"], [(string)$args[0]], $cfg->get("error-not-ipbanned")));
             return;
         }
         $playerip = $args[0];
@@ -71,7 +71,7 @@ class EditipbanCommand extends Command implements PluginIdentifiableCommand
         $ban = $server->getIPBans()->getEntry($args[0]);
         $oldDate = $ban->getExpires();
         if ($oldDate === null) {
-            $s->sendMessage(str_replace(["{ip}"], [$args[0]], $cfg->get("error-no-iptempban-found")));
+            $s->sendMessage(str_replace(["{ip}"], [(string)$args[0]], $cfg->get("error-no-iptempban-found")));
             return;
         }
         $ipBans = $server->getIPBans();

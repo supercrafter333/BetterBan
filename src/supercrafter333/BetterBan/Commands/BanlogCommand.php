@@ -58,7 +58,7 @@ class BanlogCommand extends Command implements PluginIdentifiableCommand
         }
         $pl = $this->pl;
         $name = implode(" ", $args);
-        $s->sendMessage(str_replace(["{name}", "{log}"], [$name, $pl->getBanLogOf($name)], $pl->getConfig()->get("banlog-message-log")));
+        $s->sendMessage(str_replace(["{name}", "{log}"], [$name, (string)$pl->getBanLogOf($name)], $pl->getConfig()->get("banlog-message-log")));
         return;
     }
 

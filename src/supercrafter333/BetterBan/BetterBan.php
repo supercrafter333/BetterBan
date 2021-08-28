@@ -6,7 +6,9 @@ use CortexPE\DiscordWebhookAPI\Embed;
 use CortexPE\DiscordWebhookAPI\Message;
 use CortexPE\DiscordWebhookAPI\Webhook;
 use DateInterval;
+use DateTime;
 use dktapps\pmforms\BaseForm;
+use Exception;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use supercrafter333\BetterBan\Commands\BanCommand;
@@ -30,7 +32,7 @@ class BetterBan extends PluginBase
     /**
      * @var self
      */
-    protected static $instance;
+    protected static BetterBan $instance;
 
     /**
      * Version of BetterBan
@@ -49,7 +51,7 @@ class BetterBan extends PluginBase
     {
         self::$instance = $this;
         $this->saveResource("config.yml");
-        $this->versionCheck(self::VERSION, false); //VERSION CHECK
+        $this->versionCheck(false); //VERSION CHECK
         $dc_webhook = $this->getConfig()->get("discord-webhook") !== "" ? $this->getConfig()->get("discord-webhook") : null;
         self::$DISCORD_WEBHOOK_URL = $dc_webhook;
         if (!class_exists(BaseForm::class)) {
@@ -104,17 +106,16 @@ class BetterBan extends PluginBase
     }
 
     /**
-     * @param $version
      * @param bool $update
      */
-    private function versionCheck($version, bool $update = true)
+    private function versionCheck(bool $update = true)
     {
-        if (!$this->getConfig()->exists("version") || $this->getConfig()->get("version") !== $version) {
+        if (!$this->getConfig()->exists("version") || $this->getConfig()->get("version") !== self::VERSION) {
             if ($update == true) {
                 $this->getLogger()->debug("OUTDATED CONFIG.YML!! You config.yml is outdated! Your config.yml will automatically updated!");
                 rename($this->getDataFolder() . "config.yml", $this->getDataFolder() . "oldConfig.yml");
                 $this->saveResource("config.yml");
-                $this->getLogger()->debug("config.yml Updated for version: §b$version");
+                $this->getLogger()->debug("config.yml Updated for version: §b" . (self::VERSION) . "");
             } else {
                 $this->getLogger()->warning("Your config.yml is outdated but that's not so bad.");
             }
@@ -124,7 +125,7 @@ class BetterBan extends PluginBase
     /**
      * @return Config
      */
-    public function getBanLogs()
+    public function getBanLogs(): Config
     {
         return new Config($this->getDataFolder() . "banLogs.yml", Config::YAML);
     }
@@ -137,11 +138,10 @@ class BetterBan extends PluginBase
         $log = $this->getBanLogs();
         if ($log->exists($playerName)) {
             $log->set($playerName, intval($log->get($playerName) + 1));
-            $log->save();
         } else {
             $log->set($playerName, 1);
-            $log->save();
         }
+        $log->save();
     }
 
     /**
@@ -150,14 +150,13 @@ class BetterBan extends PluginBase
      */
     public function getBanLogOf(string $playerName): int
     {
-        $bans = $this->getBanLogs()->exists($playerName) ? $this->getBanLogs()->get($playerName) : 0;
-        return $bans;
+        return $this->getBanLogs()->exists($playerName) ? $this->getBanLogs()->get($playerName) : 0;
     }
 
     /**
      * @param string $string
      * @return array|null
-     * @throws \Exception
+     * @throws Exception
      */
     public function stringToTimestamp(string $string): ?array
     {
@@ -175,7 +174,7 @@ class BetterBan extends PluginBase
         if (trim($string) === "") {
             return null;
         }
-        $t = new \DateTime();
+        $t = new DateTime();
         preg_match_all("/[0-9]+(y|mo|w|d|h|m|s)|[0-9]+/", $string, $found);
         if (count($found[0]) < 1) {
             return null;
@@ -207,11 +206,11 @@ class BetterBan extends PluginBase
 
     /**
      * @param string $string
-     * @param \DateTime $time
+     * @param DateTime $time
      * @return array|null
-     * @throws \Exception
+     * @throws Exception
      */
-    public function stringToTimestampAdd(string $string, \DateTime $time): ?array
+    public function stringToTimestampAdd(string $string, DateTime $time): ?array
     {
         /**
          * Rules:
@@ -259,11 +258,11 @@ class BetterBan extends PluginBase
 
     /**
      * @param string $string
-     * @param \DateTime $time
+     * @param DateTime $time
      * @return array|null
-     * @throws \Exception
+     * @throws Exception
      */
-    public function stringToTimestampReduce(string $string, \DateTime $time): ?array
+    public function stringToTimestampReduce(string $string, DateTime $time): ?array
     {
         /**
          * Rules:
@@ -326,7 +325,7 @@ class BetterBan extends PluginBase
             $embed->setTitle($title);
             $embed->setDescription($message);
             $embed->setColor($color);
-            $embed->setTimestamp(new \DateTime('now'));
+            $embed->setTimestamp(new DateTime('now'));
             $msg->addEmbed($embed);
             $webhook->send($msg);
         }
@@ -347,7 +346,7 @@ class BetterBan extends PluginBase
             $embed->setTitle($title);
             $embed->setDescription($message);
             $embed->setColor($color);
-            $embed->setTimestamp(new \DateTime('now'));
+            $embed->setTimestamp(new DateTime('now'));
             $msg->addEmbed($embed);
             $webhook->send($msg);
         }
@@ -369,7 +368,7 @@ class BetterBan extends PluginBase
             $embed->setTitle($title);
             $embed->setDescription($message);
             $embed->setColor($color);
-            $embed->setTimestamp(new \DateTime('now'));
+            $embed->setTimestamp(new DateTime('now'));
             $msg->addEmbed($embed);
             $webhook->send($msg);
         }
@@ -392,7 +391,7 @@ class BetterBan extends PluginBase
             $embed->setTitle($title);
             $embed->setDescription($message);
             $embed->setColor($color);
-            $embed->setTimestamp(new \DateTime('now'));
+            $embed->setTimestamp(new DateTime('now'));
             $msg->addEmbed($embed);
             $webhook->send($msg);
         }
@@ -413,7 +412,7 @@ class BetterBan extends PluginBase
             $embed->setTitle($title);
             $embed->setDescription($message);
             $embed->setColor($color);
-            $embed->setTimestamp(new \DateTime('now'));
+            $embed->setTimestamp(new DateTime('now'));
             $msg->addEmbed($embed);
             $webhook->send($msg);
         }
@@ -435,7 +434,7 @@ class BetterBan extends PluginBase
             $embed->setTitle($title);
             $embed->setDescription($message);
             $embed->setColor($color);
-            $embed->setTimestamp(new \DateTime('now'));
+            $embed->setTimestamp(new DateTime('now'));
             $msg->addEmbed($embed);
             $webhook->send($msg);
         }
@@ -457,7 +456,7 @@ class BetterBan extends PluginBase
             $embed->setTitle($title);
             $embed->setDescription($message);
             $embed->setColor($color);
-            $embed->setTimestamp(new \DateTime('now'));
+            $embed->setTimestamp(new DateTime('now'));
             $msg->addEmbed($embed);
             $webhook->send($msg);
         }

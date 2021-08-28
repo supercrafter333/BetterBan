@@ -67,7 +67,7 @@ class BanCommand extends Command implements PluginIdentifiableCommand
 
         if (count($args) == 2 || count($args) == 1) {
             $name = array_shift($args);
-            $reason = isset($args[0]) ? $args[0] : "";
+            $reason = isset($args[0]) ? (string)$args[0] : "";
 
             $banEvent = new BBBanEvent($sender->getName(), $name);
             $banEvent->call();
@@ -78,14 +78,14 @@ class BanCommand extends Command implements PluginIdentifiableCommand
             $pl->addBanToBanlog($name);
             $sender->getServer()->getNameBans()->addBan($name, $reason, null, $sender->getName());
             if (($player = $sender->getServer()->getPlayerExact($name)) instanceof Player) {
-                $player->kick($reason !== "" ? str_replace(["{reason}", "{line}"], [$args[0], "\n"], $cfg->get("kick-message-with-reason")) . $reason : $cfg->get("kick-message"));
+                $player->kick($reason !== "" ? str_replace(["{reason}", "{line}"], [(string)$args[0], "\n"], $cfg->get("kick-message-with-reason")) . $reason : $cfg->get("kick-message"));
                 Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.ban.success", [$player !== null ? $player->getName() : $name]));
                 $sender->sendMessage("Banned!");
                 $reason2 = $reason === "" ?? null;
             }
         } elseif (count($args) >= 3) {
             $name = array_shift($args);
-            $reason = isset($args[0]) ? $args[0] : "";
+            $reason = isset($args[0]) ? (string)$args[0] : "";
             if (!$pl->stringToTimestamp(implode(" ", $args))) {
                 $sender->sendMessage($cfg->get("use-DateInterval-format"));
                 return true;
@@ -104,7 +104,7 @@ class BanCommand extends Command implements PluginIdentifiableCommand
             $pl->addBanToBanlog($name);
             $sender->getServer()->getNameBans()->addBan($name, $reason, $bantime, $sender->getName());
             if (($player = $sender->getServer()->getPlayerExact($name)) instanceof Player) {
-                $player->kick($reason !== "" ? str_replace(["{reason}", "{time}", "{line}"], [$args[0], $bantime->format("Y.m.d H:i:s"), "\n"], $cfg->get("kick-message-with-time")) . $reason : $cfg->get("kick-message"));
+                $player->kick($reason !== "" ? str_replace(["{reason}", "{time}", "{line}"], [(string)$args[0], $bantime->format("Y.m.d H:i:s"), "\n"], $cfg->get("kick-message-with-time")) . $reason : $cfg->get("kick-message"));
                 Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.ban.success", [$player !== null ? $player->getName() : $name]));
                 $sender->sendMessage("[Time] Banned!");
                 $reason2 = $reason === "" ?? null;

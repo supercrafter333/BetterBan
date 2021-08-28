@@ -154,7 +154,7 @@ class BanIpCommand extends Command implements PluginIdentifiableCommand
             if(($player = $sender->getServer()->getPlayer($value)) instanceof Player){
                 $this->processIPBan($player->getAddress(), $sender, $reason, $expires);
 
-                Command::broadcastCommandMessage($sender, new TranslationContainer("commands.banip.success.players", [$player->getAddress(), $player->getName()]), true);
+                Command::broadcastCommandMessage($sender, new TranslationContainer("commands.banip.success.players", [(string)$player->getAddress(), $player->getName()]), true);
             }else{
                 $sender->sendMessage(new TranslationContainer("commands.banip.invalid"));
 

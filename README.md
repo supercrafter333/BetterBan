@@ -1,5 +1,9 @@
 [![Discord](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/ca6cWPpERp)
-# BetterBan - V3.0.2   [![](https://poggit.pmmp.io/shield.state/BetterBan)](https://poggit.pmmp.io/p/BetterBan) [![](https://poggit.pmmp.io/shield.dl.total/BetterBan)](https://poggit.pmmp.io/p/BetterBan)
+# BetterBan - V3.0.2-php8.0   [![](https://poggit.pmmp.io/shield.state/BetterBan)](https://poggit.pmmp.io/p/BetterBan) [![](https://poggit.pmmp.io/shield.dl.total/BetterBan)](https://poggit.pmmp.io/p/BetterBan)
+
+> **WARNING:** This version is not fully tested! Use it at **you own risk**!
+> 
+> Please report bugs in theSpawn with php8.0!
 
 **Would you like to ban players for a certain period of time? Then BetterBan is just right for you! Easily ban players for a certain time and configure a bit in `config.yml`.**
 

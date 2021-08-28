@@ -65,7 +65,7 @@ class BaninfoCommand extends Command implements PluginIdentifiableCommand
         $date = $ban->hasExpired() ? $ban->getExpires()->format("Y.m.d H:i:s") : "§8---";
         $reason = $ban->getReason();
         $log = $pl->getBanLogOf($name);
-        $s->sendMessage(str_replace(["{name}", "{source}", "{date}", "{reason}", "{log}", "{line}"], [$name, $source, $date, $reason, $log, "\n"], $pl->getConfig()->get("baninfo-message-list")));
+        $s->sendMessage(str_replace(["{name}", "{source}", "{date}", "{reason}", "{log}", "{line}"], [$name, $source, $date, $reason, (string)$log, "\n"], $pl->getConfig()->get("baninfo-message-list")));
         return;
     }
 

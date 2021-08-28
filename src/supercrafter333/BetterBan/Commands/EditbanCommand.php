@@ -60,10 +60,10 @@ class EditbanCommand extends Command implements PluginIdentifiableCommand
         }
         $server = $plugin->getServer();
         if (!$server->getNameBans()->isBanned($args[0])) {
-            $s->sendMessage(str_replace(["{name}"], [$args[0]], $cfg->get("error-not-banned")));
+            $s->sendMessage(str_replace(["{name}"], [(string)$args[0]], $cfg->get("error-not-banned")));
             return;
         }
-        $playerName = $args[0];
+        $playerName = (string)$args[0];
         if ($args[1] !== "addbantime" && $args[1] !== "reducebantime") {
             $s->sendMessage($this->usageMessage);
             return;
@@ -71,7 +71,7 @@ class EditbanCommand extends Command implements PluginIdentifiableCommand
         $ban = $server->getNameBans()->getEntry($args[0]);
         $oldDate = $ban->getExpires();
         if ($oldDate === null) {
-            $s->sendMessage(str_replace(["{name}"], [$args[0]], $cfg->get("error-no-tempban-found")));
+            $s->sendMessage(str_replace(["{name}"], [(string)$args[0]], $cfg->get("error-no-tempban-found")));
             return;
         }
         $nameBans = $server->getNameBans();
