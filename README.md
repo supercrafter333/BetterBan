@@ -3,7 +3,7 @@
 
 > **WARNING:** This version is not fully tested! Use it at **you own risk**!
 > 
-> Please report bugs in theSpawn with php8.0!
+> Please report bugs in BetterBan with php8.0!
 
 **Would you like to ban players for a certain period of time? Then BetterBan is just right for you! Easily ban players for a certain time and configure a bit in `config.yml`.**
 
