@@ -69,7 +69,7 @@ class BanCommand extends Command implements PluginIdentifiableCommand
             $name = array_shift($args);
             $reason = isset($args[0]) ? (string)$args[0] : "";
 
-            $banEvent = new BBBanEvent($sender->getName(), $name);
+            $banEvent = new BBBanEvent($name, $sender->getName());
             $banEvent->call();
             if ($banEvent->isCancelled()) {
                 Command::broadcastCommandMessage($sender, "Ban cancelled because the BBBanEvent is cancelled!", true);
