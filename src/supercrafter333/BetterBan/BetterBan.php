@@ -21,6 +21,7 @@ use supercrafter333\BetterBan\Commands\EditipbanCommand;
 use supercrafter333\BetterBan\Commands\KickCommand;
 use supercrafter333\BetterBan\Commands\PardonCommand;
 use supercrafter333\BetterBan\Commands\PardonIpCommand;
+use supercrafter333\BetterBan\Permission\MySQLBanList;
 
 /**
  * Class BetterBan
@@ -37,12 +38,18 @@ class BetterBan extends PluginBase
     /**
      * Version of BetterBan
      */
-    public const VERSION = "3.0.2";
+    public const VERSION = "4.0.0-DEV";
 
     /**
      * @var null
      */
     public static $DISCORD_WEBHOOK_URL = null;
+
+    /** @var MySQLBanList $mysqlBanByName */
+    private $mysqlBanByName;
+
+    /** @var MySQLBanList $mysqlBanByIP */
+    private $mysqlBanByIP;
 
     /**
      * On Plugin Loading
@@ -51,12 +58,9 @@ class BetterBan extends PluginBase
     {
         self::$instance = $this;
         $this->saveResource("config.yml");
-        $this->versionCheck(false); //VERSION CHECK
-        $dc_webhook = $this->getConfig()->get("discord-webhook") !== "" ? $this->getConfig()->get("discord-webhook") : null;
-        self::$DISCORD_WEBHOOK_URL = $dc_webhook;
+        $this->versionCheck(true);
         if (!class_exists(BaseForm::class)) {
             $this->getLogger()->error("pmforms missing!! Please download BetterBan from Poggit!");
-            $this->getServer()->getPluginManager()->disablePlugin($this);
         }
         if (!class_exists(Webhook::class)) {
             $this->getLogger()->error("DiscordWebhookAPI missing!! Please download BetterBan from Poggit!");
@@ -64,6 +68,8 @@ class BetterBan extends PluginBase
                 $this->getServer()->getPluginManager()->disablePlugin($this);
             }
         }
+        $dc_webhook = $this->getConfig()->get("discord-webhook") !== "" ? $this->getConfig()->get("discord-webhook") : null;
+        self::$DISCORD_WEBHOOK_URL = $dc_webhook;
     }
 
     /**
@@ -71,6 +77,11 @@ class BetterBan extends PluginBase
      */
     public function onEnable()
     {
+        if ($this->useMySQL()) {
+            $this->mysqlBanByName = new MySQLBanList($this->getMySQLSettings(), MySQLBanList::TABLE_NAMEBANS);
+            $this->mysqlBanByIP = new MySQLBanList($this->getMySQLSettings(), MySQLBanList::TABLE_IPBANS);
+            $this->getLogger()->info("MySQL support enabled!"); //I hope that's okay :/
+        }
         $cmdMap = $this->getServer()->getCommandMap();
         $pmmpBanCmd = $cmdMap->getCommand("ban");
         $pmmpPardonCmd = $cmdMap->getCommand("pardon");
@@ -98,11 +109,44 @@ class BetterBan extends PluginBase
     }
 
     /**
+     *
+     */
+    public function onDisable()
+    {
+        if(isset($this->mysqlBanByName))
+            $this->getMySQLNameBans()->close();
+        if(isset($this->mysqlBanByIP))
+            $this->getMySQLIpBans()->close();
+    }
+
+    /**
      * @return static
      */
     public static function getInstance(): self
     {
         return self::$instance;
+    }
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public static function isBanned(string $name): bool
+    {
+        $pl = self::getInstance();
+        if ($pl->useMySQL()) return $pl->getMySQLNameBans()->isBanned($name);
+        return $pl->getServer()->getNameBans()->isBanned($name);
+    }
+
+    /**
+     * @param string $ip
+     * @return bool
+     */
+    public static function isBannedIp(string $ip): bool
+    {
+        $pl = self::getInstance();
+        if ($pl->useMySQL()) return $pl->getMySQLIpBans()->isBanned($ip);
+        return $pl->getServer()->getIPBans()->isBanned($ip);
     }
 
     /**
@@ -123,11 +167,44 @@ class BetterBan extends PluginBase
     }
 
     /**
+     * @return MySQLBanList
+     */
+    public function getMySQLNameBans(): MySQLBanList
+    {
+        return $this->mysqlBanByName;
+    }
+
+    /**
+     * @return MySQLBanList
+     */
+    public function getMySQLIpBans()
+    {
+        return $this->mysqlBanByIP;
+    }
+
+    /**
      * @return Config
      */
     public function getBanLogs(): Config
     {
         return new Config($this->getDataFolder() . "banLogs.yml", Config::YAML);
+    }
+
+    /**
+     * @return bool
+     */
+    public function useMySQL(): bool
+    {
+        if ($this->getConfig()->get("use-MySQL") !== "true") return false;
+        return true;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMySQLSettings(): array
+    {
+        return $this->getConfig()->get("MySQL", []);
     }
 
     /**

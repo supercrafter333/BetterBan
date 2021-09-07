@@ -59,7 +59,12 @@ class PardonCommand extends Command implements PluginIdentifiableCommand
             return true;
         }
 
-        $sender->getServer()->getNameBans()->remove($args[0]);
+        $pl = BetterBan::getInstance();
+        if ($pl->useMySQL()) {
+            $pl->getMySQLNameBans()->remove($args[0]);
+        } else {
+            $pl->getServer()->getNameBans()->remove($args[0]);
+        }
 
         Command::broadcastCommandMessage($sender, new TranslationContainer("commands.unban.success", [$args[0]]));
 

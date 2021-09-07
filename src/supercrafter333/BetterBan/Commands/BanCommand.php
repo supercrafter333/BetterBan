@@ -69,14 +69,18 @@ class BanCommand extends Command implements PluginIdentifiableCommand
             $name = array_shift($args);
             $reason = isset($args[0]) ? (string)$args[0] : "";
 
-            $banEvent = new BBBanEvent($sender->getName(), $name);
+            $banEvent = new BBBanEvent($name, $sender->getName());
             $banEvent->call();
             if ($banEvent->isCancelled()) {
                 Command::broadcastCommandMessage($sender, "Ban cancelled because the BBBanEvent is cancelled!", true);
                 return true;
             }
             $pl->addBanToBanlog($name);
-            $sender->getServer()->getNameBans()->addBan($name, $reason, null, $sender->getName());
+            if ($pl->useMySQL()) {
+                $pl->getMySQLNameBans()->addBan($name, $reason, null, $sender->getName());
+            } else {
+                $sender->getServer()->getNameBans()->addBan($name, $reason, null, $sender->getName());
+            }
             if (($player = $sender->getServer()->getPlayerExact($name)) instanceof Player) {
                 $player->kick($reason !== "" ? str_replace(["{reason}", "{line}"], [(string)$args[0], "\n"], $cfg->get("kick-message-with-reason")) . $reason : $cfg->get("kick-message"));
                 Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.ban.success", [$player !== null ? $player->getName() : $name]));

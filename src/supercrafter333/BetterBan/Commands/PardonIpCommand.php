@@ -59,7 +59,12 @@ class PardonIpCommand extends Command implements PluginIdentifiableCommand
             return true;
         }
 
-        $sender->getServer()->getIPBans()->remove($args[0]);
+        $pl = BetterBan::getInstance();
+        if ($pl->useMySQL()) {
+            $pl->getMySQLIpBans()->remove($args[0]);
+        } else {
+            $pl->getServer()->getIpBans()->remove($args[0]);
+        }
 
         Command::broadcastCommandMessage($sender, new TranslationContainer("commands.unbanip.success", [$args[0]]));
 

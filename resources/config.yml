@@ -3,6 +3,15 @@
 
 # Configuration
 
+# MySQL - use MySQL for bans
+use-MySQL: "false"
+MySQL:
+  host: ""
+  user: ""
+  password: ""
+  database: ""
+  port: ""
+
 # Messages
 #ban
 kick-message: "Banned by admin."
@@ -13,9 +22,13 @@ kick-ip-message-with-reason: "IP Banned. Reason: {reason}"
 kick-ip-message-with-time: "IP Banned. {line} Reason: {reason} {line} Ends at: {time}"
 banlog-message-log: "§eBans of player §7{name}§e: §b{log}"
 baninfo-message-list: "§7---====§eBan Informations of §b{name}§7====---{line}§7source: §b{source}{line}§7reason: §b{reason}{line}§7date: §b{date}{line}§7log: §b{log}{line}§7---====§eBan Informations of §b{name}§7====---"
+baninfo-not-banned: "§7The player §e{name}§7 isn't banned.{line}§7Ban-Log: §r{log}"
 #kick
 kicked-message: "Kicked by admin."
 kicked-with-reason-message: "Kicked by admin.{line}Reason: {reason}"
+#logout
+#-> uses: {line} {reason} {expires} {source}
+you-are-banned-logout: "§cYou are banned on this server!{line}§7Reason: §e{reason}{line}§7Expires at: §e{expires}"
 
 # Error messages
 use-DateInterval-format: "§4Please use the the right format!§4 For example: §81d"
@@ -69,4 +82,4 @@ kick-dc-color: 16776960
 
 
 #don't change this
-version: "3.0.2"
+version: "4.0.0"

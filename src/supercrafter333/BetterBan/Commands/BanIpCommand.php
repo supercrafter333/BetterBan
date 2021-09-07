@@ -172,7 +172,12 @@ class BanIpCommand extends Command implements PluginIdentifiableCommand
      * @param \DateTime|null $expires
      */
     private function processIPBan(string $ip, CommandSender $sender, string $reason = null, \DateTime $expires = null) : void{
-        $sender->getServer()->getIPBans()->addBan($ip, $reason, $expires, $sender->getName());
+
+        if ($this->pl->useMySQL()) {
+            $this->pl->getMySQLIpBans()->addBan($ip, $reason, $expires, $sender->getName());
+        } else {
+            $sender->getServer()->getIPBans()->addBan($ip, $reason, $expires, $sender->getName());
+        }
 
         foreach($sender->getServer()->getOnlinePlayers() as $player){
             if($player->getAddress() === $ip) {

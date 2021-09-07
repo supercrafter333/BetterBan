@@ -68,13 +68,14 @@ class EditbanCommand extends Command implements PluginIdentifiableCommand
             $s->sendMessage($this->usageMessage);
             return;
         }
-        $ban = $server->getNameBans()->getEntry($args[0]);
+
+        $ban = $plugin->useMySQL() ? $plugin->getMySQLNameBans()->getEntry($args[0]) : $server->getNameBans()->getEntry($args[0]);
         $oldDate = $ban->getExpires();
         if ($oldDate === null) {
             $s->sendMessage(str_replace(["{name}"], [(string)$args[0]], $cfg->get("error-no-tempban-found")));
             return;
         }
-        $nameBans = $server->getNameBans();
+        $nameBans = $plugin->useMySQL() ? $plugin->getMySQLNameBans() : $server->getNameBans();
         $option = $args[1];
         $ebEvent = new BBEditbanEvent($playerName);
         $ebEvent->call();
@@ -87,7 +88,11 @@ class EditbanCommand extends Command implements PluginIdentifiableCommand
             $date = $information[0];
             $newDate = $date;
             $ban->setExpires($newDate);
-            $server->getNameBans()->save(true);
+            if ($plugin->useMySQL()) {
+                $nameBans->add($ban);
+            } else {
+                $nameBans->save(true);
+            }
             if (!$s->isOp()) {
                 $s->sendMessage("§7§o[Added time to ban: " . $playerName . " +" . $args[2] . "]");
             }
@@ -106,6 +111,11 @@ class EditbanCommand extends Command implements PluginIdentifiableCommand
             $newDate = $date;
             //$clipboard = ["time" => $ban->getExpires(), "reason" => $ban->getReason(), "source" => $ban->getSource(), "name" => $ban->getName(), "created" => $ban->getCreated()];
             $ban->setExpires($newDate);
+            if ($plugin->useMySQL()) {
+                $nameBans->add($ban);
+            } else {
+                $nameBans->save(true);
+            }
             $server->getNameBans()->save(true);
             if (!$s->isOp()) {
                 $s->sendMessage("§7§o[Reduced time for ban: " . $playerName . " -" . $args[2] . "]");

@@ -3,6 +3,8 @@
 namespace supercrafter333\BetterBan;
 
 use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerPreLoginEvent;
+use pocketmine\permission\BanEntry;
 use supercrafter333\BetterBan\Events\BBBanEvent;
 use supercrafter333\BetterBan\Events\BBBanIpEvent;
 use supercrafter333\BetterBan\Events\BBEditbanEvent;
@@ -78,5 +80,19 @@ class EventListener implements Listener
     {
         if ($event->isCancelled()) return;
         $event->sendDiscordWebhookMessage();
+    }
+
+    /**
+     * @param PlayerPreLoginEvent $event
+     */
+    public function onPreLogin(PlayerPreLoginEvent $event)
+    {
+        $player = $event->getPlayer();
+        if (BetterBan::isBanned($player->getName())) {
+            $pl = BetterBan::getInstance();
+            $entry = $pl->useMySQL() ? $pl->getMySQLNameBans()->getEntry($player->getName()) : $pl->getServer()->getNameBans()->getEntry($player->getName());
+            $reason = str_replace(["{source}", "{expires}", "{reason}", "{line}"], [$entry->getSource(), $entry->getExpires() !== null ? $entry->getExpires() : "Never", $entry->getReason(), "\n"], BetterBan::getInstance()->getConfig()->get("you-are-banned-logout"));
+            $player->close("", $reason); //INFO: That will trigger an error, but the error is not important
+        }
     }
 }

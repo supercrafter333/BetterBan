@@ -1,5 +1,5 @@
 [![Discord](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/ca6cWPpERp)
-# BetterBan - V3.0.2   [![](https://poggit.pmmp.io/shield.state/BetterBan)](https://poggit.pmmp.io/p/BetterBan) [![](https://poggit.pmmp.io/shield.dl.total/BetterBan)](https://poggit.pmmp.io/p/BetterBan)
+# BetterBan - V4.0.0   [![](https://poggit.pmmp.io/shield.state/BetterBan)](https://poggit.pmmp.io/p/BetterBan) [![](https://poggit.pmmp.io/shield.dl.total/BetterBan)](https://poggit.pmmp.io/p/BetterBan)
 
 **Would you like to ban players for a certain period of time? Then BetterBan is just right for you! Easily ban players for a certain time and configure a bit in `config.yml`.**
 
@@ -11,9 +11,10 @@ I would be very happy if you leave a star for this project.
 - Custom Kicks
 - See how often was a player banned
 - See ban informations of bans
-- configure something in the `config.yml`
+- MySQL Support (Thank you very much [@Tobias-2006](https://github.com/Tobias-2006))
 - Discord-Webhook Support
 - Events
+- configure something in the `config.yml`
 - Easy2Use
 
 ### TODOs
@@ -25,9 +26,14 @@ I would be very happy if you leave a star for this project.
 - [X] Ip-Bans
 - [X] Custom Kick
 - [X] Forms
-- [ ] MySQL Support ([#8](https://github.com/supercrafter333/BetterBan/issues/8)) [V4]
+- [X] MySQL Support ([#8](https://github.com/supercrafter333/BetterBan/issues/8)) [V4]
 - [ ] Add logic for Player & IP Bans ([#10](https://github.com/supercrafter333/BetterBan/issues/10)) [V4]
 
+**Mutes & Warns?**
+
+Please **DO NOT** open issues with suggestions like "Can you add mutes/warns?"! I already have plugins for this, [theWarn](https://github.com/supercrafter333/theWarn) to warn players and BetterMute which is under development.
+
+###
 ### Bugs - none
 You've found a Bug?
 - Go to [Issues](https://github.com/supercrafter333/BetterBan/issues)
@@ -51,7 +57,7 @@ You've found a Bug?
 |`/betterban`|Open the BetterBan-Form|
 
 ### License
-This Plugin licensed under the [Apache License 2.0](/LICENSE)! Plugin by supercrafter333!
+This Plugin is licensed under the [Apache License 2.0](/LICENSE)! Plugin by supercrafter333!
 
 ### Credits
 Owner: supercrafter333
