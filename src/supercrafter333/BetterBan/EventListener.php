@@ -91,7 +91,7 @@ class EventListener implements Listener
         if (BetterBan::isBanned($player->getName())) {
             $pl = BetterBan::getInstance();
             $entry = $pl->useMySQL() ? $pl->getMySQLNameBans()->getEntry($player->getName()) : $pl->getServer()->getNameBans()->getEntry($player->getName());
-            $reason = str_replace(["{source}", "{expires}", "{reason}", "{line}"], [$entry->getSource(), $entry->getExpires() !== null ? $entry->getExpires() : "Never", $entry->getReason(), "\n"], BetterBan::getInstance()->getConfig()->get("you-are-banned-logout"));
+            $reason = str_replace(["{source}", "{expires}", "{reason}", "{line}"], [$entry->getSource(), $entry->getExpires() !== null ? $entry->getExpires()->format("d.m.Y H:i:s") : "Never", $entry->getReason(), "\n"], BetterBan::getInstance()->getConfig()->get("you-are-banned-logout"));
             $player->close("", $reason); //INFO: That will trigger an error, but the error is not important
         }
     }
