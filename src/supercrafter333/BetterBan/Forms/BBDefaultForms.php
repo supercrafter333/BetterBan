@@ -441,7 +441,7 @@ class BBDefaultForms
             [
                 new Label("l1", "Here you can kick a player from the server."),
                 new Input("name", "Name", "Name of the player"),
-                new Input("reason", "Name", "Reason of the kick"),
+                new Input("reason", "Reason", "Reason of the kick"),
                 new Label("l2", "Click on §8Send§r to submit the changes.")
             ],
             function (Player $submitter, CustomFormResponse $response): void {
