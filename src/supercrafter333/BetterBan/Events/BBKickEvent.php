@@ -3,8 +3,9 @@
 namespace supercrafter333\BetterBan\Events;
 
 use pocketmine\event\Cancellable;
+use pocketmine\event\CancellableTrait;
 use pocketmine\event\Event;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use supercrafter333\BetterBan\BetterBan;
 
 /**
@@ -13,6 +14,7 @@ use supercrafter333\BetterBan\BetterBan;
  */
 class BBKickEvent extends Event implements Cancellable
 {
+    use CancellableTrait;
 
     /**
      * @var Player

@@ -3,6 +3,7 @@
 namespace supercrafter333\BetterBan\Events;
 
 use pocketmine\event\Cancellable;
+use pocketmine\event\CancellableTrait;
 use pocketmine\event\Event;
 use supercrafter333\BetterBan\BetterBan;
 
@@ -12,6 +13,7 @@ use supercrafter333\BetterBan\BetterBan;
  */
 class BBEditbanEvent extends Event implements Cancellable
 {
+    use CancellableTrait;
 
     /**
      * @var string

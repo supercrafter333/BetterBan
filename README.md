@@ -1,5 +1,9 @@
 [![Discord](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/ca6cWPpERp)
-# BetterBan - V4.0.0   [![](https://poggit.pmmp.io/shield.state/BetterBan)](https://poggit.pmmp.io/p/BetterBan) [![](https://poggit.pmmp.io/shield.dl.total/BetterBan)](https://poggit.pmmp.io/p/BetterBan)
+# BetterBan - V4.0.0-PM4   [![](https://poggit.pmmp.io/shield.state/BetterBan)](https://poggit.pmmp.io/p/BetterBan) [![](https://poggit.pmmp.io/shield.dl.total/BetterBan)](https://poggit.pmmp.io/p/BetterBan)
+
+> **WARNING:** This version of theSpawn is developed for *PocketMine-MP 4* (PM4), please only use it if you use PM4!
+> 
+> Please report bugs, if you found a bug!!
 
 **Would you like to ban players for a certain period of time? Then BetterBan is just right for you! Easily ban players for a certain time and configure a bit in `config.yml`.**
 

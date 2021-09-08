@@ -3,8 +3,7 @@
 namespace supercrafter333\BetterBan;
 
 use pocketmine\event\Listener;
-use pocketmine\event\player\PlayerPreLoginEvent;
-use pocketmine\permission\BanEntry;
+use pocketmine\event\player\PlayerLoginEvent;
 use supercrafter333\BetterBan\Events\BBBanEvent;
 use supercrafter333\BetterBan\Events\BBBanIpEvent;
 use supercrafter333\BetterBan\Events\BBEditbanEvent;
@@ -83,9 +82,9 @@ class EventListener implements Listener
     }
 
     /**
-     * @param PlayerPreLoginEvent $event
+     * @param PlayerLoginEvent $event
      */
-    public function onPreLogin(PlayerPreLoginEvent $event)
+    public function onPreLogin(PlayerLoginEvent $event)
     {
         $player = $event->getPlayer();
         if (BetterBan::isBanned($player->getName())) {

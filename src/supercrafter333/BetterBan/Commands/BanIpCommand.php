@@ -4,10 +4,10 @@ namespace supercrafter333\BetterBan\Commands;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\command\utils\InvalidCommandSyntaxException;
-use pocketmine\lang\TranslationContainer;
-use pocketmine\Player;
+use pocketmine\lang\KnownTranslationFactory;
+use pocketmine\lang\KnownTranslationKeys;
+use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
 use supercrafter333\BetterBan\BetterBan;
 use supercrafter333\BetterBan\Events\BBBanEvent;
@@ -18,7 +18,7 @@ use supercrafter333\BetterBan\Forms\BBDefaultForms;
  * Class BanIpCommand
  * @package supercrafter333\BetterBan\Commands
  */
-class BanIpCommand extends Command implements PluginIdentifiableCommand
+class BanIpCommand extends Command
 {
     /**
      * @var BetterBan
@@ -36,7 +36,7 @@ class BanIpCommand extends Command implements PluginIdentifiableCommand
     public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = [])
     {
         $this->pl = BetterBan::getInstance();
-        parent::__construct($name, "%pocketmine.command.ban.ip.description", "§4Use: §r/banip <ip-address> [reason: ...] [date interval: ...]", ["ban-ip"]);
+        parent::__construct($name, KnownTranslationKeys::POCKETMINE_COMMAND_BAN_IP_DESCRIPTION, "§4Use: §r/banip <ip-address> [reason: ...] [date interval: ...]", ["ban-ip"]);
         $this->setPermission("pocketmine.command.ban.ip");
     }
 
@@ -149,14 +149,14 @@ class BanIpCommand extends Command implements PluginIdentifiableCommand
             }
             $this->processIPBan($value, $sender, $reason, $expires);
 
-            Command::broadcastCommandMessage($sender, new TranslationContainer("commands.banip.success", [$value]), true);
+            Command::broadcastCommandMessage($sender, KnownTranslationFactory::commands_banip_success($value), true);
         }else{
-            if(($player = $sender->getServer()->getPlayer($value)) instanceof Player){
-                $this->processIPBan($player->getAddress(), $sender, $reason, $expires);
+            if(($player = $sender->getServer()->getPlayerByPrefix($value)) instanceof Player){
+                $this->processIPBan($player->getNetworkSession()->getIp(), $sender, $reason, $expires);
 
-                Command::broadcastCommandMessage($sender, new TranslationContainer("commands.banip.success.players", [(string)$player->getAddress(), $player->getName()]), true);
+                Command::broadcastCommandMessage($sender, KnownTranslationFactory::commands_banip_success_players((string)$player->getNetworkSession()->getIp(), $player->getName()), true);
             }else{
-                $sender->sendMessage(new TranslationContainer("commands.banip.invalid"));
+                $sender->sendMessage(KnownTranslationFactory::commands_banip_invalid());
 
                 return false;
             }
@@ -180,7 +180,7 @@ class BanIpCommand extends Command implements PluginIdentifiableCommand
         }
 
         foreach($sender->getServer()->getOnlinePlayers() as $player){
-            if($player->getAddress() === $ip) {
+            if($player->getNetworkSession()->getIp() === $ip) {
                 $cfg = BetterBan::getInstance()->getConfig();
                 BetterBan::getInstance()->addBanToBanlog($player->getName());
                 if ($reason == null) {

@@ -4,10 +4,10 @@ namespace supercrafter333\BetterBan\Commands;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\command\utils\InvalidCommandSyntaxException;
-use pocketmine\lang\TranslationContainer;
-use pocketmine\Player;
+use pocketmine\lang\KnownTranslationFactory;
+use pocketmine\lang\KnownTranslationKeys;
+use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
 use supercrafter333\BetterBan\BetterBan;
 use supercrafter333\BetterBan\Events\BBPardonEvent;
@@ -17,7 +17,7 @@ use supercrafter333\BetterBan\Forms\BBDefaultForms;
  * Class PardonCommand
  * @package supercrafter333\BetterBan\Commands
  */
-class PardonCommand extends Command implements PluginIdentifiableCommand
+class PardonCommand extends Command
 {
 
     /**
@@ -27,8 +27,8 @@ class PardonCommand extends Command implements PluginIdentifiableCommand
     public function __construct(string $name){
         parent::__construct(
             $name,
-            "%pocketmine.command.unban.player.description",
-            "%commands.unban.usage",
+            KnownTranslationKeys::POCKETMINE_COMMAND_UNBAN_PLAYER_DESCRIPTION,
+            KnownTranslationKeys::COMMANDS_UNBAN_USAGE,
             ["unban"]
         );
         $this->setPermission("pocketmine.command.unban.player");
@@ -66,7 +66,7 @@ class PardonCommand extends Command implements PluginIdentifiableCommand
             $pl->getServer()->getNameBans()->remove($args[0]);
         }
 
-        Command::broadcastCommandMessage($sender, new TranslationContainer("commands.unban.success", [$args[0]]));
+        Command::broadcastCommandMessage($sender, KnownTranslationFactory::commands_unban_success($args[0]));
 
         return true;
     }

@@ -4,10 +4,10 @@ namespace supercrafter333\BetterBan\Commands;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\command\utils\InvalidCommandSyntaxException;
-use pocketmine\lang\TranslationContainer;
-use pocketmine\Player;
+use pocketmine\lang\KnownTranslationFactory;
+use pocketmine\lang\KnownTranslationKeys;
+use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
 use supercrafter333\BetterBan\BetterBan;
 use supercrafter333\BetterBan\Events\BBPardonIpEvent;
@@ -17,7 +17,7 @@ use supercrafter333\BetterBan\Forms\BBDefaultForms;
  * Class PardonIpCommand
  * @package supercrafter333\BetterBan\Commands
  */
-class PardonIpCommand extends Command implements PluginIdentifiableCommand
+class PardonIpCommand extends Command
 {
 
     /**
@@ -27,8 +27,8 @@ class PardonIpCommand extends Command implements PluginIdentifiableCommand
     public function __construct(string $name){
         parent::__construct(
             $name,
-            "%pocketmine.command.unban.ip.description",
-            "%commands.unbanip.usage",
+            KnownTranslationKeys::POCKETMINE_COMMAND_UNBAN_IP_DESCRIPTION,
+            KnownTranslationKeys::COMMANDS_UNBANIP_USAGE,
             ["unban-ip"]
         );
         $this->setPermission("pocketmine.command.unban.ip");
@@ -59,15 +59,18 @@ class PardonIpCommand extends Command implements PluginIdentifiableCommand
             return true;
         }
 
-        $pl = BetterBan::getInstance();
-        if ($pl->useMySQL()) {
-            $pl->getMySQLIpBans()->remove($args[0]);
-        } else {
-            $pl->getServer()->getIpBans()->remove($args[0]);
+        if(preg_match("/^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$/", $args[0])){
+			$pl = BetterBan::getInstance();
+            if ($pl->useMySQL()) {
+                $pl->getMySQLIpBans()->remove($args[0]);
+            } else {
+                $pl->getServer()->getIpBans()->remove($args[0]);
+            }
+			$sender->getServer()->getNetwork()->unblockAddress($args[0]);
+			Command::broadcastCommandMessage($sender, KnownTranslationFactory::commands_unbanip_success($args[0]));
+		}else {
+            $sender->sendMessage(KnownTranslationFactory::commands_unbanip_invalid());
         }
-
-        Command::broadcastCommandMessage($sender, new TranslationContainer("commands.unbanip.success", [$args[0]]));
-
         return true;
     }
 

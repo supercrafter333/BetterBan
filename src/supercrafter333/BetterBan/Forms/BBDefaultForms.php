@@ -5,7 +5,6 @@ namespace supercrafter333\BetterBan\Forms;
 use DateTime;
 use dktapps\pmforms\CustomForm;
 use dktapps\pmforms\CustomFormResponse;
-use dktapps\pmforms\element\CustomFormElement;
 use dktapps\pmforms\element\Input;
 use dktapps\pmforms\element\Label;
 use dktapps\pmforms\element\Slider;
@@ -13,8 +12,8 @@ use dktapps\pmforms\element\Toggle;
 use dktapps\pmforms\MenuForm;
 use dktapps\pmforms\MenuOption;
 use pocketmine\command\Command;
-use pocketmine\lang\TranslationContainer;
-use pocketmine\Player;
+use pocketmine\lang\KnownTranslationFactory;
+use pocketmine\player\Player;
 use supercrafter333\BetterBan\BetterBan;
 use supercrafter333\BetterBan\Events\BBBanEvent;
 use supercrafter333\BetterBan\Events\BBBanIpEvent;
@@ -128,7 +127,7 @@ class BBDefaultForms
                     $submitter->getServer()->getNameBans()->addBan($name, $reason, $bantime, $submitter->getName());
                     if (($player = $submitter->getServer()->getPlayerExact($name)) instanceof Player) {
                         $player->kick($reason !== "" ? str_replace(["{reason}", "{time}", "{line}"], [$reason, $bantime->format("Y.m.d H:i:s"), "\n"], $cfg->get("kick-message-with-time")) . $reason : $cfg->get("kick-message"));
-                        Command::broadcastCommandMessage($submitter, new TranslationContainer("%commands.ban.success", [$player !== null ? $player->getName() : $name]));
+                        Command::broadcastCommandMessage($submitter, KnownTranslationFactory::commands_ban_success($player !== null ? $player->getName() : $name));
                         $submitter->sendMessage("[Time] Banned!");
                     }
                 }
@@ -196,7 +195,7 @@ class BBDefaultForms
                     $submitter->getServer()->getIPBans()->addBan($ip, $reason, $bantime, $submitter->getName());
                     if (($player = $submitter->getServer()->getPlayerExact($ip)) instanceof Player) {
                         $player->kick(str_replace(["{reason}", "{time}", "{line}"], [$reason, $bantime->format("Y.m.d H:i:s"), "\n"], $cfg->get("kick-ip-message-with-time")));
-                        Command::broadcastCommandMessage($submitter, new TranslationContainer("commands.banip.success.players", [$player->getAddress(), $player->getName()]), true);
+                        Command::broadcastCommandMessage($submitter, KnownTranslationFactory::commands_banip_success_players((string)$player->getNetworkSession()->getIp(), $player->getName()), true);
                         $submitter->sendMessage("[Time] Banned!");
                     }
                 }

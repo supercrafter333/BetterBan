@@ -4,7 +4,6 @@ namespace supercrafter333\BetterBan\Commands;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\plugin\Plugin;
 use supercrafter333\BetterBan\BetterBan;
 
@@ -12,7 +11,7 @@ use supercrafter333\BetterBan\BetterBan;
  * Class BaninfoCommand
  * @package supercrafter333\BetterBan\Commands
  */
-class BaninfoCommand extends Command implements PluginIdentifiableCommand
+class BaninfoCommand extends Command
 {
 
     /**

@@ -9,6 +9,8 @@ use DateInterval;
 use DateTime;
 use dktapps\pmforms\BaseForm;
 use Exception;
+use pocketmine\permission\Permission;
+use pocketmine\permission\PermissionManager;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
 use supercrafter333\BetterBan\Commands\BanCommand;
@@ -54,7 +56,7 @@ class BetterBan extends PluginBase
     /**
      * On Plugin Loading
      */
-    public function onLoad()
+    public function onLoad(): void
     {
         self::$instance = $this;
         $this->saveResource("config.yml");
@@ -70,13 +72,23 @@ class BetterBan extends PluginBase
         }
         $dc_webhook = $this->getConfig()->get("discord-webhook") !== "" ? $this->getConfig()->get("discord-webhook") : null;
         self::$DISCORD_WEBHOOK_URL = $dc_webhook;
+
+        ### PM4 Warning ###
+        ###################
+        $this->getLogger()->warning("WARNING! You are running a development version of BetterBan! Please report bugs on: §bhttps://github.com/supercrafter333/theSpawn/issues");
+        ###################
     }
 
     /**
      * On Plugin Enabling
      */
-    public function onEnable()
+    public function onEnable(): void
     {
+        ### PM4 Warning ###
+        ###################
+        $this->getLogger()->warning("WARNING! You are running a development version of BetterBan! Please report bugs on: §bhttps://github.com/supercrafter333/theSpawn/issues");
+        ###################
+
         if ($this->useMySQL()) {
             $this->mysqlBanByName = new MySQLBanList($this->getMySQLSettings(), MySQLBanList::TABLE_NAMEBANS);
             $this->mysqlBanByIP = new MySQLBanList($this->getMySQLSettings(), MySQLBanList::TABLE_IPBANS);
@@ -106,12 +118,16 @@ class BetterBan extends PluginBase
             new BetterBanCommand("betterban")
         ]);
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
+
+        //Add bypass permission "BetterBan.admin"
+        $perms = new PermissionManager();
+        $perms->addPermission(new Permission("BetterBan.admin", "Bypass permission", ["BetterBan.editban.cmd", "BetterBan.banlog.cmd", "BetterBan.baninfo.cmd", "BetterBan.editipban.cmd", "BetterBan.betterban.cmd"]));
     }
 
     /**
      *
      */
-    public function onDisable()
+    public function onDisable(): void
     {
         if(isset($this->mysqlBanByName))
             $this->getMySQLNameBans()->close();
