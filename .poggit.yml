@@ -8,6 +8,9 @@ projects:
   BetterBan:
     path: ""
     icon: "icon.gif"
+    php: 8.0
+    lint:
+      phpstan: false
     libs:
       - src: https://poggit.pmmp.io/ci/CortexPE/DiscordWebhookAPI/DiscordWebhookAPI
       - src: dktapps-pm-pl/pmforms/pmforms
