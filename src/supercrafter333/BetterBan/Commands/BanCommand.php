@@ -106,7 +106,11 @@ class BanCommand extends Command implements PluginIdentifiableCommand
                 return true;
             }
             $pl->addBanToBanlog($name);
-            $sender->getServer()->getNameBans()->addBan($name, $reason, $bantime, $sender->getName());
+            if ($pl->useMySQL()) {
+                $pl->getMySQLNameBans()->addBan($name, $reason, $bantime, $sender->getName());
+            } else {
+                $sender->getServer()->getNameBans()->addBan($name, $reason, $bantime, $sender->getName());
+            }
             if (($player = $sender->getServer()->getPlayerExact($name)) instanceof Player) {
                 $player->kick($reason !== "" ? str_replace(["{reason}", "{time}", "{line}"], [(string)$args[0], $bantime->format("Y.m.d H:i:s"), "\n"], $cfg->get("kick-message-with-time")) . $reason : $cfg->get("kick-message"));
                 Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.ban.success", [$player !== null ? $player->getName() : $name]));
