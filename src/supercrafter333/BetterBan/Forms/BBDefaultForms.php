@@ -124,7 +124,11 @@ class BBDefaultForms
                     if ($months !== 0) $bantime->modify("+$months months");
                     if ($years !== 0) $bantime->modify("+$years years");
                     $pl->addBanToBanlog($name);
-                    $submitter->getServer()->getNameBans()->addBan($name, $reason, $bantime, $submitter->getName());
+                    if ($pl->useMySQL()) {
+                        $pl->getMySQLNameBans()->addBan($name, $reason, $bantime, $submitter->getName());
+                    } else {
+                        $submitter->getServer()->getNameBans()->addBan($name, $reason, $bantime, $submitter->getName());
+                    }
                     if (($player = $submitter->getServer()->getPlayerExact($name)) instanceof Player) {
                         $player->kick($reason !== "" ? str_replace(["{reason}", "{time}", "{line}"], [$reason, $bantime->format("Y.m.d H:i:s"), "\n"], $cfg->get("kick-message-with-time")) . $reason : $cfg->get("kick-message"));
                         Command::broadcastCommandMessage($submitter, KnownTranslationFactory::commands_ban_success($player !== null ? $player->getName() : $name));
@@ -192,8 +196,19 @@ class BBDefaultForms
                     if ($days !== 0) $bantime->modify("+$days days");
                     if ($months !== 0) $bantime->modify("+$months months");
                     if ($years !== 0) $bantime->modify("+$years years");
-                    $submitter->getServer()->getIPBans()->addBan($ip, $reason, $bantime, $submitter->getName());
-                    if (($player = $submitter->getServer()->getPlayerExact($ip)) instanceof Player) {
+                    $player = null;
+                    foreach ($submitter->getServer()->getOnlinePlayers() as $onlinePlayer) {
+                        if ($onlinePlayer->getNetworkSession()->getIp() === $ip) {
+                            $player = $onlinePlayer;
+                        }
+                    }
+                    if (BetterBan::getInstance()->useMySQL()) {
+                        BetterBan::getInstance()->getMySQLIpBans()->addBan($ip, $reason, $bantime, $submitter->getName());
+                    } else {
+                        $player->getServer()->getIPBans()->addBan($ip, $reason, $bantime, $submitter->getName());
+                    }
+                    $submitter->getServer()->getNetwork()->blockAddress($ip, -1);
+                    if ($player instanceof Player) {
                         $player->kick(str_replace(["{reason}", "{time}", "{line}"], [$reason, $bantime->format("Y.m.d H:i:s"), "\n"], $cfg->get("kick-ip-message-with-time")));
                         Command::broadcastCommandMessage($submitter, KnownTranslationFactory::commands_banip_success_players((string)$player->getNetworkSession()->getIp(), $player->getName()), true);
                         $submitter->sendMessage("[Time] Banned!");
