@@ -62,7 +62,7 @@ This Plugin is licensed under the [Apache License 2.0](/LICENSE)! Plugin by supe
 ### Credits
 Owner: supercrafter333
 
-Helper: ---
+Helper: [@Tobias-2006](https://github.com/Tobias-2006)
 
 Icon: [Tenor GIF](https://tenor.com/boBQR.gif)
 
