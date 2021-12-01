@@ -1,3 +1,4 @@
+# This version is End-Of-Life (please use the [PM4-Version](https://github.com/supercrafter333/BetterBan))
 [![Discord](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/ca6cWPpERp)
 # BetterBan - V4.0.0   [![](https://poggit.pmmp.io/shield.state/BetterBan)](https://poggit.pmmp.io/p/BetterBan) [![](https://poggit.pmmp.io/shield.dl.total/BetterBan)](https://poggit.pmmp.io/p/BetterBan)
 
