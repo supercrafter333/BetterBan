@@ -72,11 +72,6 @@ class BetterBan extends PluginBase
         }
         $dc_webhook = $this->getConfig()->get("discord-webhook") !== "" ? $this->getConfig()->get("discord-webhook") : null;
         self::$DISCORD_WEBHOOK_URL = $dc_webhook;
-
-        ### PM4 Warning ###
-        ###################
-        $this->getLogger()->warning("WARNING! You are running a development version of BetterBan! Please report bugs on: §bhttps://github.com/supercrafter333/theSpawn/issues");
-        ###################
     }
 
     /**
@@ -84,10 +79,6 @@ class BetterBan extends PluginBase
      */
     public function onEnable(): void
     {
-        ### PM4 Warning ###
-        ###################
-        $this->getLogger()->warning("WARNING! You are running a development version of BetterBan! Please report bugs on: §bhttps://github.com/supercrafter333/theSpawn/issues");
-        ###################
 
         if ($this->useMySQL()) {
             $this->mysqlBanByName = new MySQLBanList($this->getMySQLSettings(), MySQLBanList::TABLE_NAMEBANS);
