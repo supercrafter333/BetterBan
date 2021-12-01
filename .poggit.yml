@@ -7,7 +7,7 @@ projects:
     path: ""
     icon: "icon.gif"
     libs:
-      - src: https://poggit.pmmp.io/ci/CortexPE/DiscordWebhookAPI/DiscordWebhookAPI/dev:20
+      - src: https://poggit.pmmp.io/ci/CortexPE/DiscordWebhookAPI/DiscordWebhookAPI/~/dev:20
       - src: dktapps-pm-pl/pmforms/pmforms
         version: ^1.0.0
 ...
