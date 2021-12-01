@@ -4,8 +4,7 @@ namespace supercrafter333\BetterBan\Commands;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\command\PluginIdentifiableCommand;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
 use supercrafter333\BetterBan\BetterBan;
 use supercrafter333\BetterBan\Events\BBEditbanEvent;
@@ -15,7 +14,7 @@ use supercrafter333\BetterBan\Forms\BBDefaultForms;
  * Class EditbanCommand
  * @package supercrafter333\BetterBan\Commands
  */
-class EditipbanCommand extends Command implements PluginIdentifiableCommand
+class EditipbanCommand extends Command
 {
 
     /**

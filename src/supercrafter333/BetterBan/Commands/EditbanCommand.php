@@ -4,8 +4,7 @@ namespace supercrafter333\BetterBan\Commands;
 
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\command\PluginIdentifiableCommand;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
 use supercrafter333\BetterBan\BetterBan;
 use supercrafter333\BetterBan\Events\BBEditbanEvent;
@@ -15,7 +14,7 @@ use supercrafter333\BetterBan\Forms\BBDefaultForms;
  * Class EditbanCommand
  * @package supercrafter333\BetterBan\Commands
  */
-class EditbanCommand extends Command implements PluginIdentifiableCommand
+class EditbanCommand extends Command
 {
 
     /**
@@ -93,12 +92,12 @@ class EditbanCommand extends Command implements PluginIdentifiableCommand
             } else {
                 $nameBans->save(true);
             }
-            if (!$s->isOp()) {
+            if (!$s->getServer()->isOp($s->getName())) {
                 $s->sendMessage("§7§o[Added time to ban: " . $playerName . " +" . $args[2] . "]");
             }
             $server->getLogger()->info("§7§o[Added time to ban: " . $playerName . " +" . $args[2] . "]");
             foreach ($plugin->getServer()->getOps() as $ops) {
-                $op = $plugin->getServer()->getPlayer($ops);
+                $op = $plugin->getServer()->getPlayerByPrefix($ops);
                 if ($op instanceof Player) {
                     $op->sendMessage("§7§o[Added time to ban: " . $playerName . " +" . $args[2] . "]");
                 }
@@ -117,12 +116,12 @@ class EditbanCommand extends Command implements PluginIdentifiableCommand
                 $nameBans->save(true);
             }
             $server->getNameBans()->save(true);
-            if (!$s->isOp()) {
+            if (!$s->getServer()->isOp($s->getName())) {
                 $s->sendMessage("§7§o[Reduced time for ban: " . $playerName . " -" . $args[2] . "]");
             }
             $server->getLogger()->info("§7§o[Reduced time for ban: " . $playerName . " -" . $args[2] . "]");
             foreach ($plugin->getServer()->getOps() as $ops) {
-                $op = $plugin->getServer()->getPlayer($ops);
+                $op = $plugin->getServer()->getPlayerByPrefix($ops);
                 if ($op instanceof Player) {
                     $op->sendMessage("§7§o[Reduced time for ban: " . $playerName . " -" . $args[2] . "]");
                 }

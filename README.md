@@ -27,7 +27,6 @@ I would be very happy if you leave a star for this project.
 - [X] Custom Kick
 - [X] Forms
 - [X] MySQL Support ([#8](https://github.com/supercrafter333/BetterBan/issues/8)) [V4]
-- [ ] Add logic for Player & IP Bans ([#10](https://github.com/supercrafter333/BetterBan/issues/10)) [V4]
 
 **Mutes & Warns?**
 
@@ -62,7 +61,7 @@ This Plugin is licensed under the [Apache License 2.0](/LICENSE)! Plugin by supe
 ### Credits
 Owner: supercrafter333
 
-Helper: ---
+Helper: [@Tobias-2006](https://github.com/Tobias-2006)
 
 Icon: [Tenor GIF](https://tenor.com/boBQR.gif)
 

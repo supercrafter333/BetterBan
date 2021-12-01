@@ -1,25 +1,27 @@
 name: BetterBan
 version: 4.0.0
-api: 3.0.0
+api: 4.0.0
 main: supercrafter333\BetterBan\BetterBan
 author: supercrfafter333
 
 permissions:
-  BetterBan.admin:
+  BetterBan.editban.cmd:
+    description: Command permission
     default: op
-    children:
-      BetterBan.editban.cmd:
-        description: Command permission
-        default: op
-      BetterBan.banlog.cmd:
-        description: Command permission
-        default: op
-      BetterBan.baninfo.cmd:
-        description: Command permission
-        default: op
-      BetterBan.editipban.cmd:
-        description: Command permission
-        default: op
-      BetterBan.betterban.cmd:
-        description: Command permission
-        default: op
+  BetterBan.banlog.cmd:
+    description: Command permission
+    default: op
+  BetterBan.baninfo.cmd:
+    description: Command permission
+    default: op
+  BetterBan.editipban.cmd:
+    description: Command permission
+    default: op
+  BetterBan.betterban.cmd:
+    description: Command permission
+    default: op
+
+#   BetterBan.admin:
+#    default: op
+#    children:
+# MOVED TO BetterBan.php

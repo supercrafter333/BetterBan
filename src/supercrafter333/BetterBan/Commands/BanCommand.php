@@ -6,11 +6,10 @@ use DateInterval;
 use DateTime;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\command\defaults\VanillaCommand;
-use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\command\utils\InvalidCommandSyntaxException;
-use pocketmine\lang\TranslationContainer;
-use pocketmine\Player;
+use pocketmine\lang\KnownTranslationFactory;
+use pocketmine\lang\KnownTranslationKeys;
+use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
 use supercrafter333\BetterBan\BetterBan;
 use supercrafter333\BetterBan\Events\BBBanEvent;
@@ -20,7 +19,7 @@ use supercrafter333\BetterBan\Forms\BBDefaultForms;
  * Class BanCommand
  * @package supercrafter333\BetterBan\Commands
  */
-class BanCommand extends Command implements PluginIdentifiableCommand
+class BanCommand extends Command
 {
 
     /**
@@ -38,7 +37,7 @@ class BanCommand extends Command implements PluginIdentifiableCommand
     public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = [])
     {
         $this->pl = BetterBan::getInstance();
-        parent::__construct($name, "%pocketmine.command.ban.player.description", "§4Use: §r/ban <name> [reason: ...] [date interval: ...]");
+        parent::__construct($name, KnownTranslationKeys::POCKETMINE_COMMAND_BAN_PLAYER_DESCRIPTION, "§4Use: §r/ban <name> [reason: ...] [date interval: ...]");
         $this->setPermission("pocketmine.command.ban.player");
     }
 
@@ -83,7 +82,7 @@ class BanCommand extends Command implements PluginIdentifiableCommand
             }
             if (($player = $sender->getServer()->getPlayerExact($name)) instanceof Player) {
                 $player->kick($reason !== "" ? str_replace(["{reason}", "{line}"], [(string)$args[0], "\n"], $cfg->get("kick-message-with-reason")) . $reason : $cfg->get("kick-message"));
-                Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.ban.success", [$player !== null ? $player->getName() : $name]));
+                Command::broadcastCommandMessage($sender, KnownTranslationFactory::commands_ban_success($player !== null ? $player->getName() : $name));
                 $sender->sendMessage("Banned!");
                 $reason2 = $reason === "" ?? null;
             }
@@ -106,10 +105,14 @@ class BanCommand extends Command implements PluginIdentifiableCommand
                 return true;
             }
             $pl->addBanToBanlog($name);
-            $sender->getServer()->getNameBans()->addBan($name, $reason, $bantime, $sender->getName());
+            if ($pl->useMySQL()) {
+                $pl->getMySQLNameBans()->addBan($name, $reason, $bantime, $sender->getName());
+            } else {
+                $sender->getServer()->getNameBans()->addBan($name, $reason, $bantime, $sender->getName());
+            }
             if (($player = $sender->getServer()->getPlayerExact($name)) instanceof Player) {
                 $player->kick($reason !== "" ? str_replace(["{reason}", "{time}", "{line}"], [(string)$args[0], $bantime->format("Y.m.d H:i:s"), "\n"], $cfg->get("kick-message-with-time")) . $reason : $cfg->get("kick-message"));
-                Command::broadcastCommandMessage($sender, new TranslationContainer("%commands.ban.success", [$player !== null ? $player->getName() : $name]));
+                Command::broadcastCommandMessage($sender, KnownTranslationFactory::commands_ban_success($player !== null ? $player->getName() : $name));
                 $sender->sendMessage("[Time] Banned!");
                 $reason2 = $reason === "" ?? null;
             }
