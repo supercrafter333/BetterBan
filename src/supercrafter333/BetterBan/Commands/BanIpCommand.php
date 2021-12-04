@@ -10,7 +10,6 @@ use pocketmine\lang\KnownTranslationKeys;
 use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
 use supercrafter333\BetterBan\BetterBan;
-use supercrafter333\BetterBan\Events\BBBanEvent;
 use supercrafter333\BetterBan\Events\BBBanIpEvent;
 use supercrafter333\BetterBan\Forms\BBDefaultForms;
 
@@ -18,7 +17,7 @@ use supercrafter333\BetterBan\Forms\BBDefaultForms;
  * Class BanIpCommand
  * @package supercrafter333\BetterBan\Commands
  */
-class BanIpCommand extends Command
+class BanIpCommand extends BetterBanOwnedCommand
 {
     /**
      * @var BetterBan

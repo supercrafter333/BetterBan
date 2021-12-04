@@ -2,7 +2,6 @@
 
 namespace supercrafter333\BetterBan\Commands;
 
-use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\plugin\Plugin;
 use supercrafter333\BetterBan\BetterBan;
@@ -10,8 +9,9 @@ use supercrafter333\BetterBan\BetterBan;
 /**
  * Class BaninfoCommand
  * @package supercrafter333\BetterBan\Commands
+ * @method testPermission(CommandSender $s)
  */
-class BaninfoCommand extends Command
+class BaninfoCommand extends BetterBanOwnedCommand
 {
 
     /**

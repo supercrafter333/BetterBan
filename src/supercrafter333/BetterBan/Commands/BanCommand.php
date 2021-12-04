@@ -2,8 +2,6 @@
 
 namespace supercrafter333\BetterBan\Commands;
 
-use DateInterval;
-use DateTime;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\utils\InvalidCommandSyntaxException;
@@ -19,7 +17,7 @@ use supercrafter333\BetterBan\Forms\BBDefaultForms;
  * Class BanCommand
  * @package supercrafter333\BetterBan\Commands
  */
-class BanCommand extends Command
+class BanCommand extends BetterBanOwnedCommand
 {
 
     /**

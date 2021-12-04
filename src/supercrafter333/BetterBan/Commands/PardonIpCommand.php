@@ -3,6 +3,7 @@
 namespace supercrafter333\BetterBan\Commands;
 
 use pocketmine\command\Command;
+use supercrafter333\BetterBan\Commands\BetterBanOwnedCommand;
 use pocketmine\command\CommandSender;
 use pocketmine\command\utils\InvalidCommandSyntaxException;
 use pocketmine\lang\KnownTranslationFactory;
@@ -17,7 +18,7 @@ use supercrafter333\BetterBan\Forms\BBDefaultForms;
  * Class PardonIpCommand
  * @package supercrafter333\BetterBan\Commands
  */
-class PardonIpCommand extends Command
+class PardonIpCommand extends BetterBanOwnedCommand
 {
 
     /**

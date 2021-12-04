@@ -3,6 +3,7 @@
 namespace supercrafter333\BetterBan\Commands;
 
 use pocketmine\command\Command;
+use supercrafter333\BetterBan\Commands\BetterBanOwnedCommand;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
@@ -13,7 +14,7 @@ use supercrafter333\BetterBan\Forms\BBDefaultForms;
  * Class BetterBanCommand
  * @package supercrafter333\BetterBan\Commands
  */
-class BetterBanCommand extends Command
+class BetterBanCommand extends BetterBanOwnedCommand
 {
 
     /**

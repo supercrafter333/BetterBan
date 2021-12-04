@@ -14,7 +14,7 @@ use supercrafter333\BetterBan\BetterBan;
 use supercrafter333\BetterBan\Events\BBKickEvent;
 use supercrafter333\BetterBan\Forms\BBDefaultForms;
 
-class KickCommand extends Command
+class KickCommand extends BetterBanOwnedCommand
 {
     public function __construct(string $name){
         parent::__construct(
