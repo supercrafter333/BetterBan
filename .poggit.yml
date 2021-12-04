@@ -2,13 +2,13 @@
 build-by-default: true
 branches:
 - master
-- PM4
 projects:
   BetterBan:
     path: ""
     icon: "icon.gif"
     libs:
       - src: https://poggit.pmmp.io/ci/CortexPE/DiscordWebhookAPI/DiscordWebhookAPI
+        branch: "PM4"
       - src: dktapps-pm-pl/pmforms/pmforms
         version: ^1.0.0
 ...
