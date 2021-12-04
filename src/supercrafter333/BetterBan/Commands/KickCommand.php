@@ -43,7 +43,7 @@ class KickCommand extends BetterBanOwnedCommand
         $name = array_shift($args);
         $reason = trim(implode(" ", $args));
 
-        if(($player = $sender->getServer()->getPlayerByPrefix($name)) instanceof Player){
+        if(($player = $sender->getServer()->getPlayerExact($name)) instanceof Player){
             $newReason = $reason == "" ? null : $reason;
             $ev = new BBKickEvent($player, $sender->getName(), $newReason);
             $ev->call();

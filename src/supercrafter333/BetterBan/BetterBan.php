@@ -83,7 +83,6 @@ class BetterBan extends PluginBase
         if ($this->useMySQL()) {
             $this->mysqlBanByName = new MySQLBanList($this->getMySQLSettings(), MySQLBanList::TABLE_NAMEBANS);
             $this->mysqlBanByIP = new MySQLBanList($this->getMySQLSettings(), MySQLBanList::TABLE_IPBANS);
-            $this->getLogger()->info("MySQL support enabled!"); //I hope that's okay :/
         }
         $cmdMap = $this->getServer()->getCommandMap();
         $pmmpBanCmd = $cmdMap->getCommand("ban");

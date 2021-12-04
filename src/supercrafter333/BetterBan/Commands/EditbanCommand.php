@@ -98,7 +98,7 @@ class EditbanCommand extends BetterBanOwnedCommand
             }
             $server->getLogger()->info("§7§o[Added time to ban: " . $playerName . " +" . $args[2] . "]");
             foreach ($plugin->getServer()->getOps() as $ops) {
-                $op = $plugin->getServer()->getPlayerByPrefix($ops);
+                $op = $plugin->getServer()->getPlayerExact($ops);
                 if ($op instanceof Player) {
                     $op->sendMessage("§7§o[Added time to ban: " . $playerName . " +" . $args[2] . "]");
                 }
@@ -122,7 +122,7 @@ class EditbanCommand extends BetterBanOwnedCommand
             }
             $server->getLogger()->info("§7§o[Reduced time for ban: " . $playerName . " -" . $args[2] . "]");
             foreach ($plugin->getServer()->getOps() as $ops) {
-                $op = $plugin->getServer()->getPlayerByPrefix($ops);
+                $op = $plugin->getServer()->getPlayerExact($ops);
                 if ($op instanceof Player) {
                     $op->sendMessage("§7§o[Reduced time for ban: " . $playerName . " -" . $args[2] . "]");
                 }

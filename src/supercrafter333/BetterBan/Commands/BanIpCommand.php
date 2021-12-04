@@ -150,7 +150,7 @@ class BanIpCommand extends BetterBanOwnedCommand
 
             Command::broadcastCommandMessage($sender, KnownTranslationFactory::commands_banip_success($value), true);
         }else{
-            if(($player = $sender->getServer()->getPlayerByPrefix($value)) instanceof Player){
+            if(($player = $sender->getServer()->getPlayerExact($value)) instanceof Player){
                 $this->processIPBan($player->getNetworkSession()->getIp(), $sender, $reason, $expires);
 
                 Command::broadcastCommandMessage($sender, KnownTranslationFactory::commands_banip_success_players((string)$player->getNetworkSession()->getIp(), $player->getName()), true);
