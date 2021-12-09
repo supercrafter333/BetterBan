@@ -94,7 +94,6 @@ class BanCommand extends BetterBanOwnedCommand
 
             $informations = $pl->stringToTimestamp(implode(" ", $args));
             $bantime = $informations[0];
-            $reason = $informations[1];
             //if ($args[1] instanceof DateInterval) {
             $banEvent = new BBBanEvent($sender->getName(), $name, $reason);
             $banEvent->call();

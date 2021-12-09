@@ -84,7 +84,7 @@ class EventListener implements Listener
     /**
      * @param PlayerLoginEvent $event
      */
-    public function onPreLogin(PlayerLoginEvent $event)
+    public function onLogin(PlayerLoginEvent $event)
     {
         $player = $event->getPlayer();
         if (BetterBan::isBanned($player->getName())) {

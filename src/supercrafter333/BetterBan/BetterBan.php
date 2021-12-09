@@ -40,7 +40,7 @@ class BetterBan extends PluginBase
     /**
      * Version of BetterBan
      */
-    public const VERSION = "4.0.0";
+    public const VERSION = "4.0.1";
 
     /**
      * @var null
@@ -60,7 +60,7 @@ class BetterBan extends PluginBase
     {
         self::$instance = $this;
         $this->saveResource("config.yml");
-        $this->versionCheck(true);
+        $this->versionCheck(self::VERSION < "4.0.1"); //only update when version is lower that v4.0.1
         if (!class_exists(BaseForm::class)) {
             $this->getLogger()->error("pmforms missing!! Please download BetterBan from Poggit!");
         }
