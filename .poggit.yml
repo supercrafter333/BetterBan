@@ -10,5 +10,5 @@ projects:
       - src: https://poggit.pmmp.io/ci/CortexPE/DiscordWebhookAPI/DiscordWebhookAPI
         branch: "PM4"
       - src: dktapps-pm-pl/pmforms/pmforms
-        version: ^1.0.0
+        version: ^2.0.0
 ...
