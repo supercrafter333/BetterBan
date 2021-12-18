@@ -4,6 +4,7 @@ namespace supercrafter333\BetterBan;
 
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerLoginEvent;
+use pocketmine\event\player\PlayerPreLoginEvent;
 use supercrafter333\BetterBan\Events\BBBanEvent;
 use supercrafter333\BetterBan\Events\BBBanIpEvent;
 use supercrafter333\BetterBan\Events\BBEditbanEvent;
@@ -81,6 +82,17 @@ class EventListener implements Listener
         $event->sendDiscordWebhookMessage();
     }
 
+    public function onPreLogin(PlayerPreLoginEvent $event)
+    {
+        $playerInfo = $event->getPlayerInfo();
+        if (BetterBan::isBanned($playerInfo->getUsername())) {
+            $pl = BetterBan::getInstance();
+            $entry = $pl->useMySQL() ? $pl->getMySQLNameBans()->getEntry($playerInfo->getUsername()) : $pl->getServer()->getNameBans()->getEntry($playerInfo->getUsername());
+            $reason = str_replace(["{source}", "{expires}", "{reason}", "{line}"], [$entry->getSource(), $entry->getExpires() !== null ? $entry->getExpires()->format("d.m.Y H:i:s") : "Never", $entry->getReason(), "\n"], BetterBan::getInstance()->getConfig()->get("you-are-banned-logout"));
+            $event->setKickReason(PlayerPreLoginEvent::KICK_REASON_BANNED, $reason);
+        }
+    }
+
     /**
      * @param PlayerLoginEvent $event
      */
@@ -91,7 +103,7 @@ class EventListener implements Listener
             $pl = BetterBan::getInstance();
             $entry = $pl->useMySQL() ? $pl->getMySQLNameBans()->getEntry($player->getName()) : $pl->getServer()->getNameBans()->getEntry($player->getName());
             $reason = str_replace(["{source}", "{expires}", "{reason}", "{line}"], [$entry->getSource(), $entry->getExpires() !== null ? $entry->getExpires()->format("d.m.Y H:i:s") : "Never", $entry->getReason(), "\n"], BetterBan::getInstance()->getConfig()->get("you-are-banned-logout"));
-            $player->close("", $reason); //INFO: That will trigger an error, but the error is not important
+            $player->kick($reason);
         }
     }
 }
