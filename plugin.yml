@@ -2,7 +2,7 @@ name: BetterBan
 version: 4.0.2
 api: 4.0.0
 main: supercrafter333\BetterBan\BetterBan
-author: supercrfafter333
+author: supercrafter333
 
 permissions:
   BetterBan.editban.cmd:
