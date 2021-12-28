@@ -28,8 +28,8 @@ class PardonCommand extends BetterBanOwnedCommand
     public function __construct(string $name){
         parent::__construct(
             $name,
-            KnownTranslationKeys::POCKETMINE_COMMAND_UNBAN_PLAYER_DESCRIPTION,
-            KnownTranslationKeys::COMMANDS_UNBAN_USAGE,
+            KnownTranslationFactory::pocketmine_command_unban_player_description(),
+            KnownTranslationFactory::commands_unban_usage(),
             ["unban"]
         );
         $this->setPermission("pocketmine.command.unban.player");

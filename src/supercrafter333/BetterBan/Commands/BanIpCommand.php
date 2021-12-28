@@ -35,7 +35,7 @@ class BanIpCommand extends BetterBanOwnedCommand
     public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = [])
     {
         $this->pl = BetterBan::getInstance();
-        parent::__construct($name, KnownTranslationKeys::POCKETMINE_COMMAND_BAN_IP_DESCRIPTION, "§4Use: §r/banip <ip-address> [reason: ...] [date interval: ...]", ["ban-ip"]);
+        parent::__construct($name, KnownTranslationFactory::pocketmine_command_ban_ip_description(), "/banip <ip-address> [reason: ...] [date interval: ...]", ["ban-ip"]);
         $this->setPermission("pocketmine.command.ban.ip");
     }
 

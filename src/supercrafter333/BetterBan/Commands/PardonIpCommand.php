@@ -28,8 +28,8 @@ class PardonIpCommand extends BetterBanOwnedCommand
     public function __construct(string $name){
         parent::__construct(
             $name,
-            KnownTranslationKeys::POCKETMINE_COMMAND_UNBAN_IP_DESCRIPTION,
-            KnownTranslationKeys::COMMANDS_UNBANIP_USAGE,
+            KnownTranslationFactory::pocketmine_command_unban_ip_description(),
+            KnownTranslationFactory::commands_unbanip_usage(),
             ["unban-ip"]
         );
         $this->setPermission("pocketmine.command.unban.ip");
