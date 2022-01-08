@@ -16,18 +16,12 @@ class BBEditbanEvent extends Event implements Cancellable
     use CancellableTrait;
 
     /**
-     * @var string
-     */
-    protected $target;
-
-    /**
      * BBEditbanEvent constructor.
      * @param string $target
      */
-    public function __construct(string $target)
+    public function __construct(private string $target)
     {
         $this->eventName = "BBEditbanEvent";
-        $this->target = $target;
     }
 
     /**

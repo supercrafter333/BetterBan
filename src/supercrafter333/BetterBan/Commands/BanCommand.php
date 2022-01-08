@@ -35,7 +35,7 @@ class BanCommand extends BetterBanOwnedCommand
     public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = [])
     {
         $this->pl = BetterBan::getInstance();
-        parent::__construct($name, KnownTranslationKeys::POCKETMINE_COMMAND_BAN_PLAYER_DESCRIPTION, "§4Use: §r/ban <name> [reason: ...] [date interval: ...]");
+        parent::__construct($name, KnownTranslationFactory::pocketmine_command_ban_player_description(), "§4Use:§r /ban <name> [reason: ...] [date interval: ...]");
         $this->setPermission("pocketmine.command.ban.player");
     }
 
@@ -79,7 +79,7 @@ class BanCommand extends BetterBanOwnedCommand
                 $sender->getServer()->getNameBans()->addBan($name, $reason, null, $sender->getName());
             }
             if (($player = $sender->getServer()->getPlayerExact($name)) instanceof Player) {
-                $player->kick($reason !== "" ? str_replace(["{reason}", "{line}"], [(string)$args[0], "\n"], $cfg->get("kick-message-with-reason")) . $reason : $cfg->get("kick-message"));
+                $player->kick($reason !== "" ? str_replace(["{reason}", "{line}"], [(string)$args[0], "\n"], $cfg->get("kick-message-with-reason")) : $cfg->get("kick-message"));
                 Command::broadcastCommandMessage($sender, KnownTranslationFactory::commands_ban_success($player !== null ? $player->getName() : $name));
                 $sender->sendMessage("Banned!");
                 $reason2 = $reason === "" ?? null;
@@ -108,7 +108,7 @@ class BanCommand extends BetterBanOwnedCommand
                 $sender->getServer()->getNameBans()->addBan($name, $reason, $bantime, $sender->getName());
             }
             if (($player = $sender->getServer()->getPlayerExact($name)) instanceof Player) {
-                $player->kick($reason !== "" ? str_replace(["{reason}", "{time}", "{line}"], [(string)$args[0], $bantime->format("Y.m.d H:i:s"), "\n"], $cfg->get("kick-message-with-time")) . $reason : $cfg->get("kick-message"));
+                $player->kick($reason !== "" ? str_replace(["{reason}", "{time}", "{line}"], [(string)$args[0], $bantime->format("Y.m.d H:i:s"), "\n"], $cfg->get("kick-message-with-time")) : $cfg->get("kick-message"));
                 Command::broadcastCommandMessage($sender, KnownTranslationFactory::commands_ban_success($player !== null ? $player->getName() : $name));
                 $sender->sendMessage("[Time] Banned!");
                 $reason2 = $reason === "" ?? null;

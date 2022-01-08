@@ -16,25 +16,13 @@ class BBPardonIpEvent extends Event implements Cancellable
     use CancellableTrait;
 
     /**
-     * @var string
-     */
-    private $IpAddress;
-
-    /**
-     * @var string
-     */
-    private $source;
-
-    /**
      * BBPardonIpEvent constructor.
      * @param string $IpAddress
      * @param string $source
      */
-    public function __construct(string $IpAddress, string $source)
+    public function __construct(private string $IpAddress, private string $source)
     {
         $this->eventName = "BBPardonIpEvent";
-        $this->IpAddress = $IpAddress;
-        $this->source = $source;
     }
 
     /**

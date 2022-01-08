@@ -22,8 +22,13 @@ use supercrafter333\BetterBan\Events\BBEditipbanEvent;
 
 class BBDefaultForms
 {
+    /**
+     * @throws \Exception
+     */
     public static function openMenuForm(): MenuForm
     {
+        if (!BetterBan::pmformsExists()) throw BetterBan::pmformsNotFoundError();
+
         return new MenuForm(
             "§c§lBetterBan",
             "Please select an option.",
@@ -69,8 +74,13 @@ class BBDefaultForms
             });
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function banForm(): CustomForm
     {
+        if (!BetterBan::pmformsExists()) throw BetterBan::pmformsNotFoundError();
+
         return new CustomForm(
             "§c§lBetterBan",
             [
@@ -142,8 +152,13 @@ class BBDefaultForms
             });
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function banIpForm(): CustomForm
     {
+        if (!BetterBan::pmformsExists()) throw BetterBan::pmformsNotFoundError();
+
         return new CustomForm(
             "§c§lBetterBan",
             [
@@ -221,8 +236,13 @@ class BBDefaultForms
             });
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function editbanForm(): CustomForm
     {
+        if (!BetterBan::pmformsExists()) throw BetterBan::pmformsNotFoundError();
+
         return new CustomForm(
             "§c§lBetterBan",
             [
@@ -312,8 +332,13 @@ class BBDefaultForms
             });
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function editipbanForm(): CustomForm
     {
+        if (!BetterBan::pmformsExists()) throw BetterBan::pmformsNotFoundError();
+
         return new CustomForm(
             "§c§lBetterBan",
             [
@@ -403,8 +428,13 @@ class BBDefaultForms
             });
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function pardonForm(): CustomForm
     {
+        if (!BetterBan::pmformsExists()) throw BetterBan::pmformsNotFoundError();
+
         return new CustomForm(
             "§c§lBetterBan",
             [
@@ -426,8 +456,13 @@ class BBDefaultForms
             });
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function pardonIpForm(): CustomForm
     {
+        if (!BetterBan::pmformsExists()) throw BetterBan::pmformsNotFoundError();
+
         return new CustomForm(
             "§c§lBetterBan",
             [
@@ -449,8 +484,13 @@ class BBDefaultForms
             });
     }
 
+    /**
+     * @throws \Exception
+     */
     public static function kickForm(): CustomForm
     {
+        if (!BetterBan::pmformsExists()) throw BetterBan::pmformsNotFoundError();
+
         return new CustomForm(
             "§c§lBetterBan",
             [

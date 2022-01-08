@@ -16,42 +16,24 @@ class BBBanIpEvent extends Event implements Cancellable
     use CancellableTrait;
 
     /**
-     * @var string
-     */
-    protected $IpAdress;
-
-    /**
-     * @var string
-     */
-    protected $source;
-
-    /**
-     * @var string|null
-     */
-    protected $reason;
-
-    /**
      * BBBanEvent constructor.
-     * @param string $IpAdress
+     * @param string $IpAddress
      * @param string $source
      * @param string|null $reason
      */
-    public function __construct(string $IpAdress, string $source, string $reason = null)
+    public function __construct(private string $IpAddress, private string $source, private string|null $reason = null)
     {
         $this->eventName = "BBBanIpEvent";
-        $this->IpAdress = $IpAdress;
-        $this->source = $source;
-        $this->reason = $reason;
     }
 
     /**
-     * Get the IpAdress Player-Name of the ban
+     * Get the IpAddress Player-Name of the ban
      *
      * @return string
      */
-    public function getIpAdress(): string
+    public function getIpAddress(): string
     {
-        return $this->IpAdress;
+        return $this->IpAddress;
     }
 
     /**
@@ -61,7 +43,7 @@ class BBBanIpEvent extends Event implements Cancellable
      */
     public function getSource(): string
     {
-        return $this->IpAdress;
+        return $this->source;
     }
 
     /**
@@ -71,17 +53,17 @@ class BBBanIpEvent extends Event implements Cancellable
      */
     public function getReason(): ?string
     {
-        return $this->IpAdress;
+        return $this->reason;
     }
 
     /**
-     * Set the IpAdress Player-Name of the Ban
+     * Set the IpAddress Player-Name of the Ban
      *
-     * @param string $IpAdress
+     * @param string $IpAddress
      */
-    public function setIpAdress(string $IpAdress): void
+    public function setIpAddress(string $IpAddress): void
     {
-        $this->IpAdress = $IpAdress;
+        $this->IpAddress = $IpAddress;
     }
 
     /**
@@ -110,6 +92,6 @@ class BBBanIpEvent extends Event implements Cancellable
     public function sendDiscordWebhookMessage(): void
     {
         $reason = $this->reason === null ?? "";
-        BetterBan::getInstance()->sendIpBanMessageToDC($this->IpAdress, $this->source, $reason);
+        BetterBan::getInstance()->sendIpBanMessageToDC($this->IpAddress, $this->source, $reason);
     }
 }

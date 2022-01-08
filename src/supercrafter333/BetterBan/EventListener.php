@@ -22,7 +22,7 @@ class EventListener implements Listener
     /**
      * @param BBBanEvent $event
      */
-    public function onBBBan(BBBanEvent $event)
+    public function onBBBan(BBBanEvent $event): void
     {
         if ($event->isCancelled()) return;
         $event->sendDiscordWebhookMessage();
@@ -31,7 +31,7 @@ class EventListener implements Listener
     /**
      * @param BBEditbanEvent $event
      */
-    public function onBBEditban(BBEditbanEvent $event)
+    public function onBBEditban(BBEditbanEvent $event): void
     {
         if ($event->isCancelled()) return;
         $event->sendDiscordWebhookMessage();
@@ -40,7 +40,7 @@ class EventListener implements Listener
     /**
      * @param BBPardonEvent $event
      */
-    public function onBBPardon(BBPardonEvent $event)
+    public function onBBPardon(BBPardonEvent $event): void
     {
         if ($event->isCancelled()) return;
         $event->sendDiscordWebhookMessage();
@@ -49,7 +49,7 @@ class EventListener implements Listener
     /**
      * @param BBBanIpEvent $event
      */
-    public function onBBIpBan(BBBanIpEvent $event)
+    public function onBBIpBan(BBBanIpEvent $event): void
     {
         if ($event->isCancelled()) return;
         $event->sendDiscordWebhookMessage();
@@ -58,7 +58,7 @@ class EventListener implements Listener
     /**
      * @param BBEditipbanEvent $event
      */
-    public function onBBEditIpBan(BBEditipbanEvent $event)
+    public function onBBEditIpBan(BBEditipbanEvent $event): void
     {
         if ($event->isCancelled()) return;
         $event->sendDiscordWebhookMessage();
@@ -67,7 +67,7 @@ class EventListener implements Listener
     /**
      * @param BBPardonIpEvent $event
      */
-    public function onBBPardonIp(BBPardonIpEvent $event)
+    public function onBBPardonIp(BBPardonIpEvent $event): void
     {
         if ($event->isCancelled()) return;
         $event->sendDiscordWebhookMessage();
@@ -76,13 +76,13 @@ class EventListener implements Listener
     /**
      * @param BBKickEvent $event
      */
-    public function onBBKick(BBKickEvent $event)
+    public function onBBKick(BBKickEvent $event): void
     {
         if ($event->isCancelled()) return;
         $event->sendDiscordWebhookMessage();
     }
 
-    public function onPreLogin(PlayerPreLoginEvent $event)
+    public function onPreLogin(PlayerPreLoginEvent $event): void
     {
         $playerInfo = $event->getPlayerInfo();
         if (BetterBan::isBanned($playerInfo->getUsername())) {
@@ -96,7 +96,7 @@ class EventListener implements Listener
     /**
      * @param PlayerLoginEvent $event
      */
-    public function onLogin(PlayerLoginEvent $event)
+    public function onLogin(PlayerLoginEvent $event): void
     {
         $player = $event->getPlayer();
         if (BetterBan::isBanned($player->getName())) {

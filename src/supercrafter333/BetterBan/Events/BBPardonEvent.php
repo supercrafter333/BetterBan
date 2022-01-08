@@ -16,25 +16,13 @@ class BBPardonEvent extends Event implements Cancellable
     use CancellableTrait;
 
     /**
-     * @var string
-     */
-    private $target;
-
-    /**
-     * @var string
-     */
-    private $source;
-
-    /**
      * BBPardonEvent constructor.
      * @param string $target
      * @param string $source
      */
-    public function __construct(string $target, string $source)
+    public function __construct(private string $target, private string $source)
     {
         $this->eventName = "BBPardonEvent";
-        $this->target = $target;
-        $this->source = $source;
     }
 
     /**

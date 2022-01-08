@@ -35,7 +35,7 @@ class BanIpCommand extends BetterBanOwnedCommand
     public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = [])
     {
         $this->pl = BetterBan::getInstance();
-        parent::__construct($name, KnownTranslationKeys::POCKETMINE_COMMAND_BAN_IP_DESCRIPTION, "§4Use: §r/banip <ip-address> [reason: ...] [date interval: ...]", ["ban-ip"]);
+        parent::__construct($name, KnownTranslationFactory::pocketmine_command_ban_ip_description(), "§4Use:§r /banip <ip-address> [reason: ...] [date interval: ...]", ["ban-ip"]);
         $this->setPermission("pocketmine.command.ban.ip");
     }
 
@@ -139,7 +139,7 @@ class BanIpCommand extends BetterBanOwnedCommand
             $expires = null;
         }
 
-        if(preg_match("/^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$/", $value)){
+        if(inet_pton($value) !== false){
             $ev = new BBBanIpEvent($value, $sender->getName(), $reason);
             $ev->call();
             if ($ev->isCancelled()) {

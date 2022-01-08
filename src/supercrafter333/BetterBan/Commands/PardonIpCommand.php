@@ -28,8 +28,8 @@ class PardonIpCommand extends BetterBanOwnedCommand
     public function __construct(string $name){
         parent::__construct(
             $name,
-            KnownTranslationKeys::POCKETMINE_COMMAND_UNBAN_IP_DESCRIPTION,
-            KnownTranslationKeys::COMMANDS_UNBANIP_USAGE,
+            KnownTranslationFactory::pocketmine_command_unban_ip_description(),
+            KnownTranslationFactory::commands_unbanip_usage(),
             ["unban-ip"]
         );
         $this->setPermission("pocketmine.command.unban.ip");
@@ -60,7 +60,7 @@ class PardonIpCommand extends BetterBanOwnedCommand
             return true;
         }
 
-        if(preg_match("/^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\.([01]?\\d\\d?|2[0-4]\\d|25[0-5])$/", $args[0])){
+        if(inet_pton($args[0]) !== false){
 			$pl = BetterBan::getInstance();
             if ($pl->useMySQL()) {
                 $pl->getMySQLIpBans()->remove($args[0]);
@@ -69,7 +69,7 @@ class PardonIpCommand extends BetterBanOwnedCommand
             }
 			$sender->getServer()->getNetwork()->unblockAddress($args[0]);
 			Command::broadcastCommandMessage($sender, KnownTranslationFactory::commands_unbanip_success($args[0]));
-		}else {
+        } else {
             $sender->sendMessage(KnownTranslationFactory::commands_unbanip_invalid());
         }
         return true;

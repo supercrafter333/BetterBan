@@ -17,31 +17,14 @@ class BBKickEvent extends Event implements Cancellable
     use CancellableTrait;
 
     /**
-     * @var Player
-     */
-    protected $target;
-
-    /**
-     * @var string
-     */
-    protected $source;
-
-    /**
-     * @var string|null
-     */
-    protected $reason;
-
-    /**
      * BBKickEvent constructor.
      * @param Player $target
      * @param string $source
+     * @param string|null $reason
      */
-    public function __construct(Player $target, string $source, string $reason = null)
+    public function __construct(private Player $target, private string $source, private string|null $reason = null)
     {
         $this->eventName = "BBKickEvent";
-        $this->target = $target;
-        $this->source = $source;
-        $this->reason = $reason;
     }
 
     /**

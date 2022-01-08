@@ -1,10 +1,13 @@
 name: BetterBan
-version: 4.0.2
+version: 4.1.0
 api: 4.0.0
 main: supercrafter333\BetterBan\BetterBan
 author: supercrfafter333
 
 permissions:
+  BetterBan.admin:
+    description: Bypass permission
+    default: op
   BetterBan.editban.cmd:
     description: Command permission
     default: op
@@ -20,8 +23,3 @@ permissions:
   BetterBan.betterban.cmd:
     description: Command permission
     default: op
-
-#   BetterBan.admin:
-#    default: op
-#    children:
-# MOVED TO BetterBan.php

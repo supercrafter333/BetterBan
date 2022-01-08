@@ -16,34 +16,28 @@ class BBEditipbanEvent extends Event implements Cancellable
     use CancellableTrait;
 
     /**
-     * @var string
-     */
-    protected $IpAdress;
-
-    /**
      * BBEditipbanEvent constructor.
-     * @param string $IpAdress
+     * @param string $IpAddress
      */
-    public function __construct(string $IpAdress)
+    public function __construct(private string $IpAddress)
     {
         $this->eventName = "BBEditipbanEvent";
-        $this->IpAdress = $IpAdress;
     }
 
     /**
      * @return string
      */
-    public function getIpAdress(): string
+    public function getIpAddress(): string
     {
-        return $this->IpAdress;
+        return $this->IpAddress;
     }
 
     /**
-     * @param string $IpAdress
+     * @param string $IpAddress
      */
-    public function setIpAdress(string $IpAdress): void
+    public function setIpAddress(string $IpAddress): void
     {
-        $this->IpAdress = $IpAdress;
+        $this->IpAddress = $IpAddress;
     }
 
     /**
@@ -51,6 +45,6 @@ class BBEditipbanEvent extends Event implements Cancellable
      */
     public function sendDiscordWebhookMessage(): void
     {
-        BetterBan::getInstance()->sendIpBanUpdatedMessageToDC($this->IpAdress);
+        BetterBan::getInstance()->sendIpBanUpdatedMessageToDC($this->IpAddress);
     }
 }

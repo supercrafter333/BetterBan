@@ -16,32 +16,14 @@ class BBBanEvent extends Event implements Cancellable
     use CancellableTrait;
 
     /**
-     * @var string
-     */
-    protected $target;
-
-    /**
-     * @var string
-     */
-    protected $source;
-
-    /**
-     * @var string|null
-     */
-    protected $reason;
-
-    /**
      * BBBanEvent constructor.
      * @param string $target
      * @param string $source
      * @param string|null $reason
      */
-    public function __construct(string $target, string $source, string $reason = null)
+    public function __construct(private string $target, private string $source, private string|null $reason = null)
     {
         $this->eventName = "BBBanEvent";
-        $this->target = $target;
-        $this->source = $source;
-        $this->reason = $reason;
     }
 
     /**

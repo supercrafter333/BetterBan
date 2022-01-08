@@ -1,5 +1,5 @@
 [![Discord](https://img.shields.io/badge/chat-on%20discord-7289da.svg)](https://discord.gg/ca6cWPpERp)
-# BetterBan - V4.0.2   [![](https://poggit.pmmp.io/shield.state/BetterBan)](https://poggit.pmmp.io/p/BetterBan) [![](https://poggit.pmmp.io/shield.dl.total/BetterBan)](https://poggit.pmmp.io/p/BetterBan)
+# BetterBan - V4.1.0   [![](https://poggit.pmmp.io/shield.state/BetterBan)](https://poggit.pmmp.io/p/BetterBan) [![](https://poggit.pmmp.io/shield.dl.total/BetterBan)](https://poggit.pmmp.io/p/BetterBan)
 
 **Would you like to ban players for a certain period of time? Then BetterBan is just right for you! Easily ban players for a certain time and configure a bit in `config.yml`.**
 
@@ -18,6 +18,7 @@ I would be very happy if you leave a star for this project.
 - Easy2Use
 
 ### TODOs
+- [ ] Stop dispatching commands in forms [**!**]
 - [X] Banlog Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2))
 - [X] Baninfo Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2))
 - [X] Edited Unban Command ([#2](https://github.com/supercrafter333/BetterBan/issues/2)) [Only maybe]

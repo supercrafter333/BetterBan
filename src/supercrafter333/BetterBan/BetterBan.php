@@ -9,6 +9,8 @@ use DateInterval;
 use DateTime;
 use dktapps\pmforms\BaseForm;
 use Exception;
+use pocketmine\permission\DefaultPermissionNames;
+use pocketmine\permission\DefaultPermissions;
 use pocketmine\permission\Permission;
 use pocketmine\permission\PermissionManager;
 use pocketmine\plugin\PluginBase;
@@ -40,7 +42,7 @@ class BetterBan extends PluginBase
     /**
      * Version of BetterBan
      */
-    public const VERSION = "4.0.2";
+    public const VERSION = "4.1.0";
 
     /**
      * @var null
@@ -61,6 +63,10 @@ class BetterBan extends PluginBase
         self::$instance = $this;
         $this->saveResource("config.yml");
         $this->versionCheck($this->getConfig()->get("version") < "4.0.1"); //only update when version is lower than v4.0.1
+
+        $dc_webhook = $this->getConfig()->get("discord-webhook") !== "" ? $this->getConfig()->get("discord-webhook") : null;
+        self::$DISCORD_WEBHOOK_URL = $dc_webhook;
+
         if (!class_exists(BaseForm::class)) {
             $this->getLogger()->error("pmforms missing!! Please download BetterBan from Poggit!");
         }
@@ -70,8 +76,6 @@ class BetterBan extends PluginBase
                 $this->getServer()->getPluginManager()->disablePlugin($this);
             }
         }
-        $dc_webhook = $this->getConfig()->get("discord-webhook") !== "" ? $this->getConfig()->get("discord-webhook") : null;
-        self::$DISCORD_WEBHOOK_URL = $dc_webhook;
     }
 
     /**
@@ -110,8 +114,11 @@ class BetterBan extends PluginBase
         $this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
 
         //Add bypass permission "BetterBan.admin"
-        $perms = new PermissionManager();
-        $perms->addPermission(new Permission("BetterBan.admin", "Bypass permission", ["BetterBan.editban.cmd", "BetterBan.banlog.cmd", "BetterBan.baninfo.cmd", "BetterBan.editipban.cmd", "BetterBan.betterban.cmd"]));
+        $betterBanAdmin = PermissionManager::getInstance()->getPermission("BetterBan.admin");
+        $children = ["BetterBan.editban.cmd", "BetterBan.banlog.cmd", "BetterBan.baninfo.cmd", "BetterBan.editipban.cmd", "BetterBan.betterban.cmd"];
+        foreach ($children as $child) {
+            $betterBanAdmin->addChild($child, true);
+        }
     }
 
     /**
@@ -153,6 +160,22 @@ class BetterBan extends PluginBase
         $pl = self::getInstance();
         if ($pl->useMySQL()) return $pl->getMySQLIpBans()->isBanned($ip);
         return $pl->getServer()->getIPBans()->isBanned($ip);
+    }
+
+    /**
+     * @return bool
+     */
+    public static function pmformsExists(): bool
+    {
+        return class_exists(\dktapps\pmforms\BaseForm::class);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public static function pmformsNotFoundError()
+    {
+        throw new Exception("Can't find virion pmforms (https://github.com/dktapps-pm-pl/pmforms)! Please download BetterBan from poggit (https://poggit.pmmp.io/p/BetterBan).");
     }
 
     /**

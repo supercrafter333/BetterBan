@@ -15,11 +15,6 @@ class BanlogCommand extends BetterBanOwnedCommand
 {
 
     /**
-     * @var BetterBan
-     */
-    private $pl;
-
-    /**
      * BanlogCommand constructor.
      * @param string $name
      * @param string $description
@@ -28,8 +23,7 @@ class BanlogCommand extends BetterBanOwnedCommand
      */
     public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = [])
     {
-        $this->pl = BetterBan::getInstance();
-        parent::__construct("banlog", "See the ban-count of a player", "§4Usage:§r /banlog <player>", ["bancount"]);
+        parent::__construct("banlog", "See the ban-count of a player", "§4Use:§r /banlog <player>", ["bancount"]);
     }
 
     /**
@@ -46,24 +40,15 @@ class BanlogCommand extends BetterBanOwnedCommand
             $s->sendMessage($this->usageMessage);
             return;
         }
-        $pl = $this->pl;
+        $pl = $this->getOwningPlugin();
         $cfg = $pl->getConfig();
         $server = $pl->getServer();
         if (!$server->getNameBans()->isBanned($args[0])) {
             $s->sendMessage(str_replace(["{name}"], [$args[0]], $cfg->get("error-not-banned")));
             return;
         }
-        $pl = $this->pl;
         $name = implode(" ", $args);
         $s->sendMessage(str_replace(["{name}", "{log}"], [$name, (string)$pl->getBanLogOf($name)], $pl->getConfig()->get("banlog-message-log")));
         return;
-    }
-
-    /**
-     * @return Plugin
-     */
-    public function getPlugin(): Plugin
-    {
-        return $this->pl;
     }
 }
