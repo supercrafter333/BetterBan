@@ -140,7 +140,7 @@ class BBDefaultForms
                         $submitter->getServer()->getNameBans()->addBan($name, $reason, $bantime, $submitter->getName());
                     }
                     if (($player = $submitter->getServer()->getPlayerExact($name)) instanceof Player) {
-                        $player->kick($reason !== "" ? str_replace(["{reason}", "{time}", "{line}"], [$reason, $bantime->format("Y.m.d H:i:s"), "\n"], $cfg->get("kick-message-with-time")) . $reason : $cfg->get("kick-message"));
+                        $player->kick($reason !== "" ? str_replace(["{reason}", "{time}", "{line}"], [$reason, $bantime->format("Y.m.d H:i:s"), "\n"], $cfg->get("kick-message-with-time")) : $cfg->get("kick-message"));
                         Command::broadcastCommandMessage($submitter, KnownTranslationFactory::commands_ban_success($player !== null ? $player->getName() : $name));
                         $submitter->sendMessage("[Time] Banned!");
                     }
