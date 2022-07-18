@@ -29,6 +29,7 @@ class BaninfoCommand extends BetterBanOwnedCommand
     public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = [])
     {
         $this->pl = BetterBan::getInstance();
+        $this->setPermission('BetterBan.baninfo.cmd');
         parent::__construct("baninfo", "See the ban-informations of a banned player", "§4Use:§r /baninfo <player>", ["baninformation"]);
     }
 

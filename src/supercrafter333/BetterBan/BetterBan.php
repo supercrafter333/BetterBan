@@ -9,9 +9,6 @@ use DateInterval;
 use DateTime;
 use dktapps\pmforms\BaseForm;
 use Exception;
-use pocketmine\permission\DefaultPermissionNames;
-use pocketmine\permission\DefaultPermissions;
-use pocketmine\permission\Permission;
 use pocketmine\permission\PermissionManager;
 use pocketmine\plugin\PluginBase;
 use pocketmine\utils\Config;
@@ -34,26 +31,21 @@ use supercrafter333\BetterBan\Permission\MySQLBanList;
 class BetterBan extends PluginBase
 {
 
-    /**
-     * @var self
-     */
     protected static BetterBan $instance;
 
     /**
      * Version of BetterBan
      */
-    public const VERSION = "4.1.2";
+    public const VERSION = "4.1.3";
 
     /**
      * @var null
      */
     public static $DISCORD_WEBHOOK_URL = null;
 
-    /** @var MySQLBanList $mysqlBanByName */
-    private $mysqlBanByName;
+    private MySQLBanList $mysqlBanByName;
 
-    /** @var MySQLBanList $mysqlBanByIP */
-    private $mysqlBanByIP;
+    private MySQLBanList $mysqlBanByIP;
 
     /**
      * On Plugin Loading

@@ -3,9 +3,6 @@
 namespace supercrafter333\BetterBan\Commands;
 
 use pocketmine\command\CommandSender;
-use pocketmine\plugin\Plugin;
-use supercrafter333\BetterBan\BetterBan;
-use supercrafter333\BetterBan\Forms\BBDefaultForms;
 
 /**
  * Class BanlogCommand
@@ -23,6 +20,7 @@ class BanlogCommand extends BetterBanOwnedCommand
      */
     public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = [])
     {
+        $this->setPermission('BetterBan.banlog.cmd');
         parent::__construct("banlog", "See the ban-count of a player", "§4Use:§r /banlog <player>", ["bancount"]);
     }
 

@@ -3,11 +3,10 @@
 namespace supercrafter333\BetterBan\Commands;
 
 use pocketmine\command\Command;
-use supercrafter333\BetterBan\Commands\BetterBanOwnedCommand;
 use pocketmine\command\CommandSender;
 use pocketmine\command\utils\InvalidCommandSyntaxException;
 use pocketmine\lang\KnownTranslationFactory;
-use pocketmine\lang\KnownTranslationKeys;
+use pocketmine\permission\DefaultPermissionNames;
 use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
 use supercrafter333\BetterBan\BetterBan;
@@ -32,7 +31,7 @@ class PardonIpCommand extends BetterBanOwnedCommand
             KnownTranslationFactory::commands_unbanip_usage(),
             ["unban-ip"]
         );
-        $this->setPermission("pocketmine.command.unban.ip");
+        $this->setPermission(DefaultPermissionNames::COMMAND_UNBAN_IP);
     }
 
     /**

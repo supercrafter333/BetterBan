@@ -6,7 +6,7 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\utils\InvalidCommandSyntaxException;
 use pocketmine\lang\KnownTranslationFactory;
-use pocketmine\lang\KnownTranslationKeys;
+use pocketmine\permission\DefaultPermissionNames;
 use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
 use supercrafter333\BetterBan\BetterBan;
@@ -23,7 +23,7 @@ class BanCommand extends BetterBanOwnedCommand
     /**
      * @var BetterBan
      */
-    private $pl;
+    private BetterBan $pl;
 
     /**
      * BanCommand constructor.
@@ -36,7 +36,7 @@ class BanCommand extends BetterBanOwnedCommand
     {
         $this->pl = BetterBan::getInstance();
         parent::__construct($name, KnownTranslationFactory::pocketmine_command_ban_player_description(), "§4Use:§r /ban <name> [reason: ...] [date interval: ...]");
-        $this->setPermission("pocketmine.command.ban.player");
+        $this->setPermission(DefaultPermissionNames::COMMAND_BAN_PLAYER);
     }
 
     /**

@@ -6,6 +6,7 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\utils\InvalidCommandSyntaxException;
 use pocketmine\lang\KnownTranslationFactory;
+use pocketmine\permission\DefaultPermissionNames;
 use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;
 use pocketmine\utils\TextFormat;
@@ -21,7 +22,7 @@ class KickCommand extends BetterBanOwnedCommand
             KnownTranslationFactory::pocketmine_command_kick_description(),
 			KnownTranslationFactory::commands_kick_usage()
         );
-        $this->setPermission("pocketmine.command.kick");
+        $this->setPermission(DefaultPermissionNames::COMMAND_KICK);
     }
 
     public function execute(CommandSender $sender, string $commandLabel, array $args): bool
