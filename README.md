@@ -31,7 +31,7 @@ I would be very happy if you leave a star for this project.
 
 **Mutes & Warns?**
 
-Please **DO NOT** open issues with suggestions like "Can you add mutes/warns?"! I already have plugins for this, [theWarn](https://github.com/supercrafter333/theWarn) to warn players and BetterMute which is under development.
+Please **DO NOT** open issues with suggestions like "Can you add mutes/warns?"! I already have plugins for this, [theWarn](https://github.com/supercrafter333/theWarn) to warn players and BetterMute which can be found on poggit.
 
 ###
 ### Bugs - none
