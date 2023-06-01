@@ -2,8 +2,6 @@
 
 namespace supercrafter333\BetterBan\Commands;
 
-use pocketmine\command\Command;
-use supercrafter333\BetterBan\Commands\BetterBanOwnedCommand;
 use pocketmine\command\CommandSender;
 use pocketmine\player\Player;
 use pocketmine\plugin\Plugin;

@@ -13,14 +13,12 @@ class MySQLBanList
     public const TABLE_NAMEBANS = 'banned_players';
     public const TABLE_IPBANS = 'banned_ips';
 
-    /** @var \mysqli $db */
-    private $db;
+    private \mysqli $db;
 
     /** @var string[] $settings */
-    private $settings;
+    private array $settings;
 
-    /** @var string $table */
-    private $table;
+    private string $table;
 
     /**
      * MySQLBanList constructor.
