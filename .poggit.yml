@@ -1,7 +1,7 @@
 --- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/supercrafter333/BetterBan
 build-by-default: true
 branches:
-- master
+- api/pm5
 projects:
   BetterBan:
     path: ""
