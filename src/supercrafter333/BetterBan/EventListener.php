@@ -85,7 +85,6 @@ class EventListener implements Listener
     /**
      * @param PlayerPreLoginEvent $event
      * @return void
-     * @handleCancelled
      */
     public function onPreLogin(PlayerPreLoginEvent $event): void
     {
