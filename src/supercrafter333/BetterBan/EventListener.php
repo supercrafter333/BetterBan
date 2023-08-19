@@ -92,7 +92,7 @@ class EventListener implements Listener
         if (BetterBan::isBanned($playerInfo->getUsername())) {
             $pl = BetterBan::getInstance();
             $entry = $pl->useMySQL() ? $pl->getMySQLNameBans()->getEntry($playerInfo->getUsername()) : $pl->getServer()->getNameBans()->getEntry($playerInfo->getUsername());
-            $reason = str_replace(["{source}", "{expires}", "{reason}", "{line}"], [$entry->getSource(), $entry->getExpires() !== null ? $entry->getExpires()->format("d.m.Y H:i:s") : "Never", $entry->getReason(), "\n"], BetterBan::getInstance()->getConfig()->get("you-are-banned-logout"));
+            $reason = str_replace(["{source}", "{expires}", "{reason}", "{line}"], [$entry->getSource(), $entry->getExpires() !== null ? BetterBan::getInstance()->toPrettyFormat($entry->getExpires()) : "Never", $entry->getReason(), "\n"], BetterBan::getInstance()->getConfig()->get("you-are-banned-logout"));
             $event->setKickFlag(PlayerPreLoginEvent::KICK_FLAG_BANNED, $reason);
         }
     }
@@ -106,7 +106,7 @@ class EventListener implements Listener
         if (BetterBan::isBanned($player->getName())) {
             $pl = BetterBan::getInstance();
             $entry = $pl->useMySQL() ? $pl->getMySQLNameBans()->getEntry($player->getName()) : $pl->getServer()->getNameBans()->getEntry($player->getName());
-            $reason = str_replace(["{source}", "{expires}", "{reason}", "{line}"], [$entry->getSource(), $entry->getExpires() !== null ? $entry->getExpires()->format("d.m.Y H:i:s") : "Never", $entry->getReason(), "\n"], BetterBan::getInstance()->getConfig()->get("you-are-banned-logout"));
+            $reason = str_replace(["{source}", "{expires}", "{reason}", "{line}"], [$entry->getSource(), $entry->getExpires() !== null ? BetterBan::getInstance()->toPrettyFormat($entry->getExpires()) : "Never", $entry->getReason(), "\n"], BetterBan::getInstance()->getConfig()->get("you-are-banned-logout"));
             $player->kick($reason);
             $event->cancel();
         }

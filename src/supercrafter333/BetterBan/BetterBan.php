@@ -405,6 +405,21 @@ class BetterBan extends PluginBase
         }
         return [$t, ltrim(str_replace($found[0], "", $string))];
     }
+	
+	/**
+	 * Pretty Format instead of use DateTime()->format() function.
+	 * Since PHP diff() is not yet %W implemented for weeks. We made a hack to do it.
+	 * 
+	 * @param DateTime $duration
+	 * @return string
+	 */
+	public function toPrettyFormat(DateTime $duration) : string{
+		$now = new DateTime('NOW');
+		$interval = $duration->diff($now);
+		$output = $interval->format('%m months, %W weeks, %d days, %h hours, %i minutes');
+		$output = str_replace("%W", floor($now->diff($duration)->days/7), $output); // TODO: This totally a hack to calculate the weeks since PHP doesn't added yet the diff() for weeks.
+		return $output;
+	}
 
     /**
      * @param string $banned
