@@ -413,10 +413,15 @@ class BetterBan extends PluginBase
 	 * @param DateTime $duration
 	 * @return string
 	 */
-	public function toPrettyFormat(DateTime $duration) : string{
-		$now = new DateTime('NOW');
+	public function toPrettyFormat(DateTime $duration, bool $legacy = false) : string{
+		
+        if($legacy){
+            return $duration->format(($this->getConfig()->get("legacy-dateformat") ?? "d.m.Y H:i:s"));
+        }
+        
+        $now = new DateTime('NOW');
 		$interval = $duration->diff($now);
-		$output = $interval->format('%m months, %d days, %h hours, %i minutes');
+		$output = $interval->format(($this->getConfig()->get("dateformat") ?? "%y years, %m months, %d days, %h hours, %i minutes"));
 		return $output;
 	}
 

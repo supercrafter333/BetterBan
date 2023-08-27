@@ -30,6 +30,18 @@ kicked-with-reason-message: "Kicked by admin.{line}Reason: {reason}"
 #-> uses: {line} {reason} {expires} {source}
 you-are-banned-logout: "§cYou are banned on this server!{line}§7Reason: §e{reason}{line}§7Expires at: §e{expires}"
 
+# Date Format syntax for Timer Durations
+# This uses class called DateInterval::diff()
+# Checkout this format for more information to how to make your own dateformat parameters.
+# https://www.php.net/manual/en/dateinterval.format.php#refsect1-dateinterval.format-parameters
+# The following characters are recognized in the format parameter string. 
+# Each format character must be prefixed by a percent sign (%).
+dateformat: "%y years, %m months, %d days, %h hours, %i minutes"
+# Whether to choose DateTime Standard format.
+# Learn more about our standard datetime formatting without diff() function.
+use-legacy-format: false
+legacy-dateformat: "d.m.Y H:i:s"
+
 # Error messages
 use-DateInterval-format: "§4Please use the the right format!§4 For example: §81d"
 error-not-banned: "§4The player called §7{name}§4 isn't banned!"
