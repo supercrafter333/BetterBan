@@ -28,6 +28,7 @@ I would be very happy if you leave a star for this project.
 - [X] Custom Kick
 - [X] Forms
 - [X] MySQL Support ([#8](https://github.com/supercrafter333/BetterBan/issues/8)) [V4]
+- [x] Timer Durations ([#39](https://github.com/supercrafter333/BetterBan/issues/39))
 
 **Mutes & Warns?**
 
