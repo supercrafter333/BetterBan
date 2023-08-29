@@ -58,7 +58,7 @@ class BaninfoCommand extends BetterBanOwnedCommand
         }
         $ban = $nameBans->getEntry($name);
         $source = $ban->getSource() === "(Unknown)" ? "§8---" : $ban->getSource();
-        $date = $ban->hasExpired() ? $ban->getExpires()->format("Y.m.d H:i:s") : "§8---";
+        $date = $ban->hasExpired() ? $pl->toPrettyFormat($ban->getExpires(), $pl->getConfig()->get("use-legacy-format", false)) : "§8---";
         $reason = $ban->getReason();
         $log = $pl->getBanLogOf($name);
         $s->sendMessage(str_replace(["{name}", "{source}", "{date}", "{reason}", "{log}", "{line}"], [$name, $source, $date, $reason, (string)$log, "\n"], $pl->getConfig()->get("baninfo-message-list")));

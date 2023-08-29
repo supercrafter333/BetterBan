@@ -108,7 +108,7 @@ class BanCommand extends BetterBanOwnedCommand
                 $sender->getServer()->getNameBans()->addBan($name, $reason, $bantime, $sender->getName());
             }
             if (($player = $sender->getServer()->getPlayerExact($name)) instanceof Player) {
-                $player->kick($reason !== "" ? str_replace(["{reason}", "{time}", "{line}"], [(string)$args[0], $bantime->format("Y.m.d H:i:s"), "\n"], $cfg->get("kick-message-with-time")) : $cfg->get("kick-message"));
+                $player->kick($reason !== "" ? str_replace(["{reason}", "{time}", "{line}"], [(string)$args[0], $pl->toPrettyFormat($bantime, $pl->getConfig()->get("use-legacy-format", false)), "\n"], $cfg->get("kick-message-with-time")) : $cfg->get("kick-message"));
                 Command::broadcastCommandMessage($sender, KnownTranslationFactory::commands_ban_success($player !== null ? $player->getName() : $name));
                 $sender->sendMessage("[Time] Banned!");
                 $reason2 = $reason === "" ?? null;

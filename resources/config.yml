@@ -31,12 +31,22 @@ kicked-with-reason-message: "Kicked by admin.{line}Reason: {reason}"
 you-are-banned-logout: "§cYou are banned on this server!{line}§7Reason: §e{reason}{line}§7Expires at: §e{expires}"
 
 # Date Format syntax for Timer Durations
-# This uses class called DateInterval::diff()
-# Checkout this format for more information to how to make your own dateformat parameters.
+# {YEAR} - Years, numeric but leading with 0
+# {year} - Years, numeric
+# {MONTH} - Months, numeric but leading with 0
+# {month} - Months, numeric
+# {DAY} - Days, numeric but leading with 0
+# {day} - Days, numeric
+# {HOUR} - Hours, numeric but leading with 0
+# {hour} - Hours, numeric
+# {MINUTE} - Minutes, numeric but leading with 0
+# {minute} - Minutes, numeric
+# {SECOND} - Seconds, numeric but leading with 0
+# {second} - Seconds, numeric
+# These are CASE-SENSITIVE, use these format corretly or might else would break the datetime formatting.
+# For more information about DateFormat syntax format please see this article:
 # https://www.php.net/manual/en/dateinterval.format.php#refsect1-dateinterval.format-parameters
-# The following characters are recognized in the format parameter string. 
-# Each format character must be prefixed by a percent sign (%).
-dateformat: "%y years, %m months, %d days, %h hours, %i minutes"
+dateformat: "{year} year(s), {month} month(s), {day} day(s), {hours} hour(s), {minute} minute(s)"
 # Whether to choose DateTime Standard format.
 # Learn more about our standard datetime formatting without diff() function.
 use-legacy-format: false

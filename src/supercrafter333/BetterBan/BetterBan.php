@@ -408,7 +408,7 @@ class BetterBan extends PluginBase
 	
 	/**
 	 * Pretty Format instead of use DateTime()->format() function.
-         * DateTime::diff()->format() is suitable creating date format.
+     * DateTime::diff()->format() is suitable creating date format.
 	 * 
 	 * @param DateTime $duration
 	 * @return string
@@ -416,13 +416,27 @@ class BetterBan extends PluginBase
 	public function toPrettyFormat(DateTime $duration, bool $legacy = false) : string{
 		
         if($legacy){
-            return $duration->format(($this->getConfig()->get("legacy-dateformat") ?? "d.m.Y H:i:s"));
+            return $duration->format($this->getConfig()->get("legacy-dateformat", "d.m.Y H:i:s"));
         }
         
         $now = new DateTime('NOW');
 		$interval = $duration->diff($now);
-		$output = $interval->format(($this->getConfig()->get("dateformat") ?? "%y years, %m months, %d days, %h hours, %i minutes"));
-		return $output;
+        $output = $this->getConfig()->get("dateformat", "{year} year(s), {month} month(s), {day} day(s), {hours} hour(s), {minute} minute(s)");
+        // Subtitute {PREFIX}, {YEARS}, etc... to a literal format.
+        $output = str_replace("{PREFIX}", "%", $output);
+        $output = str_replace("{year}", "%y", $output);
+        $output = str_replace("{YEAR}", "%Y", $output);
+        $output = str_replace("{MONTH}", "%M", $output);
+        $output = str_replace("{month}", "%m", $output);
+        $output = str_replace("{day}", "%d", $output);
+        $output = str_replace("{DAY}", "%D", $output);
+        $output = str_replace("{hour}", "%h", $output);
+        $output = str_replace("{HOURS}", "%H", $output);
+        $output = str_replace("{MINUTES}", "%I", $output);
+        $output = str_replace("{minutes}", "%i", $output);
+        $output = str_replace("{second}", "%s", $output);
+        $output = str_replace("{SECOND}", "%S", $output);
+		return $interval->format($output);
 	}
 
     /**

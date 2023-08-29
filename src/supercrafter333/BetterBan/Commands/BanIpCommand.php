@@ -124,7 +124,7 @@ class BanIpCommand extends BetterBanOwnedCommand
                 } elseif ($expires == null) {
                     $player->kick(str_replace(["{reason}", "{line}"], [$reason, "\n"], $cfg->get("kick-ip-message-with-reason")));
                 } else {
-                    $player->kick(str_replace(["{reason}", "{time}", "{line}"], [$reason, $expires->format("Y.m.d H:i:s"), "\n"], $cfg->get("kick-ip-message-with-time")));
+                    $player->kick(str_replace(["{reason}", "{time}", "{line}"], [$reason, BetterBan::getInstance()->toPrettyFormat($expires, BetterBan::getInstance()->getConfig()->get("use-legacy-format", false)), "\n"], $cfg->get("kick-ip-message-with-time")));
                 }
             }
         }
