@@ -439,6 +439,8 @@ class BetterBan extends PluginBase
         $output = str_replace("{SECOND}", "%S", $output);
         $output = str_replace("{MICROSECOND}", "%F", $output);
         $output = str_replace("{microsecond}", "%f", $output);
+        $output = str_replace("{SIGN}", "%R", $output);
+        $output = str_replace("{sign}", "%r", $output);
 		return $interval->format($output);
 	}
 
