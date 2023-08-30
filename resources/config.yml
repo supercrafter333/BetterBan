@@ -37,12 +37,17 @@ you-are-banned-logout: "§cYou are banned on this server!{line}§7Reason: §e{re
 # {month} - Months, numeric
 # {DAY} - Days, numeric but leading with 0
 # {day} - Days, numeric
+# {TOTAL_DAYS} - Total number of days or (unknown) otherwise
 # {HOUR} - Hours, numeric but leading with 0
 # {hour} - Hours, numeric
 # {MINUTE} - Minutes, numeric but leading with 0
 # {minute} - Minutes, numeric
 # {SECOND} - Seconds, numeric but leading with 0
 # {second} - Seconds, numeric
+# {MICROSECOND} - Microseconds, numeric, at least 6 digits with leading 0
+# {microsecond} - Microseconds, numeric
+# {SIGN} - Sign "-" when negative, "+" when positive
+# {sign} - Sign "-" when negative, empty when positive
 # These are CASE-SENSITIVE, use these format corretly or might else would break the datetime formatting.
 # For more information about DateFormat syntax format please see this article:
 # https://www.php.net/manual/en/dateinterval.format.php#refsect1-dateinterval.format-parameters

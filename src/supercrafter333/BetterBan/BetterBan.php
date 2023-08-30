@@ -36,7 +36,7 @@ class BetterBan extends PluginBase
     /**
      * Version of BetterBan
      */
-    public const VERSION = "4.2.1";
+    public const VERSION = "4.2.2";
 
     /**
      * @var null
@@ -430,12 +430,15 @@ class BetterBan extends PluginBase
         $output = str_replace("{month}", "%m", $output);
         $output = str_replace("{day}", "%d", $output);
         $output = str_replace("{DAY}", "%D", $output);
+        $output = str_replace("{TOTAL_DAYS}", "%a", $output);
         $output = str_replace("{hour}", "%h", $output);
         $output = str_replace("{HOURS}", "%H", $output);
         $output = str_replace("{MINUTES}", "%I", $output);
         $output = str_replace("{minutes}", "%i", $output);
         $output = str_replace("{second}", "%s", $output);
         $output = str_replace("{SECOND}", "%S", $output);
+        $output = str_replace("{MICROSECOND}", "%F", $output);
+        $output = str_replace("{microsecond}", "%f", $output);
 		return $interval->format($output);
 	}
 
