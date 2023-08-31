@@ -1,5 +1,33 @@
 <?php
 
+/*
+ *
+ *  ____       _   _            ____
+ * |  _ \     | | | |          |  _ \
+ * | |_) | ___| |_| |_ ___ _ __| |_) | __ _ _ __
+ * |  _ < / _ \ __| __/ _ \ '__|  _ < / _` | '_ \
+ * | |_) |  __/ |_| ||  __/ |  | |_) | (_| | | | |
+ * |____/ \___|\__|\__\___|_|  |____/ \__,_|_| |_|
+ *
+ * Copyright (c) 2023 by supercrafter333
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at: https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @author supercrafter333
+ * @link https://github.com/supercrafter333/BetterBan
+ *
+ */
+
+declare(strict_types=1);
+
 namespace supercrafter333\BetterBan\Events;
 
 use pocketmine\event\Cancellable;
@@ -11,65 +39,48 @@ use supercrafter333\BetterBan\BetterBan;
  * Class BBPardonEvent
  * @package supercrafter333\BetterBan\Events
  */
-class BBPardonEvent extends Event implements Cancellable
-{
-    use CancellableTrait;
+class BBPardonEvent extends Event implements Cancellable {
+	use CancellableTrait;
 
-    /**
-     * BBPardonEvent constructor.
-     * @param string $target
-     * @param string $source
-     */
-    public function __construct(private string $target, private string $source)
-    {
-        $this->eventName = "BBPardonEvent";
-    }
+	/**
+	 * BBPardonEvent constructor.
+	 */
+	public function __construct(private string $target, private string $source) {
+		$this->eventName = "BBPardonEvent";
+	}
 
-    /**
-     * Get the target
-     *
-     * @return string
-     */
-    public function getTarget(): string
-    {
-        return $this->target;
-    }
+	/**
+	 * Get the target
+	 */
+	public function getTarget() : string {
+		return $this->target;
+	}
 
-    /**
-     *
-     * Get the source
-     * @return string
-     */
-    public function getSource(): string
-    {
-        return $this->source;
-    }
+	/**
+	 * Get the source
+	 */
+	public function getSource() : string {
+		return $this->source;
+	}
 
-    /**
-     * Set the source
-     *
-     * @param string $source
-     */
-    public function setSource(string $source): void
-    {
-        $this->source = $source;
-    }
+	/**
+	 * Set the source
+	 */
+	public function setSource(string $source) : void {
+		$this->source = $source;
+	}
 
-    /**
-     * Set the target
-     *
-     * @param string $target
-     */
-    public function setTarget(string $target): void
-    {
-        $this->target = $target;
-    }
+	/**
+	 * Set the target
+	 */
+	public function setTarget(string $target) : void {
+		$this->target = $target;
+	}
 
-    /**
-     * Send the Discord-Webhook Message
-     */
-    public function sendDiscordWebhookMessage(): void
-    {
-        BetterBan::getInstance()->sendPardonMessageToDC($this->target, $this->source);
-    }
+	/**
+	 * Send the Discord-Webhook Message
+	 */
+	public function sendDiscordWebhookMessage() : void {
+		BetterBan::getInstance()->sendPardonMessageToDC($this->target, $this->source);
+	}
 }
