@@ -45,11 +45,18 @@ use function str_replace;
  * @package supercrafter333\BetterBan\Commands
  */
 class EditbanCommand extends BetterBanOwnedCommand {
-	/** @var BetterBan */
-	private $pl;
+	
+	/**
+	 * @var BetterBan
+	 */
+	private BetterBan $pl;
 
 	/**
 	 * EditbanCommand constructor.
+	 * @param string $name
+	 * @param string $description
+	 * @param string|null $usageMessage
+	 * @param array $aliases
 	 */
 	public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = []) {
 		$this->pl = BetterBan::getInstance();
@@ -58,7 +65,13 @@ class EditbanCommand extends BetterBanOwnedCommand {
 	}
 
 	/**
+	 * @param CommandSender $s
+	 * @param string $commandLabel
+	 * @param array $args
+	 * 
 	 * @throws \Exception
+	 * 
+	 * @return void
 	 */
 	public function execute(CommandSender $s, string $commandLabel, array $args) : void {
 		if (!$this->testPermission($s)) {
@@ -148,6 +161,9 @@ class EditbanCommand extends BetterBanOwnedCommand {
 	}
 
 
+	/**
+	 * @return Plugin
+	 */
 	public function getPlugin() : Plugin {
 		return $this->pl;
 	}
