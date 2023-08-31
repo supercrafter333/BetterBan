@@ -49,9 +49,14 @@ use supercrafter333\BetterBan\Events\BBEditbanEvent;
 use supercrafter333\BetterBan\Events\BBEditipbanEvent;
 use function str_replace;
 
+/**
+ * Class BBDefaultForms
+ * @package supercrafter333\BetterBan\Forms
+ */
 class BBDefaultForms {
 	/**
 	 * @throws \Exception
+	 * @return MenuForm
 	 */
 	public static function openMenuForm() : MenuForm {
 		if (!BetterBan::pmformsExists()) {
@@ -105,6 +110,7 @@ class BBDefaultForms {
 	}
 
 	/**
+	 * @return CustomForm
 	 * @throws \Exception
 	 */
 	public static function banForm() : CustomForm {
@@ -196,6 +202,7 @@ class BBDefaultForms {
 
 	/**
 	 * @throws \Exception
+	 * @return CustomForm
 	 */
 	public static function banIpForm() : CustomForm {
 		if (!BetterBan::pmformsExists()) {
@@ -292,6 +299,7 @@ class BBDefaultForms {
 
 	/**
 	 * @throws \Exception
+	 * @return CustomForm
 	 */
 	public static function editbanForm() : CustomForm {
 		if (!BetterBan::pmformsExists()) {
@@ -410,6 +418,7 @@ class BBDefaultForms {
 
 	/**
 	 * @throws \Exception
+	 * @return CustomForm
 	 */
 	public static function editipbanForm() : CustomForm {
 		if (!BetterBan::pmformsExists()) {
@@ -528,6 +537,7 @@ class BBDefaultForms {
 
 	/**
 	 * @throws \Exception
+	 * @return CustomForm
 	 */
 	public static function pardonForm() : CustomForm {
 		if (!BetterBan::pmformsExists()) {
@@ -558,6 +568,7 @@ class BBDefaultForms {
 
 	/**
 	 * @throws \Exception
+	 * @return CustomForm
 	 */
 	public static function pardonIpForm() : CustomForm {
 		if (!BetterBan::pmformsExists()) {
@@ -588,6 +599,7 @@ class BBDefaultForms {
 
 	/**
 	 * @throws \Exception
+	 * @return CustomForm
 	 */
 	public static function kickForm() : CustomForm {
 		if (!BetterBan::pmformsExists()) {
@@ -628,6 +640,12 @@ class BBDefaultForms {
 		);
 	}
 
+	/**
+	 * Close ui text message.
+	 * @param Player $player
+	 * 
+	 * @return void
+	 */
 	private static function closeUI(Player $player) : void {
 		$player->sendMessage("Successfully closed the form!");
 		return;
@@ -639,6 +657,11 @@ class BBDefaultForms {
 		return;
 	}*/
 
+	/**
+	 * @param string|null $res
+	 * 
+	 * @return bool
+	 */
 	private static function isResOkay(?string $res) : bool {
 		if ($res == "" || $res == null) {
 			return false;

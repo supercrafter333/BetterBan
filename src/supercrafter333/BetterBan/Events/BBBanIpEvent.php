@@ -52,6 +52,7 @@ class BBBanIpEvent extends Event implements Cancellable {
 
 	/**
 	 * Get the IpAddress Player-Name of the ban
+	 * @return string
 	 */
 	public function getIpAddress() : string {
 		return $this->IpAddress;
@@ -59,6 +60,7 @@ class BBBanIpEvent extends Event implements Cancellable {
 
 	/**
 	 * Get the Source Name of the ban
+	 * @return string
 	 */
 	public function getSource() : string {
 		return $this->source;
@@ -66,6 +68,7 @@ class BBBanIpEvent extends Event implements Cancellable {
 
 	/**
 	 * Get the Reason of the ban
+	 * @return string|null
 	 */
 	public function getReason() : ?string {
 		return $this->reason;
@@ -73,6 +76,9 @@ class BBBanIpEvent extends Event implements Cancellable {
 
 	/**
 	 * Set the IpAddress Player-Name of the Ban
+	 * @param string $IpAddress
+	 * 
+	 * @return void
 	 */
 	public function setIpAddress(string $IpAddress) : void {
 		$this->IpAddress = $IpAddress;
@@ -80,6 +86,9 @@ class BBBanIpEvent extends Event implements Cancellable {
 
 	/**
 	 * Set the Source Player-Name of the Ban
+	 * @param string $source
+	 * 
+	 * @return void
 	 */
 	public function setSource(string $source) : void {
 		$this->source = $source;
@@ -87,6 +96,9 @@ class BBBanIpEvent extends Event implements Cancellable {
 
 	/**
 	 * Set the Reason of the Ban
+	 * @param string|null $reason
+	 * 
+	 * @return void
 	 */
 	public function setReason(string $reason = null) : void {
 		$this->reason = $reason;
@@ -94,6 +106,7 @@ class BBBanIpEvent extends Event implements Cancellable {
 
 	/**
 	 * Send the Discord-Webhook Message
+	 * @return void
 	 */
 	public function sendDiscordWebhookMessage() : void {
 		$reason = $this->reason === null ?? "";

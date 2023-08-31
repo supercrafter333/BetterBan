@@ -54,6 +54,10 @@ class BanCommand extends BetterBanOwnedCommand {
 
 	/**
 	 * BanCommand constructor.
+	 * @param string $name
+	 * @param string $description
+	 * @param string|null $usageMessage
+	 * @param array $aliases
 	 */
 	public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = []) {
 		$this->pl = BetterBan::getInstance();
@@ -62,6 +66,13 @@ class BanCommand extends BetterBanOwnedCommand {
 	}
 
 
+	/**
+	 * @param CommandSender $sender
+	 * @param string $commandLabel
+	 * @param array $args
+	 * 
+	 * @return bool
+	 */
 	public function execute(CommandSender $sender, string $commandLabel, array $args) : bool {
 		$pl = BetterBan::getInstance();
 		$cfg = $pl->getConfig();
@@ -136,6 +147,9 @@ class BanCommand extends BetterBanOwnedCommand {
 	}
 
 
+	/**
+	 * @return Plugin
+	 */
 	public function getPlugin() : Plugin {
 		return $this->pl;
 	}

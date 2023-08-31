@@ -49,6 +49,7 @@ use function count;
 class PardonCommand extends BetterBanOwnedCommand {
 	/**
 	 * PardonCommand constructor.
+	 * @param string $name
 	 */
 	public function __construct(string $name) {
 		parent::__construct(
@@ -61,6 +62,13 @@ class PardonCommand extends BetterBanOwnedCommand {
 	}
 
 
+	/**
+	 * @param CommandSender $sender
+	 * @param string $commandLabel
+	 * @param array $args
+	 * 
+	 * @return bool
+	 */
 	public function execute(CommandSender $sender, string $commandLabel, array $args) : bool {
 		if (!$this->testPermission($sender)) {
 			return true;
@@ -92,6 +100,9 @@ class PardonCommand extends BetterBanOwnedCommand {
 	}
 
 
+	/**
+	 * @return Plugin
+	 */
 	public function getPlugin() : Plugin {
 		return BetterBan::getInstance();
 	}

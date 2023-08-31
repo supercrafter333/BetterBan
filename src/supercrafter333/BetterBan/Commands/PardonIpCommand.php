@@ -50,6 +50,7 @@ use function inet_pton;
 class PardonIpCommand extends BetterBanOwnedCommand {
 	/**
 	 * PardonIpCommand constructor.
+	 * @param string $name
 	 */
 	public function __construct(string $name) {
 		parent::__construct(
@@ -62,6 +63,13 @@ class PardonIpCommand extends BetterBanOwnedCommand {
 	}
 
 
+	/**
+	 * @param CommandSender $sender
+	 * @param string $commandLabel
+	 * @param array $args
+	 * 
+	 * @return bool
+	 */
 	public function execute(CommandSender $sender, string $commandLabel, array $args) : bool {
 		if (!$this->testPermission($sender)) {
 			return true;
@@ -96,6 +104,9 @@ class PardonIpCommand extends BetterBanOwnedCommand {
 	}
 
 
+	/**
+	 * @return Plugin
+	 */
 	public function getPlugin() : Plugin {
 		return BetterBan::getInstance();
 	}

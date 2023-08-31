@@ -47,6 +47,9 @@ use function implode;
 use function trim;
 
 class KickCommand extends BetterBanOwnedCommand {
+	/**
+	 * @param string $name
+	 */
 	public function __construct(string $name) {
 		parent::__construct(
 			$name,
@@ -56,6 +59,13 @@ class KickCommand extends BetterBanOwnedCommand {
 		$this->setPermission(DefaultPermissionNames::COMMAND_KICK);
 	}
 
+	/**
+	 * @param CommandSender $sender
+	 * @param string $commandLabel
+	 * @param array $args
+	 * 
+	 * @return bool
+	 */
 	public function execute(CommandSender $sender, string $commandLabel, array $args) : bool {
 		if (!$this->testPermission($sender)) {
 			return true;
@@ -97,6 +107,9 @@ class KickCommand extends BetterBanOwnedCommand {
 	}
 
 
+	/**
+	 * @return Plugin
+	 */
 	public function getPlugin() : Plugin {
 		return BetterBan::getInstance();
 	}

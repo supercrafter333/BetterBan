@@ -44,6 +44,8 @@ class BBPardonIpEvent extends Event implements Cancellable {
 
 	/**
 	 * BBPardonIpEvent constructor.
+	 * @param string $source
+	 * @param string $IpAdress
 	 */
 	public function __construct(private string $IpAddress, private string $source) {
 		$this->eventName = "BBPardonIpEvent";
@@ -51,6 +53,7 @@ class BBPardonIpEvent extends Event implements Cancellable {
 
 	/**
 	 * Get the IpAddress
+	 * @return string
 	 */
 	public function getIpAddress() : string {
 		return $this->IpAddress;
@@ -58,6 +61,7 @@ class BBPardonIpEvent extends Event implements Cancellable {
 
 	/**
 	 * Get the source
+	 * @return string
 	 */
 	public function getSource() : string {
 		return $this->source;
@@ -65,6 +69,9 @@ class BBPardonIpEvent extends Event implements Cancellable {
 
 	/**
 	 * Set the source
+	 * @param string $source
+	 * 
+	 * @return void
 	 */
 	public function setSource(string $source) : void {
 		$this->source = $source;
@@ -72,6 +79,9 @@ class BBPardonIpEvent extends Event implements Cancellable {
 
 	/**
 	 * Set the IpAddress
+	 * @param string $IpAddress
+	 * 
+	 * @return void
 	 */
 	public function setIpAddress(string $IpAddress) : void {
 		$this->IpAddress = $IpAddress;
@@ -79,6 +89,7 @@ class BBPardonIpEvent extends Event implements Cancellable {
 
 	/**
 	 * Send the Discord-Webhook Message
+	 * @return void
 	 */
 	public function sendDiscordWebhookMessage() : void {
 		BetterBan::getInstance()->sendPardonIpMessageToDC($this->IpAddress, $this->source);

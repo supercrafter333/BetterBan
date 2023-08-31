@@ -43,7 +43,15 @@ use supercrafter333\BetterBan\Events\BBPardonIpEvent;
 use function str_replace;
 
 
+/**
+ * BetterBan EventListener
+ */
 class EventListener implements Listener {
+	/**
+	 * @param BBBanEvent $event
+	 * 
+	 * @return void
+	 */
 	public function onBBBan(BBBanEvent $event) : void {
 		if ($event->isCancelled()) {
 			return;
@@ -52,6 +60,11 @@ class EventListener implements Listener {
 	}
 
 
+	/**
+	 * @param BBEditbanEvent $event
+	 * 
+	 * @return void
+	 */
 	public function onBBEditban(BBEditbanEvent $event) : void {
 		if ($event->isCancelled()) {
 			return;
@@ -60,6 +73,11 @@ class EventListener implements Listener {
 	}
 
 
+	/**
+	 * @param BBPardonEvent $event
+	 * 
+	 * @return void
+	 */
 	public function onBBPardon(BBPardonEvent $event) : void {
 		if ($event->isCancelled()) {
 			return;
@@ -68,6 +86,11 @@ class EventListener implements Listener {
 	}
 
 
+	/**
+	 * @param BBBanIpEvent $event
+	 * 
+	 * @return void
+	 */
 	public function onBBIpBan(BBBanIpEvent $event) : void {
 		if ($event->isCancelled()) {
 			return;
@@ -76,6 +99,11 @@ class EventListener implements Listener {
 	}
 
 
+	/**
+	 * @param BBEditipbanEvent $event
+	 * 
+	 * @return void
+	 */
 	public function onBBEditIpBan(BBEditipbanEvent $event) : void {
 		if ($event->isCancelled()) {
 			return;
@@ -84,6 +112,11 @@ class EventListener implements Listener {
 	}
 
 
+	/**
+	 * @param BBPardonIpEvent $event
+	 * 
+	 * @return void
+	 */
 	public function onBBPardonIp(BBPardonIpEvent $event) : void {
 		if ($event->isCancelled()) {
 			return;
@@ -92,6 +125,11 @@ class EventListener implements Listener {
 	}
 
 
+	/**
+	 * @param BBKickEvent $event
+	 * 
+	 * @return void
+	 */
 	public function onBBKick(BBKickEvent $event) : void {
 		if ($event->isCancelled()) {
 			return;
@@ -100,6 +138,11 @@ class EventListener implements Listener {
 	}
 
 
+	/**
+	 * @param PlayerPreLoginEvent $event
+	 * 
+	 * @return void
+	 */
 	public function onPreLogin(PlayerPreLoginEvent $event) : void {
 		$playerInfo = $event->getPlayerInfo();
 		if (BetterBan::isBanned($playerInfo->getUsername())) {
@@ -111,6 +154,11 @@ class EventListener implements Listener {
 	}
 
 
+	/**
+	 * @param PlayerLoginEvent $event
+	 * 
+	 * @return void
+	 */
 	public function onLogin(PlayerLoginEvent $event) : void {
 		$player = $event->getPlayer();
 		if (BetterBan::isBanned($player->getName())) {

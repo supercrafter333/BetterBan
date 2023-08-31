@@ -52,6 +52,7 @@ class BBBanEvent extends Event implements Cancellable {
 
 	/**
 	 * Get the Target Player-Name of the ban
+	 * @return string
 	 */
 	public function getTarget() : string {
 		return $this->target;
@@ -59,6 +60,7 @@ class BBBanEvent extends Event implements Cancellable {
 
 	/**
 	 * Get the Source Name of the ban
+	 * @return string
 	 */
 	public function getSource() : string {
 		return $this->target;
@@ -66,6 +68,7 @@ class BBBanEvent extends Event implements Cancellable {
 
 	/**
 	 * Get the Reason of the ban
+	 * @return string|null
 	 */
 	public function getReason() : ?string {
 		return $this->target;
@@ -73,6 +76,9 @@ class BBBanEvent extends Event implements Cancellable {
 
 	/**
 	 * Set the Target Player-Name of the Ban
+	 * @param string $target
+	 * 
+	 * @return void
 	 */
 	public function setTarget(string $target) : void {
 		$this->target = $target;
@@ -80,6 +86,9 @@ class BBBanEvent extends Event implements Cancellable {
 
 	/**
 	 * Set the Source Player-Name of the Ban
+	 * @param string $source
+	 * 
+	 * @return void
 	 */
 	public function setSource(string $source) : void {
 		$this->source = $source;
@@ -87,6 +96,9 @@ class BBBanEvent extends Event implements Cancellable {
 
 	/**
 	 * Set the Reason of the Ban
+	 * @param string|null $reason
+	 * 
+	 * @return void
 	 */
 	public function setReason(string $reason = null) : void {
 		$this->reason = $reason;
@@ -94,6 +106,7 @@ class BBBanEvent extends Event implements Cancellable {
 
 	/**
 	 * Send the Discord-Webhook Message
+	 * @return void
 	 */
 	public function sendDiscordWebhookMessage() : void {
 		$reason = $this->reason === null ?? "";

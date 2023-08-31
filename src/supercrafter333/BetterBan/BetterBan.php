@@ -79,14 +79,24 @@ class BetterBan extends PluginBase {
 	public const VERSION = "4.2.2";
 
 
+	/**
+	 * @var null
+	 */
 	public static $DISCORD_WEBHOOK_URL = null;
 
+	/**
+	 * @var MySQLBanList
+	 */
 	private MySQLBanList $mysqlBanByName;
 
+	/**
+	 * @var MySQLBanList
+	 */
 	private MySQLBanList $mysqlBanByIP;
 
 	/**
 	 * On Plugin Loading
+	 * @return void
 	 */
 	public function onLoad() : void {
 		self::$instance = $this;
@@ -107,8 +117,10 @@ class BetterBan extends PluginBase {
 		}
 	}
 
+
 	/**
 	 * On Plugin Enabling
+	 * @return void
 	 */
 	public function onEnable() : void {
 		if ($this->useMySQL()) {
@@ -149,6 +161,10 @@ class BetterBan extends PluginBase {
 	}
 
 
+	/**
+	 * On Plugin Disabling
+	 * @return void
+	 */
 	public function onDisable() : void {
 		if (isset($this->mysqlBanByName)) {
 			$this->getMySQLNameBans()->close();
@@ -158,14 +174,21 @@ class BetterBan extends PluginBase {
 		}
 	}
 
+
 	/**
-	 * @return static
+	 * @return self
 	 */
 	public static function getInstance() : self {
 		return self::$instance;
 	}
 
 
+	/**
+	 * Check user if it is currently banned.
+	 * @param string $name
+	 * 
+	 * @return bool
+	 */
 	public static function isBanned(string $name) : bool {
 		$pl = self::getInstance();
 		if ($pl->useMySQL()) {
@@ -175,6 +198,12 @@ class BetterBan extends PluginBase {
 	}
 
 
+	/**
+	 * Check user if their ip is currently banned.
+	 * @param string $ip
+	 * 
+	 * @return bool
+	 */
 	public static function isBannedIp(string $ip) : bool {
 		$pl = self::getInstance();
 		if ($pl->useMySQL()) {
@@ -184,6 +213,9 @@ class BetterBan extends PluginBase {
 	}
 
 
+	/**
+	 * @return bool
+	 */
 	public static function pmformsExists() : bool {
 		return class_exists(\dktapps\pmforms\BaseForm::class);
 	}
@@ -196,7 +228,12 @@ class BetterBan extends PluginBase {
 	}
 
 
-	private function versionCheck(bool $update = true) {
+	/**
+	 * @param bool $update
+	 * 
+	 * @return void
+	 */
+	private function versionCheck(bool $update = true) : void{
 		if (!$this->getConfig()->exists("version") || $this->getConfig()->get("version") !== self::VERSION) {
 			if ($update == true) {
 				$this->getLogger()->debug("OUTDATED CONFIG.YML!! You config.yml is outdated! Your config.yml will automatically updated!");
@@ -210,6 +247,9 @@ class BetterBan extends PluginBase {
 	}
 
 
+	/**
+	 * @return MySQLBanList
+	 */
 	public function getMySQLNameBans() : MySQLBanList {
 		return $this->mysqlBanByName;
 	}
@@ -222,11 +262,17 @@ class BetterBan extends PluginBase {
 	}
 
 
+	/**
+	 * @return Config
+	 */
 	public function getBanLogs() : Config {
 		return new Config($this->getDataFolder() . "banLogs.yml", Config::YAML);
 	}
 
 
+	/**
+	 * @return bool
+	 */
 	public function useMySQL() : bool {
 		if ($this->getConfig()->get("use-MySQL") !== "true") {
 			return false;
@@ -235,12 +281,21 @@ class BetterBan extends PluginBase {
 	}
 
 
+	/**
+	 * @return array
+	 */
 	public function getMySQLSettings() : array {
 		return $this->getConfig()->get("MySQL", []);
 	}
 
 
-	public function addBanToBanlog(string $playerName) {
+	/**
+	 * Add banned user to BanLog.
+	 * @param string $playerName
+	 * 
+	 * @return void
+	 */
+	public function addBanToBanlog(string $playerName) : void{
 		$log = $this->getBanLogs();
 		if ($log->exists($playerName)) {
 			$log->set($playerName, intval($log->get($playerName) + 1));
@@ -251,11 +306,18 @@ class BetterBan extends PluginBase {
 	}
 
 
+	/**
+	 * Gets the information of the user on BanLog.
+	 * @param string $playerName
+	 * 
+	 * @return int
+	 */
 	public function getBanLogOf(string $playerName) : int {
 		return $this->getBanLogs()->exists($playerName) ? $this->getBanLogs()->get($playerName) : 0;
 	}
 
 	/**
+	 * Convert string to timestamp.
 	 * @throws Exception
 	 */
 	public function stringToTimestamp(string $string) : ?array {
@@ -304,7 +366,13 @@ class BetterBan extends PluginBase {
 	}
 
 	/**
+	 * Add time and Convert string to new datetime
+	 * @param string $string
+	 * @param DateTime $time
+	 * 
 	 * @throws Exception
+	 * 
+	 * @return array|null
 	 */
 	public function stringToTimestampAdd(string $string, DateTime $time) : ?array {
 		/**
@@ -352,6 +420,7 @@ class BetterBan extends PluginBase {
 	}
 
 	/**
+	 * Reduce datetime duration and Convert string to new datetime.
 	 * @throws Exception
 	 */
 	public function stringToTimestampReduce(string $string, DateTime $time) : ?array {
@@ -402,6 +471,10 @@ class BetterBan extends PluginBase {
 	/**
 	 * Pretty Format instead of use DateTime()->format() function.
 	 * DateTime::diff()->format() is suitable creating date format.
+	 * @param DateTime $duration
+	 * @param bool $legacy
+	 * 
+	 * @return string
 	 */
 	public function toPrettyFormat(DateTime $duration, bool $legacy = false) : string {
 		if ($legacy) {
@@ -441,7 +514,14 @@ class BetterBan extends PluginBase {
 	}
 
 
-	public function sendBanMessageToDC(string $banned, string $source, string $reason) {
+	/**
+	 * @param string $banned
+	 * @param string $source
+	 * @param string $reason
+	 * 
+	 * @return void
+	 */
+	public function sendBanMessageToDC(string $banned, string $source, string $reason) : void{
 		$title = str_replace(["{banned}", "{source}", "{reason}", "{line}"], [$banned, $source, $reason, "\n"], $this->getConfig()->get("ban-title"));
 		$message = str_replace(["{banned}", "{source}", "{reason}", "{line}"], [$banned, $source, $reason, "\n"], $this->getConfig()->get("ban-message"));
 		$color = $this->getConfig()->get("ban-color");
@@ -459,7 +539,12 @@ class BetterBan extends PluginBase {
 	}
 
 
-	public function sendBanUpdatedMessageToDC(string $banned) {
+	/**
+	 * @param string $banned
+	 * 
+	 * @return void
+	 */
+	public function sendBanUpdatedMessageToDC(string $banned) : void {
 		$title = str_replace(["{banned}", "{line}"], [$banned, "\n"], $this->getConfig()->get("ban-updated-title"));
 		$message = str_replace(["{banned}", "{line}"], [$banned, "\n"], $this->getConfig()->get("ban-updated-message"));
 		$color = $this->getConfig()->get("ban-updated-color");
@@ -477,7 +562,13 @@ class BetterBan extends PluginBase {
 	}
 
 
-	public function sendPardonMessageToDC(string $target, string $source) {
+	/**
+	 * @param string $target
+	 * @param string $source
+	 * 
+	 * @return void
+	 */
+	public function sendPardonMessageToDC(string $target, string $source) : void{
 		$title = str_replace(["{target}", "{source}", "{line}"], [$target, $source, "\n"], $this->getConfig()->get("pardon-title"));
 		$message = str_replace(["{target}", "{source}", "{line}"], [$target, $source, "\n"], $this->getConfig()->get("pardon-message"));
 		$color = $this->getConfig()->get("pardon-color");
@@ -495,7 +586,14 @@ class BetterBan extends PluginBase {
 	}
 
 
-	public function sendIpBanMessageToDC(string $ip, string $source, string $reason) {
+	/**
+	 * @param string $ip
+	 * @param string $source
+	 * @param string $reason
+	 * 
+	 * @return void
+	 */
+	public function sendIpBanMessageToDC(string $ip, string $source, string $reason) : void{
 		$title = str_replace(["{ip}", "{source}", "{reason}", "{line}"], [$ip, $source, $reason, "\n"], $this->getConfig()->get("banip-title"));
 		$message = str_replace(["{ip}", "{source}", "{reason}", "{line}"], [$ip, $source, $reason, "\n"], $this->getConfig()->get("banip-message"));
 		$color = $this->getConfig()->get("banip-color");
@@ -513,7 +611,12 @@ class BetterBan extends PluginBase {
 	}
 
 
-	public function sendIpBanUpdatedMessageToDC(string $ip) {
+	/**
+	 * @param string $ip
+	 * 
+	 * @return void
+	 */
+	public function sendIpBanUpdatedMessageToDC(string $ip) : void{
 		$title = str_replace(["{ip}", "{line}"], [$ip, "\n"], $this->getConfig()->get("ipban-updated-title"));
 		$message = str_replace(["{ip}", "{line}"], [$ip, "\n"], $this->getConfig()->get("ipban-updated-message"));
 		$color = $this->getConfig()->get("ipban-updated-color");
@@ -531,7 +634,13 @@ class BetterBan extends PluginBase {
 	}
 
 
-	public function sendPardonIpMessageToDC(string $ip, string $source) {
+	/**
+	 * @param string $ip
+	 * @param string $source
+	 * 
+	 * @return void
+	 */
+	public function sendPardonIpMessageToDC(string $ip, string $source) : void{
 		$title = str_replace(["{ip}", "{source}", "{line}"], [$ip, $source, "\n"], $this->getConfig()->get("pardonip-title"));
 		$message = str_replace(["{ip}", "{source}", "{line}"], [$ip, $source, "\n"], $this->getConfig()->get("pardonip-message"));
 		$color = $this->getConfig()->get("pardonip-color");
@@ -549,7 +658,13 @@ class BetterBan extends PluginBase {
 	}
 
 
-	public function sendKickMessageToDC(string $target, string $source) {
+	/**
+	 * @param string $target
+	 * @param string $source
+	 * 
+	 * @return void
+	 */
+	public function sendKickMessageToDC(string $target, string $source) : void{
 		$title = str_replace(["{target}", "{source}", "{line}"], [$target, $source, "\n"], $this->getConfig()->get("kick-dc-title"));
 		$message = str_replace(["{target}", "{source}", "{line}"], [$target, $source, "\n"], $this->getConfig()->get("kick-dc-message"));
 		$color = $this->getConfig()->get("kick-dc-color");

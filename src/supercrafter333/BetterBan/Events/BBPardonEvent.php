@@ -44,6 +44,8 @@ class BBPardonEvent extends Event implements Cancellable {
 
 	/**
 	 * BBPardonEvent constructor.
+	 * @param string $target
+	 * @param string $source
 	 */
 	public function __construct(private string $target, private string $source) {
 		$this->eventName = "BBPardonEvent";
@@ -51,6 +53,7 @@ class BBPardonEvent extends Event implements Cancellable {
 
 	/**
 	 * Get the target
+	 * @return string
 	 */
 	public function getTarget() : string {
 		return $this->target;
@@ -58,6 +61,7 @@ class BBPardonEvent extends Event implements Cancellable {
 
 	/**
 	 * Get the source
+	 * @return string
 	 */
 	public function getSource() : string {
 		return $this->source;
@@ -65,6 +69,9 @@ class BBPardonEvent extends Event implements Cancellable {
 
 	/**
 	 * Set the source
+	 * @param string $source
+	 * 
+	 * @return void
 	 */
 	public function setSource(string $source) : void {
 		$this->source = $source;
@@ -72,6 +79,9 @@ class BBPardonEvent extends Event implements Cancellable {
 
 	/**
 	 * Set the target
+	 * @param string $target
+	 * 
+	 * @return void
 	 */
 	public function setTarget(string $target) : void {
 		$this->target = $target;
@@ -79,6 +89,7 @@ class BBPardonEvent extends Event implements Cancellable {
 
 	/**
 	 * Send the Discord-Webhook Message
+	 * @return void
 	 */
 	public function sendDiscordWebhookMessage() : void {
 		BetterBan::getInstance()->sendPardonMessageToDC($this->target, $this->source);

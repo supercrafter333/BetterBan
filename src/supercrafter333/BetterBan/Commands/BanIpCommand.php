@@ -51,12 +51,19 @@ use function str_replace;
  * @package supercrafter333\BetterBan\Commands
  */
 class BanIpCommand extends BetterBanOwnedCommand {
-	/** @var BetterBan */
-	private $pl;
+	
+	/**
+	 * @var BetterBan
+	 */
+	private BetterBan $pl;
 
 
 	/**
 	 * BanIpCommand constructor.
+	 * @param string $name
+	 * @param string $description
+	 * @param string|null $usageMessage
+	 * @param array $aliases
 	 */
 	public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = []) {
 		$this->pl = BetterBan::getInstance();
@@ -65,7 +72,13 @@ class BanIpCommand extends BetterBanOwnedCommand {
 	}
 
 	/**
+	 * @param CommandSender $sender
+	 * @param string $commandLabel
+	 * @param array $args
+	 * 
 	 * @throws \Exception
+	 * 
+	 * @return bool
 	 */
 	public function execute(CommandSender $sender, string $commandLabel, array $args) : bool {
 		if (!$this->testPermission($sender)) {
@@ -122,6 +135,14 @@ class BanIpCommand extends BetterBanOwnedCommand {
 	}
 
 
+	/**
+	 * @param string $ip
+	 * @param CommandSender $sender
+	 * @param string|null $reason
+	 * @param \DateTime|null $expires
+	 * 
+	 * @return void
+	 */
 	private function processIPBan(string $ip, CommandSender $sender, string $reason = null, \DateTime $expires = null) : void {
 		if ($this->pl->useMySQL()) {
 			$this->pl->getMySQLIpBans()->addBan($ip, $reason, $expires, $sender->getName());
@@ -147,6 +168,9 @@ class BanIpCommand extends BetterBanOwnedCommand {
 
 
 
+	/**
+	 * @return Plugin
+	 */
 	public function getPlugin() : Plugin {
 		return $this->pl;
 	}

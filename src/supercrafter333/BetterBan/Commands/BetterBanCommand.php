@@ -43,6 +43,10 @@ use supercrafter333\BetterBan\Forms\BBDefaultForms;
 class BetterBanCommand extends BetterBanOwnedCommand {
 	/**
 	 * BetterBanCommand constructor.
+	 * @param string $name
+	 * @param string $description
+	 * @param string|null $usageMessage
+	 * @param array $aliases
 	 */
 	public function __construct(string $name, string $description = "", string $usageMessage = null, array $aliases = []) {
 		$this->setPermission("BetterBan.betterban.cmd");
@@ -50,6 +54,13 @@ class BetterBanCommand extends BetterBanOwnedCommand {
 	}
 
 
+	/**
+	 * @param CommandSender $sender
+	 * @param string $commandLabel
+	 * @param array $args
+	 * 
+	 * @return void
+	 */
 	public function execute(CommandSender $sender, string $commandLabel, array $args) : void {
 		if (!$this->testPermission($sender)) {
 			return;
@@ -64,6 +75,9 @@ class BetterBanCommand extends BetterBanOwnedCommand {
 	}
 
 
+	/**
+	 * @return Plugin
+	 */
 	public function getPlugin() : Plugin {
 		return BetterBan::getInstance();
 	}

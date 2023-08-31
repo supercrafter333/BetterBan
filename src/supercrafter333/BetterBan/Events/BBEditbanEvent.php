@@ -43,24 +43,34 @@ class BBEditbanEvent extends Event implements Cancellable {
 	use CancellableTrait;
 
 	/**
-	 * BBEditbanEvent constructor.
+	 * BBEditbanEvent constructor
+	 * @param string $target
 	 */
 	public function __construct(private string $target) {
 		$this->eventName = "BBEditbanEvent";
 	}
 
 
+	/**
+	 * @return string
+	 */
 	public function getTarget() : string {
 		return $this->target;
 	}
 
 
+	/**
+	 * @param string $target
+	 * 
+	 * @return void
+	 */
 	public function setTarget(string $target) : void {
 		$this->target = $target;
 	}
 
 	/**
 	 * Send the Discord-Webhook Message
+	 * @return void
 	 */
 	public function sendDiscordWebhookMessage() : void {
 		BetterBan::getInstance()->sendBanUpdatedMessageToDC($this->target);

@@ -46,6 +46,8 @@ class BBKickEvent extends Event implements Cancellable {
 
 	/**
 	 * BBKickEvent constructor.
+	 * @param Player $target
+	 * @param string $source
 	 * @param string|null $reason
 	 */
 	public function __construct(private Player $target, private string $source, private string|null $reason = null) {
@@ -53,16 +55,25 @@ class BBKickEvent extends Event implements Cancellable {
 	}
 
 
+	/**
+	 * @return Player
+	 */
 	public function getTarget() : Player {
 		return $this->target;
 	}
 
 
+	/**
+	 * @return string
+	 */
 	public function getTargetName() : string {
 		return $this->target->getName();
 	}
 
 
+	/**
+	 * @return string
+	 */
 	public function getSource() : string {
 		return $this->source;
 	}
@@ -75,22 +86,38 @@ class BBKickEvent extends Event implements Cancellable {
 	}
 
 
+	/**
+	 * @param Player $target
+	 * 
+	 * @return void
+	 */
 	public function setTarget(Player $target) : void {
 		$this->target = $target;
 	}
 
 
+	/**
+	 * @param string $source
+	 * 
+	 * @return void
+	 */
 	public function setSource(string $source) : void {
 		$this->source = $source;
 	}
 
 
+	/**
+	 * @param string $reason
+	 * 
+	 * @return void
+	 */
 	public function setReason(string $reason) : void {
 		$this->reason = $reason;
 	}
 
 	/**
 	 * Kick the Target Player
+	 * @return void
 	 */
 	public function kickTarget() : void {
 		if (!$this->isCancelled()) {
@@ -110,6 +137,7 @@ class BBKickEvent extends Event implements Cancellable {
 
 	/**
 	 * Send the Discord-Webhook Message
+	 * @return void
 	 */
 	public function sendDiscordWebhookMessage() : void {
 		BetterBan::getInstance()->sendKickMessageToDC($this->getTargetName(), $this->source);
