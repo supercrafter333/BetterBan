@@ -30,6 +30,33 @@ kicked-with-reason-message: "Kicked by admin.{line}Reason: {reason}"
 #-> uses: {line} {reason} {expires} {source}
 you-are-banned-logout: "§cYou are banned on this server!{line}§7Reason: §e{reason}{line}§7Expires at: §e{expires}"
 
+# Date Format syntax for Timer Durations
+# {YEAR} - Years, numeric but leading with 0
+# {year} - Years, numeric
+# {MONTH} - Months, numeric but leading with 0
+# {month} - Months, numeric
+# {DAY} - Days, numeric but leading with 0
+# {day} - Days, numeric
+# {TOTAL_DAYS} - Total number of days or (unknown) otherwise
+# {HOUR} - Hours, numeric but leading with 0
+# {hour} - Hours, numeric
+# {MINUTE} - Minutes, numeric but leading with 0
+# {minute} - Minutes, numeric
+# {SECOND} - Seconds, numeric but leading with 0
+# {second} - Seconds, numeric
+# {MICROSECOND} - Microseconds, numeric, at least 6 digits with leading 0
+# {microsecond} - Microseconds, numeric
+# {SIGN} - Sign "-" when negative, "+" when positive
+# {sign} - Sign "-" when negative, empty when positive
+# These are CASE-SENSITIVE, use these format corretly or might else would break the datetime formatting.
+# For more information about DateFormat syntax format please see this article:
+# https://www.php.net/manual/en/dateinterval.format.php#refsect1-dateinterval.format-parameters
+dateformat: "{year} year(s), {month} month(s), {day} day(s), {hours} hour(s), {minute} minute(s)"
+# Whether to choose DateTime Standard format.
+# Learn more about our standard datetime formatting without diff() function.
+use-legacy-format: false
+legacy-dateformat: "d.m.Y H:i:s"
+
 # Error messages
 use-DateInterval-format: "§4Please use the the right format!§4 For example: §81d"
 error-not-banned: "§4The player called §7{name}§4 isn't banned!"
@@ -82,4 +109,4 @@ kick-dc-color: 16776960
 
 
 #don't change this
-version: "4.2.1"
+version: "4.2.2"
