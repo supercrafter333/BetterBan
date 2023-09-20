@@ -21,18 +21,24 @@
 
 declare(strict_types=1);
 
-namespace supercrafter333\BetterBan\libs\_cce2cace6753c5e0\dktapps\pmforms\element;
+namespace supercrafter333\BetterBan\libs\_ca7ffafbbe76af5e\dktapps\pmforms\element;
 
-class StepSlider extends BaseSelector{
+use function assert;
+
+/**
+ * Element which displays some text on a form.
+ */
+class Label extends CustomFormElement{
 
 	public function getType() : string{
-		return "step_slider";
+		return "label";
+	}
+
+	public function validateValue($value) : void{
+		assert($value === null);
 	}
 
 	protected function serializeElementData() : array{
-		return [
-			"steps" => $this->options,
-			"default" => $this->defaultOptionIndex
-		];
+		return [];
 	}
 }
