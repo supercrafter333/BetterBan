@@ -249,7 +249,7 @@ class BBDefaultForms {
 				} else {
 					$pl = BetterBan::getInstance();
 					$cfg = $pl->getConfig();
-					$banEvent = new BBBanIpEvent($ip, $submitter->getName(), $reason);
+					$banEvent = new BBBanIpEvent($submitter->getName(), $ip, $reason);
 					$banEvent->call();
 					if ($banEvent->isCancelled()) {
 						Command::broadcastCommandMessage($submitter, "Ban cancelled because the BBBanIpEvent is cancelled!", true);
