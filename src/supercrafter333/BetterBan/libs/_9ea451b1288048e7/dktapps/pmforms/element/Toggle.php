@@ -21,24 +21,41 @@
 
 declare(strict_types=1);
 
-namespace supercrafter333\BetterBan\libs\_ca7ffafbbe76af5e\dktapps\pmforms\element;
+namespace supercrafter333\BetterBan\libs\_9ea451b1288048e7\dktapps\pmforms\element;
 
-use function assert;
+use pocketmine\form\FormValidationException;
+use function gettype;
+use function is_bool;
 
 /**
- * Element which displays some text on a form.
+ * Represents a UI on/off switch. The switch may have a default value.
  */
-class Label extends CustomFormElement{
+class Toggle extends CustomFormElement{
+	/** @var bool */
+	private $default;
+
+	public function __construct(string $name, string $text, bool $defaultValue = false){
+		parent::__construct($name, $text);
+		$this->default = $defaultValue;
+	}
 
 	public function getType() : string{
-		return "label";
+		return "toggle";
+	}
+
+	public function getDefaultValue() : bool{
+		return $this->default;
 	}
 
 	public function validateValue($value) : void{
-		assert($value === null);
+		if(!is_bool($value)){
+			throw new FormValidationException("Expected bool, got " . gettype($value));
+		}
 	}
 
 	protected function serializeElementData() : array{
-		return [];
+		return [
+			"default" => $this->default
+		];
 	}
 }

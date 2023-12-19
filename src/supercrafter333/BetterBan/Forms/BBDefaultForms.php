@@ -31,14 +31,14 @@ declare(strict_types=1);
 namespace supercrafter333\BetterBan\Forms;
 
 use DateTime;
-use supercrafter333\BetterBan\libs\_ca7ffafbbe76af5e\dktapps\pmforms\CustomForm;
-use supercrafter333\BetterBan\libs\_ca7ffafbbe76af5e\dktapps\pmforms\CustomFormResponse;
-use supercrafter333\BetterBan\libs\_ca7ffafbbe76af5e\dktapps\pmforms\element\Input;
-use supercrafter333\BetterBan\libs\_ca7ffafbbe76af5e\dktapps\pmforms\element\Label;
-use supercrafter333\BetterBan\libs\_ca7ffafbbe76af5e\dktapps\pmforms\element\Slider;
-use supercrafter333\BetterBan\libs\_ca7ffafbbe76af5e\dktapps\pmforms\element\Toggle;
-use supercrafter333\BetterBan\libs\_ca7ffafbbe76af5e\dktapps\pmforms\MenuForm;
-use supercrafter333\BetterBan\libs\_ca7ffafbbe76af5e\dktapps\pmforms\MenuOption;
+use supercrafter333\BetterBan\libs\_9ea451b1288048e7\dktapps\pmforms\CustomForm;
+use supercrafter333\BetterBan\libs\_9ea451b1288048e7\dktapps\pmforms\CustomFormResponse;
+use supercrafter333\BetterBan\libs\_9ea451b1288048e7\dktapps\pmforms\element\Input;
+use supercrafter333\BetterBan\libs\_9ea451b1288048e7\dktapps\pmforms\element\Label;
+use supercrafter333\BetterBan\libs\_9ea451b1288048e7\dktapps\pmforms\element\Slider;
+use supercrafter333\BetterBan\libs\_9ea451b1288048e7\dktapps\pmforms\element\Toggle;
+use supercrafter333\BetterBan\libs\_9ea451b1288048e7\dktapps\pmforms\MenuForm;
+use supercrafter333\BetterBan\libs\_9ea451b1288048e7\dktapps\pmforms\MenuOption;
 use pocketmine\command\Command;
 use pocketmine\lang\KnownTranslationFactory;
 use pocketmine\player\Player;
@@ -249,7 +249,7 @@ class BBDefaultForms {
 				} else {
 					$pl = BetterBan::getInstance();
 					$cfg = $pl->getConfig();
-					$banEvent = new BBBanIpEvent($ip, $submitter->getName(), $reason);
+					$banEvent = new BBBanIpEvent($submitter->getName(), $ip, $reason);
 					$banEvent->call();
 					if ($banEvent->isCancelled()) {
 						Command::broadcastCommandMessage($submitter, "Ban cancelled because the BBBanIpEvent is cancelled!", true);

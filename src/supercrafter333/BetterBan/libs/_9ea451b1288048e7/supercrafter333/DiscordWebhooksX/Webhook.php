@@ -26,10 +26,10 @@
 
 declare(strict_types = 1);
 
-namespace supercrafter333\BetterBan\libs\_ca7ffafbbe76af5e\supercrafter333\DiscordWebhooksX;
+namespace supercrafter333\BetterBan\libs\_9ea451b1288048e7\supercrafter333\DiscordWebhooksX;
 
 
-use supercrafter333\BetterBan\libs\_ca7ffafbbe76af5e\supercrafter333\DiscordWebhooksX\task\DiscordWebhookSendTask;
+use supercrafter333\BetterBan\libs\_9ea451b1288048e7\supercrafter333\DiscordWebhooksX\task\DiscordWebhookSendTask;
 use pocketmine\Server;
 
 class Webhook

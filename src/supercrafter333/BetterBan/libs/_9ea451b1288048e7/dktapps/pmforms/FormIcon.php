@@ -21,7 +21,7 @@
 
 declare(strict_types=1);
 
-namespace supercrafter333\BetterBan\libs\_ca7ffafbbe76af5e\dktapps\pmforms;
+namespace supercrafter333\BetterBan\libs\_9ea451b1288048e7\dktapps\pmforms;
 
 /**
  * Represents an icon which can be placed next to options on menus, or as the icon for the server-settings form type.
