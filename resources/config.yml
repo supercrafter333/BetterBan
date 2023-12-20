@@ -29,6 +29,7 @@ kicked-with-reason-message: "Kicked by admin.{line}Reason: {reason}"
 #logout
 #-> uses: {line} {reason} {expires} {source}
 you-are-banned-logout: "§cYou are banned on this server!{line}§7Reason: §e{reason}{line}§7Expires at: §e{expires}"
+you-are-banned-ip-logout: "§cYou are banned ip on this server!{line}§7Reason: §e{reason}{line}§7Expires at: §e{expires}"
 
 # Date Format syntax for Timer Durations
 # {YEAR} - Years, numeric but leading with 0

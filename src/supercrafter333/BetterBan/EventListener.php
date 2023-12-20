@@ -168,5 +168,12 @@ class EventListener implements Listener {
 			$player->kick($reason);
 			$event->cancel();
 		}
+		if (BetterBan::isBannedIp($player->getNetworkSession()->getIp())) {
+            $pl = BetterBan::getInstance();
+            $entry = $pl->useMySQL() ? $pl->getMySQLIpBans()->getEntry($player->getNetworkSession()->getIp()) : $pl->getServer()->getNameBans()->getEntry($player->getName());
+            $reason = str_replace(["{source}", "{expires}", "{reason}", "{line}"], [$entry->getSource(), $entry->getExpires() !== null ? BetterBan::getInstance()->toPrettyFormat($entry->getExpires(), BetterBan::getInstance()->getConfig("use-legacy-format", false)) : "Never", $entry->getReason(), "\n"], BetterBan::getInstance()->getConfig()->get("you-are-banned-ip-logout"));
+            $player->kick($reason);
+            $event->cancel();
+        }
 	}
 }
